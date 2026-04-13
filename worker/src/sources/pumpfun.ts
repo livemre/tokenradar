@@ -94,13 +94,13 @@ function connect() {
       // Skip subscription confirmations
       if (parsed.message) return;
 
-      // Migration event — token graduated to Raydium
-      if (parsed.txType === 'migration' || parsed.pool || parsed.poolAddress) {
+      // Route by txType (PumpFun now sends txType on all events)
+      if (parsed.txType === 'migration') {
         await handleMigration(parsed as MigrationEvent);
         return;
       }
 
-      // New token event
+      // New token event (txType === 'create' or has mint field)
       if (!parsed.mint) return;
 
       const event = parsed as PumpFunTokenEvent;
