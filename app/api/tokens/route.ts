@@ -22,10 +22,10 @@ export async function GET(request: NextRequest) {
   const LIST_COLUMNS = 'mint,name,symbol,image_url,source,safety_level,safety_score,price_usd,market_cap_usd,liquidity_usd,holder_count,volume_24h_usd,detected_at,enriched';
   let query = supabase.from('tokens').select(LIST_COLUMNS, { count: 'exact' });
 
-  // Default: hide dead tokens (no name, no price, no holders)
+  // Default: only show enriched tokens (have safety analysis, price data)
   // Unless searching or explicitly requesting all
   if (showAll !== 'true' && !search) {
-    query = query.or('name.not.is.null,price_usd.not.is.null,holder_count.gt.0');
+    query = query.eq('enriched', true);
   }
 
   // Text search: match on name, symbol, or mint address
