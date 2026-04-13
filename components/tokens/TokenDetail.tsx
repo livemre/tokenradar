@@ -154,7 +154,7 @@ export function TokenDetail({ token }: { token: Token }) {
               {/* Chart with stats sidebar */}
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
                 <Card className="p-0 overflow-hidden">
-                  <PriceChart mint={token.mint} />
+                  <PriceChart mint={token.mint} symbol={token.symbol || undefined} />
                 </Card>
 
                 {/* Side stats panel (desktop) */}
@@ -238,7 +238,7 @@ export function TokenDetail({ token }: { token: Token }) {
           {activeTab === 'chart' && (
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
               <Card className="p-0 overflow-hidden">
-                <PriceChart mint={token.mint} />
+                <PriceChart mint={token.mint} symbol={token.symbol || undefined} />
               </Card>
 
               {/* Side stats panel */}
