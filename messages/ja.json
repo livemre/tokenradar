@@ -96,7 +96,8 @@
     "showUnverified": "未検証トークン {count} 件を表示",
     "hideDead": "無効を非表示",
     "showHidden": "+{count} 件非表示",
-    "liveTokens": "ライブトークン {count} 件"
+    "liveTokens": "ライブトークン {count} 件",
+    "exploreOlderTokens": "すべてのトークンを見る"
   },
   "explorer": {
     "cardView": "カード表示",

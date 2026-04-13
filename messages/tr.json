@@ -96,7 +96,8 @@
     "showUnverified": "{count} doğrulanmamış tokeni göster",
     "hideDead": "Ölüleri gizle",
     "showHidden": "+{count} gizli",
-    "liveTokens": "{count} canlı token"
+    "liveTokens": "{count} canlı token",
+    "exploreOlderTokens": "Tüm tokenlere göz at"
   },
   "explorer": {
     "cardView": "Kart görünümü",

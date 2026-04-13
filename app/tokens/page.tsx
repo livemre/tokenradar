@@ -127,7 +127,7 @@ function TokensContent() {
             transition={{ duration: 0.2 }}
           >
             {activeTab === 'live' ? (
-              <TokenFeed tokens={tokens} newTokenIds={newTokenIds} />
+              <TokenFeed tokens={tokens} newTokenIds={newTokenIds} onSwitchToExplore={() => setActiveTab('explore')} />
             ) : activeTab === 'explore' ? (
               <TokenExplorer autoFocusSearch={autoFocusSearch} onSearchFocused={() => setAutoFocusSearch(false)} />
             ) : (

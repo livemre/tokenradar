@@ -7,7 +7,7 @@ import { TokenCard } from './TokenCard';
 import { TokenCardSkeleton } from './TokenCardSkeleton';
 import { TokenFilters } from './TokenFilters';
 import type { Token, TokenSource, SafetyLevel } from '@/lib/types/token';
-import { Eye, EyeOff, Radio } from 'lucide-react';
+import { Eye, EyeOff, Radio, Compass, ArrowRight } from 'lucide-react';
 
 function isAlive(t: Token): boolean {
   return !!(t.name || t.price_usd || (t.holder_count && t.holder_count > 0));
@@ -16,9 +16,10 @@ function isAlive(t: Token): boolean {
 interface TokenFeedProps {
   tokens: Token[];
   newTokenIds: Set<string>;
+  onSwitchToExplore?: () => void;
 }
 
-export function TokenFeed({ tokens, newTokenIds }: TokenFeedProps) {
+export function TokenFeed({ tokens, newTokenIds, onSwitchToExplore }: TokenFeedProps) {
   const t = useTranslations('feed');
   const [filters, setFilters] = useState<{
     source?: TokenSource;
@@ -56,9 +57,21 @@ export function TokenFeed({ tokens, newTokenIds }: TokenFeedProps) {
           {Array.from({ length: 5 }).map((_, i) => (
             <TokenCardSkeleton key={i} />
           ))}
-          <p className="text-center text-xs text-muted mt-4">
-            {t('waiting')}
-          </p>
+          <div className="text-center mt-6 space-y-3">
+            <p className="text-xs text-muted">
+              {t('waiting')}
+            </p>
+            {onSwitchToExplore && (
+              <button
+                onClick={onSwitchToExplore}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-muted hover:text-foreground hover:bg-white/[0.08] hover:border-white/[0.12] transition-all btn-press"
+              >
+                <Compass size={15} />
+                {t('exploreOlderTokens')}
+                <ArrowRight size={13} className="opacity-50" />
+              </button>
+            )}
+          </div>
         </div>
       ) : filteredTokens.length === 0 ? (
         <div className="text-center py-16">
@@ -69,10 +82,20 @@ export function TokenFeed({ tokens, newTokenIds }: TokenFeedProps) {
           <p className="text-xs text-muted mt-2 max-w-xs mx-auto">
             {t('analysisMessage')}
           </p>
+          {onSwitchToExplore && (
+            <button
+              onClick={onSwitchToExplore}
+              className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-safe/10 border border-safe/20 text-sm font-semibold text-safe hover:bg-safe/15 transition-all btn-press"
+            >
+              <Compass size={15} />
+              {t('exploreOlderTokens')}
+              <ArrowRight size={13} />
+            </button>
+          )}
           {deadCount > 0 && (
             <button
               onClick={() => setShowDead(true)}
-              className="mt-4 text-xs text-muted hover:text-foreground underline transition-colors"
+              className="mt-3 block mx-auto text-xs text-muted hover:text-foreground underline transition-colors"
             >
               {t('showUnverified', { count: deadCount })}
             </button>

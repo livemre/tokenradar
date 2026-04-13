@@ -96,7 +96,8 @@
     "showUnverified": "Afficher {count} tokens non verifies",
     "hideDead": "Masquer les inactifs",
     "showHidden": "+{count} masques",
-    "liveTokens": "{count} tokens en direct"
+    "liveTokens": "{count} tokens en direct",
+    "exploreOlderTokens": "Parcourir tous les tokens"
   },
   "explorer": {
     "cardView": "Vue en cartes",

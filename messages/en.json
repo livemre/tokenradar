@@ -96,7 +96,8 @@
     "showUnverified": "Show {count} unverified tokens",
     "hideDead": "Hide dead",
     "showHidden": "+{count} hidden",
-    "liveTokens": "{count} live tokens"
+    "liveTokens": "{count} live tokens",
+    "exploreOlderTokens": "Browse all tokens"
   },
   "explorer": {
     "cardView": "Card view",

@@ -96,7 +96,8 @@
     "showUnverified": "显示 {count} 个未验证代币",
     "hideDead": "隐藏归零代币",
     "showHidden": "+{count} 个已隐藏",
-    "liveTokens": "{count} 个实时代币"
+    "liveTokens": "{count} 个实时代币",
+    "exploreOlderTokens": "浏览所有代币"
   },
   "explorer": {
     "cardView": "卡片视图",

@@ -96,7 +96,8 @@
     "showUnverified": "미검증 토큰 {count}개 표시",
     "hideDead": "비활성 숨기기",
     "showHidden": "+{count}개 숨김",
-    "liveTokens": "라이브 토큰 {count}개"
+    "liveTokens": "라이브 토큰 {count}개",
+    "exploreOlderTokens": "모든 토큰 탐색"
   },
   "explorer": {
     "cardView": "카드 보기",
