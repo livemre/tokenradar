@@ -1,5 +1,13 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+
+export const metadata: Metadata = {
+  title: 'TokenRadar — Real-Time Solana Memecoin Tracker & Safety Scanner',
+  alternates: {
+    canonical: 'https://tokenradar.site',
+  },
+};
 import {
   Radar,
   Zap,

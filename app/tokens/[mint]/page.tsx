@@ -1,58 +1,53 @@
-'use client';
+import type { Metadata } from 'next';
+import { createServerSupabase } from '@/lib/supabase/server';
+import TokenPageClient from './TokenPageClient';
 
-import { use } from 'react';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { TokenDetail } from '@/components/tokens/TokenDetail';
-import { TokenDetailSkeleton } from '@/components/tokens/TokenDetailSkeleton';
-import { useTokenDetail } from '@/lib/hooks/useTokenDetail';
-import { ArrowLeft, SearchX } from 'lucide-react';
+interface Props {
+  params: Promise<{ mint: string }>;
+}
 
-export default function TokenPage({ params }: { params: Promise<{ mint: string }> }) {
-  const { mint } = use(params);
-  const { token, isLoading, error } = useTokenDetail(mint);
-  const t = useTranslations('detail');
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { mint } = await params;
+  const supabase = createServerSupabase();
 
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Header isConnected={true} />
+  const { data: token } = await supabase
+    .from('tokens')
+    .select('name,symbol,safety_level,price_usd,market_cap_usd,source')
+    .eq('mint', mint)
+    .single();
 
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
-        <Link
-          href="/tokens"
-          className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground transition-colors mb-6 btn-press"
-        >
-          <ArrowLeft size={14} />
-          {t('backToRadar')}
-        </Link>
+  if (!token || !token.name) {
+    return {
+      title: `Token ${mint.slice(0, 8)}...`,
+      description: `View safety analysis, price chart, and holder data for Solana token ${mint.slice(0, 8)}... on TokenRadar.`,
+    };
+  }
 
-        {isLoading ? (
-          <TokenDetailSkeleton />
-        ) : error || !token ? (
-          <div className="text-center py-20">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
-              <SearchX size={28} className="text-muted" />
-            </div>
-            <p className="text-lg font-medium">{t('tokenNotFound')}</p>
-            <p className="text-sm text-muted mt-2">
-              {t('tokenNotFoundDesc')}
-            </p>
-            <Link
-              href="/tokens"
-              className="inline-flex items-center gap-1 mt-4 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm transition-colors btn-press"
-            >
-              <ArrowLeft size={14} />
-              {t('backToRadar')}
-            </Link>
-          </div>
-        ) : (
-          <TokenDetail token={token} />
-        )}
-      </main>
+  const name = token.name;
+  const symbol = token.symbol ? `($${token.symbol.toUpperCase()})` : '';
+  const safety = token.safety_level ? ` — ${token.safety_level.charAt(0).toUpperCase() + token.safety_level.slice(1)}` : '';
+  const price = token.price_usd ? ` $${token.price_usd < 0.01 ? token.price_usd.toExponential(2) : token.price_usd.toFixed(4)}` : '';
 
-      <Footer />
-    </div>
-  );
+  const title = `${name} ${symbol}${safety}`;
+  const description = `${name} ${symbol} on Solana${price ? ` — Price:${price}` : ''}. Safety score, rug-pull analysis, holder concentration, live chart & swap on TokenRadar.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${name} ${symbol} — TokenRadar`,
+      description,
+      url: `https://tokenradar.site/tokens/${mint}`,
+    },
+    twitter: {
+      card: 'summary',
+      title: `${name} ${symbol}${safety}`,
+      description,
+    },
+  };
+}
+
+export default async function TokenPage({ params }: Props) {
+  const { mint } = await params;
+  return <TokenPageClient mint={mint} />;
 }

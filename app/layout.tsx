@@ -21,7 +21,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TokenRadar — Free Real-Time Solana Memecoin Tracker & Safety Scanner",
+  title: {
+    default: "TokenRadar — Real-Time Solana Memecoin Tracker & Safety Scanner",
+    template: "%s | TokenRadar",
+  },
   description:
     "Detect new Solana memecoins in under 5 seconds. Free 24/7 rug-pull detection, safety scores, holder analysis, and live charts from Pump.fun, Raydium & Moonshot.",
   metadataBase: new URL(SITE_URL),
@@ -67,7 +70,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   keywords: [
     "solana memecoin tracker",
