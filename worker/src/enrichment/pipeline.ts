@@ -15,35 +15,86 @@ import { getPumpFunTokenData } from './pumpfun.js';
 import { logger } from '../utils/logger.js';
 import { ENRICHMENT_CONCURRENCY, ENRICHMENT_DELAY_MS } from '../utils/constants.js';
 
-// Safety level computation (mirrored from lib/utils/safety.ts)
-function computeSafetyLevel(input: {
-  rugCheckScore: number | null;
+// Safety scoring: weighted factor system (mirrored from lib/utils/safety.ts)
+const SAFETY_WEIGHTS = { RUGCHECK: 25, MINT_AUTHORITY: 20, FREEZE_AUTHORITY: 15, HOLDER_CONCENTRATION: 15, HOLDER_COUNT: 10, LIQUIDITY: 15 };
+
+function scoreHolderConcentration(pct: number): number {
+  if (pct < 30) return 100;
+  if (pct < 50) return 70;
+  if (pct < 70) return 40;
+  if (pct < 90) return 15;
+  return 0;
+}
+
+function scoreHolderCount(count: number): number {
+  if (count >= 100) return 100;
+  if (count >= 50) return 80;
+  if (count >= 20) return 60;
+  if (count >= 5) return 30;
+  return 10;
+}
+
+function scoreLiquidity(usd: number): number {
+  if (usd >= 50_000) return 100;
+  if (usd >= 10_000) return 80;
+  if (usd >= 5_000) return 60;
+  if (usd >= 1_000) return 40;
+  return 15;
+}
+
+function computeSafety(input: {
+  rugCheckNormalised: number | null;
   mintAuthority: boolean | null;
   freezeAuthority: boolean | null;
   topHolderPct: number | null;
-  isRugged: boolean;
+  holderCount: number | null;
   liquidityUsd: number | null;
-}): string {
-  if (input.isRugged) return 'danger';
+  isRugged: boolean;
+}): { score: number; level: string } {
+  if (input.isRugged) return { score: 0, level: 'danger' };
 
-  let score = input.rugCheckScore ?? 50;
-
-  if (input.mintAuthority === true) score -= 20;
-  if (input.freezeAuthority === true) score -= 15;
-
-  if (input.topHolderPct !== null && input.topHolderPct > 80) {
-    score -= 40;
-  } else if (input.topHolderPct !== null && input.topHolderPct > 50) {
-    score -= 20;
+  if (input.mintAuthority === true && input.freezeAuthority === true &&
+      input.topHolderPct !== null && input.topHolderPct > 80) {
+    return { score: 5, level: 'danger' };
   }
 
-  if (input.liquidityUsd !== null && input.liquidityUsd < 1000) {
-    score -= 15;
+  let totalScore = 0;
+  let totalWeight = 0;
+
+  if (input.rugCheckNormalised !== null) {
+    totalScore += (100 - input.rugCheckNormalised) * SAFETY_WEIGHTS.RUGCHECK;
+    totalWeight += SAFETY_WEIGHTS.RUGCHECK;
+  }
+  if (input.mintAuthority !== null) {
+    totalScore += (input.mintAuthority ? 0 : 100) * SAFETY_WEIGHTS.MINT_AUTHORITY;
+    totalWeight += SAFETY_WEIGHTS.MINT_AUTHORITY;
+  }
+  if (input.freezeAuthority !== null) {
+    totalScore += (input.freezeAuthority ? 0 : 100) * SAFETY_WEIGHTS.FREEZE_AUTHORITY;
+    totalWeight += SAFETY_WEIGHTS.FREEZE_AUTHORITY;
+  }
+  if (input.topHolderPct !== null) {
+    totalScore += scoreHolderConcentration(input.topHolderPct) * SAFETY_WEIGHTS.HOLDER_CONCENTRATION;
+    totalWeight += SAFETY_WEIGHTS.HOLDER_CONCENTRATION;
+  }
+  if (input.holderCount !== null) {
+    totalScore += scoreHolderCount(input.holderCount) * SAFETY_WEIGHTS.HOLDER_COUNT;
+    totalWeight += SAFETY_WEIGHTS.HOLDER_COUNT;
+  }
+  if (input.liquidityUsd !== null) {
+    totalScore += scoreLiquidity(input.liquidityUsd) * SAFETY_WEIGHTS.LIQUIDITY;
+    totalWeight += SAFETY_WEIGHTS.LIQUIDITY;
   }
 
-  if (score >= 70) return 'safe';
-  if (score >= 40) return 'warning';
-  return 'danger';
+  if (totalWeight === 0) return { score: 0, level: 'unknown' };
+
+  const score = Math.round(totalScore / totalWeight);
+  let level: string;
+  if (score >= 70) level = 'safe';
+  else if (score >= 40) level = 'warning';
+  else level = 'danger';
+
+  return { score, level };
 }
 
 async function enrichToken(mint: string, uri: string | null, source: string, isReEnrich: boolean = false): Promise<void> {
@@ -80,18 +131,19 @@ async function enrichToken(mint: string, uri: string | null, source: string, isR
     const resolvedSymbol = rug?.tokenMeta?.symbol || meta?.symbol || pf?.symbol || gk?.symbol || dex?.symbol || null;
     const resolvedImage = rug?.tokenMeta?.image || meta?.image || pf?.imageUrl || dex?.imageUrl || null;
 
-    const safetyLevel = computeSafetyLevel({
-      rugCheckScore: rug?.score ?? null,
+    const safety = computeSafety({
+      rugCheckNormalised: rug?.score_normalised ?? null,
       mintAuthority: auth?.mintAuthorityEnabled ?? null,
       freezeAuthority: auth?.freezeAuthorityEnabled ?? null,
       topHolderPct: hold?.topHolderPct ?? null,
-      isRugged: rug?.rugged ?? false,
+      holderCount: hold?.holderCount ?? null,
       liquidityUsd: resolvedLiquidity,
+      isRugged: rug?.rugged ?? false,
     });
 
     const enrichmentData: Record<string, unknown> = {
-      safety_score: rug?.score ?? null,
-      safety_level: safetyLevel,
+      safety_score: safety.score,
+      safety_level: safety.level,
       mint_authority: auth?.mintAuthorityEnabled ?? null,
       freeze_authority: auth?.freezeAuthorityEnabled ?? null,
       top_holder_pct: hold?.topHolderPct ?? null,
@@ -113,7 +165,7 @@ async function enrichToken(mint: string, uri: string | null, source: string, isR
     await updateTokenEnrichment(mint, enrichmentData);
 
     const tag = isReEnrich ? 'Re-enriched' : 'Enriched';
-    logger.info(`${tag}: ${mint} → ${safetyLevel} (score: ${rug?.score ?? 'N/A'}, price: ${resolvedPrice ? '$' + resolvedPrice : 'N/A'}, mcap: ${resolvedMarketCap ? '$' + resolvedMarketCap : 'N/A'}, holders: ${hold?.holderCount ?? 0}, name: ${resolvedName ?? 'unknown'})`);
+    logger.info(`${tag}: ${mint} → ${safety.level} (safety: ${safety.score}/100, price: ${resolvedPrice ? '$' + resolvedPrice : 'N/A'}, mcap: ${resolvedMarketCap ? '$' + resolvedMarketCap : 'N/A'}, holders: ${hold?.holderCount ?? 0}, name: ${resolvedName ?? 'unknown'})`);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     logger.error(`Enrichment failed for ${mint}: ${msg}`);

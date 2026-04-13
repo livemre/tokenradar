@@ -8,18 +8,19 @@ export const KNOWN_QUOTE_MINTS = new Set([SOL_MINT, USDC_MINT, USDT_MINT]);
 // Raydium AMM Program
 export const RAYDIUM_AMM_PROGRAM = '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8';
 
-// Safety thresholds
+// Safety scoring: weighted factor system (each factor 0-100, weighted by importance)
+export const SAFETY_WEIGHTS = {
+  RUGCHECK: 25,
+  MINT_AUTHORITY: 20,
+  FREEZE_AUTHORITY: 15,
+  HOLDER_CONCENTRATION: 15,
+  HOLDER_COUNT: 10,
+  LIQUIDITY: 15,
+} as const;
+
 export const SAFETY_THRESHOLDS = {
   SAFE_MIN_SCORE: 70,
   WARNING_MIN_SCORE: 40,
-  HIGH_HOLDER_PCT: 50,
-  CRITICAL_HOLDER_PCT: 80,
-  LOW_LIQUIDITY_USD: 1000,
-  MINT_AUTHORITY_PENALTY: 20,
-  FREEZE_AUTHORITY_PENALTY: 15,
-  HIGH_HOLDER_PENALTY: 20,
-  CRITICAL_HOLDER_PENALTY: 20,
-  LOW_LIQUIDITY_PENALTY: 15,
 } as const;
 
 // Design tokens

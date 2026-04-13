@@ -1,36 +1,120 @@
 import type { SafetyLevel } from '@/lib/types/token';
-import { SAFETY_THRESHOLDS } from './constants';
+import { SAFETY_WEIGHTS, SAFETY_THRESHOLDS } from './constants';
 
-interface SafetyInput {
-  rugCheckScore: number | null;
+export interface SafetyInput {
+  rugCheckNormalised: number | null; // 0-100, higher = riskier (from RugCheck)
   mintAuthority: boolean | null;
   freezeAuthority: boolean | null;
   topHolderPct: number | null;
-  isRugged: boolean;
+  holderCount: number | null;
   liquidityUsd: number | null;
+  isRugged: boolean;
 }
 
+export interface SafetyResult {
+  score: number;   // 0-100, higher = safer
+  level: SafetyLevel;
+}
+
+/** Score a single factor 0-100 (100 = safest) */
+function scoreHolderConcentration(pct: number): number {
+  if (pct < 30) return 100;
+  if (pct < 50) return 70;
+  if (pct < 70) return 40;
+  if (pct < 90) return 15;
+  return 0;
+}
+
+function scoreHolderCount(count: number): number {
+  if (count >= 100) return 100;
+  if (count >= 50) return 80;
+  if (count >= 20) return 60;
+  if (count >= 5) return 30;
+  return 10;
+}
+
+function scoreLiquidity(usd: number): number {
+  if (usd >= 50_000) return 100;
+  if (usd >= 10_000) return 80;
+  if (usd >= 5_000) return 60;
+  if (usd >= 1_000) return 40;
+  return 15;
+}
+
+/**
+ * Compute safety score and level using weighted factor system.
+ * Each factor scores 0-100, weighted by importance.
+ * Missing factors are excluded from the average.
+ */
+export function computeSafety(input: SafetyInput): SafetyResult {
+  // Override: confirmed rug = immediate danger
+  if (input.isRugged) return { score: 0, level: 'danger' };
+
+  // Override: scam pattern (mint + freeze + high concentration)
+  if (
+    input.mintAuthority === true &&
+    input.freezeAuthority === true &&
+    input.topHolderPct !== null && input.topHolderPct > 80
+  ) {
+    return { score: 5, level: 'danger' };
+  }
+
+  // Weighted factor calculation
+  let totalScore = 0;
+  let totalWeight = 0;
+
+  // Factor 1: RugCheck (inverted: 100 - normalised)
+  if (input.rugCheckNormalised !== null) {
+    totalScore += (100 - input.rugCheckNormalised) * SAFETY_WEIGHTS.RUGCHECK;
+    totalWeight += SAFETY_WEIGHTS.RUGCHECK;
+  }
+
+  // Factor 2: Mint Authority
+  if (input.mintAuthority !== null) {
+    totalScore += (input.mintAuthority ? 0 : 100) * SAFETY_WEIGHTS.MINT_AUTHORITY;
+    totalWeight += SAFETY_WEIGHTS.MINT_AUTHORITY;
+  }
+
+  // Factor 3: Freeze Authority
+  if (input.freezeAuthority !== null) {
+    totalScore += (input.freezeAuthority ? 0 : 100) * SAFETY_WEIGHTS.FREEZE_AUTHORITY;
+    totalWeight += SAFETY_WEIGHTS.FREEZE_AUTHORITY;
+  }
+
+  // Factor 4: Holder Concentration
+  if (input.topHolderPct !== null) {
+    totalScore += scoreHolderConcentration(input.topHolderPct) * SAFETY_WEIGHTS.HOLDER_CONCENTRATION;
+    totalWeight += SAFETY_WEIGHTS.HOLDER_CONCENTRATION;
+  }
+
+  // Factor 5: Holder Count
+  if (input.holderCount !== null) {
+    totalScore += scoreHolderCount(input.holderCount) * SAFETY_WEIGHTS.HOLDER_COUNT;
+    totalWeight += SAFETY_WEIGHTS.HOLDER_COUNT;
+  }
+
+  // Factor 6: Liquidity
+  if (input.liquidityUsd !== null) {
+    totalScore += scoreLiquidity(input.liquidityUsd) * SAFETY_WEIGHTS.LIQUIDITY;
+    totalWeight += SAFETY_WEIGHTS.LIQUIDITY;
+  }
+
+  // No data at all → unknown
+  if (totalWeight === 0) return { score: 0, level: 'unknown' };
+
+  const score = Math.round(totalScore / totalWeight);
+
+  let level: SafetyLevel;
+  if (score >= SAFETY_THRESHOLDS.SAFE_MIN_SCORE) level = 'safe';
+  else if (score >= SAFETY_THRESHOLDS.WARNING_MIN_SCORE) level = 'warning';
+  else level = 'danger';
+
+  return { score, level };
+}
+
+// Keep old function name as alias for backward compatibility
 export function computeSafetyLevel(input: SafetyInput): SafetyLevel {
-  if (input.isRugged) return 'danger';
-
-  let score = input.rugCheckScore ?? 50;
-
-  if (input.mintAuthority === true) score -= SAFETY_THRESHOLDS.MINT_AUTHORITY_PENALTY;
-  if (input.freezeAuthority === true) score -= SAFETY_THRESHOLDS.FREEZE_AUTHORITY_PENALTY;
-
-  if (input.topHolderPct !== null && input.topHolderPct > SAFETY_THRESHOLDS.CRITICAL_HOLDER_PCT) {
-    score -= SAFETY_THRESHOLDS.HIGH_HOLDER_PENALTY + SAFETY_THRESHOLDS.CRITICAL_HOLDER_PENALTY;
-  } else if (input.topHolderPct !== null && input.topHolderPct > SAFETY_THRESHOLDS.HIGH_HOLDER_PCT) {
-    score -= SAFETY_THRESHOLDS.HIGH_HOLDER_PENALTY;
-  }
-
-  if (input.liquidityUsd !== null && input.liquidityUsd < SAFETY_THRESHOLDS.LOW_LIQUIDITY_USD) {
-    score -= SAFETY_THRESHOLDS.LOW_LIQUIDITY_PENALTY;
-  }
-
-  if (score >= SAFETY_THRESHOLDS.SAFE_MIN_SCORE) return 'safe';
-  if (score >= SAFETY_THRESHOLDS.WARNING_MIN_SCORE) return 'warning';
-  return 'danger';
+  return computeSafety(input).level;
 }
 
 export function getSafetyColor(level: SafetyLevel): string {

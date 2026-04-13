@@ -4,6 +4,7 @@ const RUGCHECK_BASE = 'https://api.rugcheck.xyz/v1';
 
 export interface RugCheckReport {
   score: number;
+  score_normalised: number;
   rugged: boolean;
   tokenMeta?: {
     name?: string;
