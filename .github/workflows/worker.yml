@@ -1,0 +1,52 @@
+name: TokenRadar Worker
+
+on:
+  push:
+    branches: [main]
+    paths: [worker/**]
+  schedule:
+    # Restart every 5.5 hours to stay within 6h limit
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Manual trigger
+
+concurrency:
+  group: worker
+  cancel-in-progress: true
+
+jobs:
+  run-worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350 # ~5h50m, under 6h limit
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+
+      - name: Install dependencies
+        working-directory: worker
+        run: npm ci
+
+      - name: Build TypeScript
+        working-directory: worker
+        run: npm run build
+
+      - name: Run worker
+        working-directory: worker
+        timeout-minutes: 345
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          HELIUS_API_KEY: ${{ secrets.HELIUS_API_KEY }}
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+          PUMPFUN_WS_URL: ${{ secrets.PUMPFUN_WS_URL }}
+          DEXSCREENER_API_URL: ${{ secrets.DEXSCREENER_API_URL }}
+          MOONSHOT_POLL_INTERVAL_MS: '30000'
+          ENRICHMENT_CONCURRENCY: '3'
+          ENRICHMENT_DELAY_MS: '2000'
+        run: node dist/index.js
