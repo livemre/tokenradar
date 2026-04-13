@@ -56,6 +56,7 @@ async function handleMigration(event: MigrationEvent) {
       .from('tokens')
       .update({
         migrated: true,
+        source: 'raydium',
         pool_address: poolAddress || null,
       })
       .eq('mint', mint);
