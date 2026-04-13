@@ -89,9 +89,27 @@ export async function POST(request: NextRequest) {
     let detected = 0;
 
     for (const tx of transactions) {
+      // Skip old transactions (>1 hour) — prevents backfill of historical swaps
+      if (tx.timestamp) {
+        const ageSeconds = Math.floor(Date.now() / 1000) - tx.timestamp;
+        if (ageSeconds > 3600) continue;
+      }
+
       const newTokens = extractNewTokenMints(tx);
+      if (newTokens.length === 0) continue;
+
+      // Batch check: skip mints already in our database
+      const mints = newTokens.map((t) => t.mint);
+      const { data: existing } = await supabase
+        .from('tokens')
+        .select('mint')
+        .in('mint', mints);
+
+      const existingMints = new Set((existing || []).map((r) => r.mint));
 
       for (const { mint, poolAddress } of newTokens) {
+        if (existingMints.has(mint)) continue;
+
         const { error } = await supabase
           .from('tokens')
           .upsert(
@@ -109,7 +127,7 @@ export async function POST(request: NextRequest) {
           console.error(`Helius webhook: failed to upsert ${mint}:`, error.message);
         } else {
           detected++;
-          console.log(`Helius webhook: new Raydium pool detected → ${mint}${poolAddress ? ` (pool: ${poolAddress.slice(0, 8)}...)` : ''}`);
+          console.log(`Helius webhook: new Raydium token → ${mint}${poolAddress ? ` (pool: ${poolAddress.slice(0, 8)}...)` : ''}`);
         }
       }
     }
