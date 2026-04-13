@@ -1,0 +1,16 @@
+app = 'tokenradar-worker'
+primary_region = 'fra'
+
+[build]
+
+[env]
+  PUMPFUN_WS_URL = 'wss://pumpportal.fun/api/data'
+  DEXSCREENER_API_URL = 'https://api.dexscreener.com'
+  MOONSHOT_POLL_INTERVAL_MS = '30000'
+  ENRICHMENT_CONCURRENCY = '3'
+  ENRICHMENT_DELAY_MS = '2000'
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1

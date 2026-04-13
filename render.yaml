@@ -1,0 +1,29 @@
+services:
+  - type: worker
+    name: tokenradar-worker
+    runtime: docker
+    dockerfilePath: ./worker/Dockerfile
+    dockerContext: ./worker
+    region: frankfurt
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: HELIUS_API_KEY
+        sync: false
+      - key: SOLANA_RPC_URL
+        sync: false
+      - key: PUMPFUN_WS_URL
+        value: wss://pumpportal.fun/api/data
+      - key: DEXSCREENER_API_URL
+        value: https://api.dexscreener.com
+      - key: MOONSHOT_POLL_INTERVAL_MS
+        value: "30000"
+      - key: ENRICHMENT_CONCURRENCY
+        value: "3"
+      - key: ENRICHMENT_DELAY_MS
+        value: "2000"
