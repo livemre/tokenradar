@@ -19,7 +19,7 @@ export interface NotificationPreferences {
 }
 
 const DEFAULT_PREFERENCES: NotificationPreferences = {
-  soundEnabled: true,
+  soundEnabled: false,
   browserNotificationsEnabled: false,
   minSafetyScore: 0,
   sources: ['pumpfun', 'raydium', 'moonshot'],
