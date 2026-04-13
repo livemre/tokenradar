@@ -1,9 +1,5 @@
-'use client';
-
-import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import {
   Radar,
   Zap,
@@ -15,51 +11,13 @@ import {
   Eye,
   ChevronRight,
   ExternalLink,
-  Heart,
-  Copy,
-  Check,
 } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+import { FadeIn, HeroAnimation, HeroCTA, StatsAnimation } from '@/components/landing/AnimatedSection';
+import { DonateSection } from '@/components/landing/DonateSection';
 
-/* ───── Helpers ───── */
-
-function FadeIn({
-  children,
-  delay = 0,
-  className = '',
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/* ───── Page ───── */
-
-export default function LandingPage() {
-  const t = useTranslations('landing');
-  const td = useTranslations('donate');
-  const [copied, setCopied] = useState(false);
-  const donateAddress = '5AxTtcGWCTrt9zL5Vy6JhGRhhuTe5ngS2dn3S8mYQt2G';
-
-  const copyAddress = async () => {
-    await navigator.clipboard.writeText(donateAddress);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+export default async function LandingPage() {
+  const t = await getTranslations('landing');
 
   const features = [
     {
@@ -152,11 +110,7 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="relative z-10 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
+          <HeroAnimation>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs text-muted mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-safe animate-pulse" />
               {t('badge')}
@@ -171,14 +125,9 @@ export default function LandingPage() {
             <p className="mt-6 text-lg sm:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
               {t('subtitle')}
             </p>
-          </motion.div>
+          </HeroAnimation>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
+          <HeroCTA className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/tokens"
               className="group flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#00ff88] to-[#00d4aa] text-black font-bold text-base hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] transition-all btn-press"
@@ -193,22 +142,17 @@ export default function LandingPage() {
               <Eye size={16} />
               {t('exploreTokens')}
             </Link>
-          </motion.div>
+          </HeroCTA>
 
           {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto"
-          >
+          <StatsAnimation className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {stats.map((s) => (
               <div key={s.label} className="text-center">
                 <div className="text-2xl sm:text-3xl font-bold font-mono text-foreground">{s.value}</div>
                 <div className="text-xs text-muted mt-1">{s.label}</div>
               </div>
             ))}
-          </motion.div>
+          </StatsAnimation>
         </div>
       </section>
 
@@ -342,44 +286,7 @@ export default function LandingPage() {
       </section>
 
       {/* Donate */}
-      <section className="relative z-10 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <FadeIn>
-            <div className="glass-card p-6 sm:p-8 bg-gradient-to-br from-safe/[0.04] to-accent/[0.04]">
-              <div className="flex flex-col sm:flex-row items-center gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-safe/10 flex items-center justify-center shrink-0">
-                  <Heart size={22} className="text-safe" />
-                </div>
-                <div className="text-center sm:text-left flex-1">
-                  <h3 className="text-lg font-semibold mb-1">{td('title')}</h3>
-                  <p className="text-sm text-muted">{td('desc')}</p>
-                </div>
-              </div>
-              <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <div className="flex-1 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 min-w-0">
-                  <span className="text-xs sm:text-sm font-mono text-muted truncate">{donateAddress}</span>
-                </div>
-                <button
-                  onClick={copyAddress}
-                  className="shrink-0 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-safe/10 text-safe text-sm font-semibold hover:bg-safe/20 transition-all btn-press"
-                >
-                  {copied ? (
-                    <>
-                      <Check size={15} />
-                      {td('copied')}
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={15} />
-                      SOL
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+      <DonateSection />
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-white/5 py-8">

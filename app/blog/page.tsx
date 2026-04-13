@@ -61,6 +61,9 @@ function CategoryIcon({ slug, size = 28 }: { slug?: string; size?: number }) {
 export const metadata = {
   title: 'Blog | TokenRadar',
   description: 'Solana token trading guides, safety tips, and ecosystem news from TokenRadar.',
+  alternates: {
+    canonical: '/blog',
+  },
 };
 
 export default async function BlogPage({

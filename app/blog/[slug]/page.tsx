@@ -59,12 +59,22 @@ export async function generateMetadata({
   return {
     title: `${title} | TokenRadar Blog`,
     description,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title,
       description,
+      url: `https://tokenradar.site/blog/${slug}`,
+      siteName: 'TokenRadar',
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.modified,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${title} | TokenRadar Blog`,
+      description,
     },
   };
 }
@@ -90,8 +100,30 @@ export default async function BlogPostPage({
     : { posts: [] };
   const relatedPosts = related.posts.filter((p) => p.id !== post.id).slice(0, 2);
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    datePublished: post.date,
+    dateModified: post.modified,
+    url: `https://tokenradar.site/blog/${slug}`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'TokenRadar',
+      url: 'https://tokenradar.site',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://tokenradar.site/blog/${slug}`,
+    },
+  };
+
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Navbar */}
       <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/60 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">

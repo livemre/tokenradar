@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   description:
     "Real-time token detection and safety analysis for Solana. Track new tokens from Pump.fun, Raydium, and Moonshot.",
   metadataBase: new URL("https://tokenradar.site"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "TokenRadar | Solana Token Radar",
     description: "Real-time token detection and safety analysis for Solana.",
@@ -41,6 +44,20 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "TokenRadar",
+  url: "https://tokenradar.site",
+  description:
+    "Real-time token detection and safety analysis for Solana. Track new tokens from Pump.fun, Raydium, and Moonshot.",
+  publisher: {
+    "@type": "Organization",
+    name: "TokenRadar",
+    url: "https://tokenradar.site",
+  },
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -55,6 +72,10 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
