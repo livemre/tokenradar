@@ -1,0 +1,269 @@
+{
+  "landing": {
+    "badge": "Live on Solana Mainnet",
+    "title1": "Solana Memecoin",
+    "title2": "Radar",
+    "subtitle": "Detect new tokens in real-time, analyze safety scores, and trade — all in one dashboard. Never miss a launch, never ape blindly.",
+    "openDashboard": "Open Dashboard",
+    "exploreTokens": "Explore Tokens",
+    "launchApp": "Launch App",
+    "stats": {
+      "speed": "Detection speed",
+      "monitoring": "Live monitoring",
+      "sources": "Sources tracked",
+      "noSignup": "No sign-up required"
+    },
+    "features": {
+      "heading": "Everything you need to <highlight>snipe safely</highlight>",
+      "subheading": "Built for degens who value speed and safety equally.",
+      "realtime": {
+        "title": "Real-time Detection",
+        "desc": "New tokens appear within seconds of creation. Live radar tracks every launch on Solana."
+      },
+      "safety": {
+        "title": "Safety Analysis",
+        "desc": "Every token is scored for rug-pull risk — mint authority, freeze authority, LP status, and more."
+      },
+      "charts": {
+        "title": "Live Charts & Swap",
+        "desc": "OHLCV charts via GeckoTerminal, one-click swap via Jupiter — all inside the dashboard."
+      },
+      "multiDex": {
+        "title": "Multi-DEX Coverage",
+        "desc": "Tracks Pump.fun, Raydium, and Moonshot simultaneously. Never miss a launch."
+      }
+    },
+    "sources": {
+      "heading": "Multi-DEX <highlight>coverage</highlight>",
+      "subheading": "Tracking the top Solana launch platforms simultaneously.",
+      "pumpfun": "Bonding curve launches",
+      "raydium": "AMM liquidity pools",
+      "moonshot": "Fair launch tokens"
+    },
+    "howItWorks": {
+      "heading": "How it <highlight>works</highlight>",
+      "detect": { "title": "Detect", "desc": "Our worker monitors Solana DEXes 24/7 and detects new tokens within seconds of creation." },
+      "analyze": { "title": "Analyze", "desc": "Each token is enriched with on-chain data — mint authority, LP status, holder count, and safety score." },
+      "act": { "title": "Act", "desc": "View charts, check safety, and swap directly through Jupiter — all from one place." }
+    },
+    "cta": {
+      "heading": "Ready to start <highlight>scanning</highlight>?",
+      "subheading": "No sign-up required. Open the dashboard and start tracking tokens instantly.",
+      "button": "Launch TokenRadar"
+    },
+    "footer": {
+      "tagline": "Solana Memecoin Radar",
+      "disclaimer": "Data provided as-is. DYOR. Not financial advice."
+    }
+  },
+  "header": {
+    "searchPlaceholder": "Search tokens...",
+    "launchApp": "Launch App"
+  },
+  "footer": {
+    "tagline": "Real-time memecoin detection and safety analysis for Solana.",
+    "resources": "Resources",
+    "explorers": "Explorers",
+    "branding": "TokenRadar — Solana Token Radar",
+    "disclaimer": "Data provided as-is. DYOR."
+  },
+  "donate": {
+    "title": "Support Us",
+    "desc": "TokenRadar is free to use. Help us keep it running by donating SOL.",
+    "copied": "Address copied!"
+  },
+  "stats": {
+    "rate": "Rate",
+    "totalTokens": "Total Tokens",
+    "safeRate": "Safe Rate",
+    "last5min": "Last 5 min"
+  },
+  "tokens": {
+    "title": "Token",
+    "titleHighlight": "Radar",
+    "subtitle": "Real-time memecoin detection across Solana",
+    "tracked": "tokens tracked",
+    "tabs": {
+      "live": "Live Radar",
+      "explore": "Explore",
+      "favorites": "Favorites"
+    }
+  },
+  "feed": {
+    "waiting": "Waiting for new tokens...",
+    "noLiveTokens": "No live tokens yet",
+    "analysisMessage": "Tokens need ~5 minutes to be analyzed. New ones will appear automatically.",
+    "showUnverified": "Show {count} unverified tokens",
+    "hideDead": "Hide dead",
+    "showHidden": "+{count} hidden",
+    "liveTokens": "{count} live tokens"
+  },
+  "explorer": {
+    "cardView": "Card view",
+    "tableView": "Table view",
+    "results": "{count} results",
+    "clearFilters": "Clear filters",
+    "noTokens": "No tokens found",
+    "adjustFilters": "Try adjusting your filters or search terms.",
+    "noDatabase": "No tokens in database yet.",
+    "clearAllFilters": "Clear all filters"
+  },
+  "tokenCard": {
+    "mcap": "MCap"
+  },
+  "detail": {
+    "backToRadar": "Back to Radar",
+    "tokenNotFound": "Token not found",
+    "tokenNotFoundDesc": "This token may not be tracked yet or the address is invalid.",
+    "tabs": {
+      "overview": "Overview",
+      "chart": "Chart",
+      "trade": "Trade",
+      "safety": "Safety"
+    },
+    "price": "Price",
+    "mcap": "MCap",
+    "stats": {
+      "marketCap": "Market Cap",
+      "price": "Price",
+      "liquidity": "Liquidity",
+      "volume24h": "Volume 24h",
+      "holders": "Holders"
+    },
+    "sidebar": {
+      "keyMetrics": "Key Metrics",
+      "safety": "Safety",
+      "info": "Info"
+    },
+    "safety": {
+      "mintAuthority": "Mint Authority",
+      "freezeAuthority": "Freeze Authority",
+      "top10Holders": "Top 10 Holders",
+      "unknown": "Unknown",
+      "enabled": "Enabled",
+      "revoked": "Revoked",
+      "rugStatus": "Rug Status",
+      "rugged": "RUGGED",
+      "notRugged": "Not Rugged",
+      "analysis": "Safety Analysis",
+      "riskDetails": "Risk Details"
+    },
+    "chart": {
+      "marketData": "Market Data",
+      "quickTrade": "Quick Trade",
+      "buyOnJupiter": "Buy on Jupiter"
+    },
+    "trade": {
+      "header": "Trade & Charts",
+      "quickSwap": "Quick Swap"
+    },
+    "info": {
+      "source": "Source",
+      "detected": "Detected",
+      "analyzed": "Analyzed"
+    }
+  },
+  "search": {
+    "placeholder": "Search by name, symbol, or address..."
+  },
+  "filters": {
+    "allSources": "All Sources",
+    "allSafety": "All Safety",
+    "safe": "Safe",
+    "warning": "Warning",
+    "danger": "Danger"
+  },
+  "swap": {
+    "buy": "Buy",
+    "sell": "Sell",
+    "youPay": "You pay",
+    "youReceive": "You receive",
+    "priceImpact": "Price Impact",
+    "route": "Route",
+    "direct": "Direct",
+    "slippage": "Slippage",
+    "connectWallet": "Connect Wallet",
+    "gettingQuote": "Getting quote...",
+    "swapping": "Swapping...",
+    "quoteFailed": "Failed to get quote. Token may not have liquidity.",
+    "swapSuccessful": "Swap successful!",
+    "viewTransaction": "View transaction"
+  },
+  "table": {
+    "token": "Token",
+    "source": "Source",
+    "price": "Price",
+    "mcap": "MCap",
+    "liquidity": "Liquidity",
+    "holders": "Holders",
+    "safety": "Safety",
+    "age": "Age"
+  },
+  "pagination": {
+    "tokensFound": "{count} tokens found"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "settings": "Settings",
+    "noNotifications": "No notifications",
+    "newAlerts": "New token alerts will appear here",
+    "unknown": "Unknown"
+  },
+  "preferences": {
+    "title": "Notification Settings",
+    "sound": {
+      "label": "Sound notifications",
+      "description": "Play a sound for new tokens"
+    },
+    "browser": {
+      "label": "Browser notifications",
+      "description": "Get notified when tab is inactive"
+    },
+    "safetyScore": {
+      "label": "Minimum Safety Score",
+      "description": "Only notify for tokens with this score or higher",
+      "all": "0 (All)"
+    },
+    "sources": {
+      "label": "Sources",
+      "description": "Which sources to get notifications for"
+    }
+  },
+  "status": {
+    "live": "LIVE",
+    "offline": "OFFLINE"
+  },
+  "priceChart": {
+    "loading": "Loading chart...",
+    "noData": "No chart data available",
+    "noDataDesc": "Price data will appear once trading begins",
+    "live": "LIVE"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "loginTitle": "Welcome back",
+    "signupTitle": "Create account",
+    "continueWithGoogle": "Continue with Google",
+    "orContinueWith": "or continue with email",
+    "email": "Email",
+    "password": "Password",
+    "displayName": "Display name",
+    "login": "Sign In",
+    "createAccount": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "checkEmail": "Check your email",
+    "confirmMessage": "We sent a confirmation link to your email. Please check your inbox and click the link to activate your account.",
+    "myFavorites": "My Favorites",
+    "signOut": "Sign Out"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "noFavoritesTitle": "No favorites yet",
+    "noFavoritesDesc": "Sign in to save your favorite tokens and track them easily.",
+    "noFavoritesDescLoggedIn": "Tap the heart icon on any token to add it to your favorites.",
+    "signInToSave": "Sign in to save favorites",
+    "count": "{count} favorites"
+  }
+}

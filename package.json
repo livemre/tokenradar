@@ -1,5 +1,5 @@
 {
-  "name": "solana-memescope",
+  "name": "tokenradar",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,24 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "@solana/wallet-adapter-react-ui": "^0.9.39",
+    "@solana/wallet-adapter-wallets": "^0.19.38",
+    "@solana/web3.js": "^1.98.4",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.103.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "framer-motion": "^12.38.0",
+    "lightweight-charts": "^5.1.0",
+    "lucide-react": "^1.8.0",
     "next": "16.2.3",
+    "next-intl": "^4.9.1",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "sonner": "^2.0.7",
+    "swr": "^2.4.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

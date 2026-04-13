@@ -1,0 +1,269 @@
+{
+  "landing": {
+    "badge": "Solana Mainnet'te Yayında",
+    "title1": "Solana Memecoin",
+    "title2": "Radar",
+    "subtitle": "Yeni tokenleri gerçek zamanlı tespit edin, güvenlik puanlarını analiz edin ve işlem yapın — hepsi tek bir panelde. Hiçbir lansman kaçırmayın, körü körüne yatırım yapmayın.",
+    "openDashboard": "Paneli Aç",
+    "exploreTokens": "Tokenleri Keşfet",
+    "launchApp": "Uygulamayı Başlat",
+    "stats": {
+      "speed": "Tespit hızı",
+      "monitoring": "Canlı izleme",
+      "sources": "Takip edilen kaynaklar",
+      "noSignup": "Kayıt gerekmez"
+    },
+    "features": {
+      "heading": "<highlight>Güvenli sniping</highlight> için ihtiyacınız olan her şey",
+      "subheading": "Hız ve güvenliğe eşit değer veren degenler için tasarlandı.",
+      "realtime": {
+        "title": "Gerçek Zamanlı Tespit",
+        "desc": "Yeni tokenler oluşturulduktan saniyeler içinde görünür. Canlı radar, Solana üzerindeki her lansmanı takip eder."
+      },
+      "safety": {
+        "title": "Güvenlik Analizi",
+        "desc": "Her token rug-pull riski açısından puanlanır — mint yetkisi, dondurma yetkisi, LP durumu ve daha fazlası."
+      },
+      "charts": {
+        "title": "Canlı Grafikler ve Takas",
+        "desc": "GeckoTerminal üzerinden OHLCV grafikleri, Jupiter üzerinden tek tıkla takas — hepsi panel içinde."
+      },
+      "multiDex": {
+        "title": "Çoklu DEX Kapsamı",
+        "desc": "Pump.fun, Raydium ve Moonshot'ı eş zamanlı takip eder. Hiçbir lansmanı kaçırmayın."
+      }
+    },
+    "sources": {
+      "heading": "Çoklu DEX <highlight>kapsamı</highlight>",
+      "subheading": "En iyi Solana lansman platformlarını eş zamanlı takip ediyor.",
+      "pumpfun": "Bonding curve lansmanları",
+      "raydium": "AMM likidite havuzları",
+      "moonshot": "Adil lansman tokenleri"
+    },
+    "howItWorks": {
+      "heading": "Nasıl <highlight>çalışır</highlight>",
+      "detect": { "title": "Tespit Et", "desc": "Worker'ımız Solana DEX'lerini 7/24 izler ve yeni tokenleri oluşturulduktan saniyeler içinde tespit eder." },
+      "analyze": { "title": "Analiz Et", "desc": "Her token zincir üstü verilerle zenginleştirilir — mint yetkisi, LP durumu, holder sayısı ve güvenlik puanı." },
+      "act": { "title": "Harekete Geç", "desc": "Grafikleri görüntüleyin, güvenliği kontrol edin ve doğrudan Jupiter üzerinden takas yapın — hepsi tek bir yerden." }
+    },
+    "cta": {
+      "heading": "<highlight>Taramaya</highlight> başlamaya hazır mısınız?",
+      "subheading": "Kayıt gerekmez. Paneli açın ve tokenleri anında takip etmeye başlayın.",
+      "button": "TokenRadar'ı Başlat"
+    },
+    "footer": {
+      "tagline": "Solana Memecoin Radarı",
+      "disclaimer": "Veriler olduğu gibi sunulmaktadır. Kendi araştırmanızı yapın. Finansal tavsiye değildir."
+    }
+  },
+  "header": {
+    "searchPlaceholder": "Token ara...",
+    "launchApp": "Uygulamayı Başlat"
+  },
+  "footer": {
+    "tagline": "Solana için gerçek zamanlı memecoin tespiti ve güvenlik analizi.",
+    "resources": "Kaynaklar",
+    "explorers": "Gezginler",
+    "branding": "TokenRadar — Solana Token Radarı",
+    "disclaimer": "Veriler olduğu gibi sunulmaktadır. Kendi araştırmanızı yapın."
+  },
+  "donate": {
+    "title": "Bizi Destekleyin",
+    "desc": "TokenRadar ücretsiz bir hizmettir. Hizmetimizin devam etmesi için SOL bağışlayarak destek olun.",
+    "copied": "Adres kopyalandı!"
+  },
+  "stats": {
+    "rate": "Oran",
+    "totalTokens": "Toplam Token",
+    "safeRate": "Güvenli Oranı",
+    "last5min": "Son 5 dk"
+  },
+  "tokens": {
+    "title": "Token",
+    "titleHighlight": "Radar",
+    "subtitle": "Solana genelinde gerçek zamanlı memecoin tespiti",
+    "tracked": "takip edilen token",
+    "tabs": {
+      "live": "Canlı Radar",
+      "explore": "Keşfet",
+      "favorites": "Favoriler"
+    }
+  },
+  "feed": {
+    "waiting": "Yeni tokenler bekleniyor...",
+    "noLiveTokens": "Henüz canlı token yok",
+    "analysisMessage": "Tokenlerin analiz edilmesi yaklaşık 5 dakika sürer. Yenileri otomatik olarak görünecektir.",
+    "showUnverified": "{count} doğrulanmamış tokeni göster",
+    "hideDead": "Ölüleri gizle",
+    "showHidden": "+{count} gizli",
+    "liveTokens": "{count} canlı token"
+  },
+  "explorer": {
+    "cardView": "Kart görünümü",
+    "tableView": "Tablo görünümü",
+    "results": "{count} sonuç",
+    "clearFilters": "Filtreleri temizle",
+    "noTokens": "Token bulunamadı",
+    "adjustFilters": "Filtrelerinizi veya arama terimlerinizi ayarlamayı deneyin.",
+    "noDatabase": "Veritabanında henüz token yok.",
+    "clearAllFilters": "Tüm filtreleri temizle"
+  },
+  "tokenCard": {
+    "mcap": "P.Değeri"
+  },
+  "detail": {
+    "backToRadar": "Radara Dön",
+    "tokenNotFound": "Token bulunamadı",
+    "tokenNotFoundDesc": "Bu token henüz takip edilmiyor olabilir veya adres geçersiz.",
+    "tabs": {
+      "overview": "Genel Bakış",
+      "chart": "Grafik",
+      "trade": "İşlem",
+      "safety": "Güvenlik"
+    },
+    "price": "Fiyat",
+    "mcap": "P.Değeri",
+    "stats": {
+      "marketCap": "Piyasa Değeri",
+      "price": "Fiyat",
+      "liquidity": "Likidite",
+      "volume24h": "24s Hacim",
+      "holders": "Holderlar"
+    },
+    "sidebar": {
+      "keyMetrics": "Temel Metrikler",
+      "safety": "Güvenlik",
+      "info": "Bilgi"
+    },
+    "safety": {
+      "mintAuthority": "Mint Yetkisi",
+      "freezeAuthority": "Dondurma Yetkisi",
+      "top10Holders": "İlk 10 Holder",
+      "unknown": "Bilinmiyor",
+      "enabled": "Etkin",
+      "revoked": "İptal Edildi",
+      "rugStatus": "Rug Durumu",
+      "rugged": "RUG ÇEKİLMİŞ",
+      "notRugged": "Rug Çekilmemiş",
+      "analysis": "Güvenlik Analizi",
+      "riskDetails": "Risk Detayları"
+    },
+    "chart": {
+      "marketData": "Piyasa Verileri",
+      "quickTrade": "Hızlı İşlem",
+      "buyOnJupiter": "Jupiter'da Al"
+    },
+    "trade": {
+      "header": "İşlem ve Grafikler",
+      "quickSwap": "Hızlı Takas"
+    },
+    "info": {
+      "source": "Kaynak",
+      "detected": "Tespit Edildi",
+      "analyzed": "Analiz Edildi"
+    }
+  },
+  "search": {
+    "placeholder": "Ad, sembol veya adres ile ara..."
+  },
+  "filters": {
+    "allSources": "Tüm Kaynaklar",
+    "allSafety": "Tüm Güvenlik",
+    "safe": "Güvenli",
+    "warning": "Uyarı",
+    "danger": "Tehlike"
+  },
+  "swap": {
+    "buy": "Al",
+    "sell": "Sat",
+    "youPay": "Ödediğiniz",
+    "youReceive": "Aldığınız",
+    "priceImpact": "Fiyat Etkisi",
+    "route": "Rota",
+    "direct": "Doğrudan",
+    "slippage": "Kayma",
+    "connectWallet": "Cüzdanı Bağla",
+    "gettingQuote": "Fiyat alınıyor...",
+    "swapping": "Takas yapılıyor...",
+    "quoteFailed": "Fiyat alınamadı. Tokenin likiditesi olmayabilir.",
+    "swapSuccessful": "Takas başarılı!",
+    "viewTransaction": "İşlemi görüntüle"
+  },
+  "table": {
+    "token": "Token",
+    "source": "Kaynak",
+    "price": "Fiyat",
+    "mcap": "P.Değeri",
+    "liquidity": "Likidite",
+    "holders": "Holderlar",
+    "safety": "Güvenlik",
+    "age": "Yaş"
+  },
+  "pagination": {
+    "tokensFound": "{count} token bulundu"
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "markAllRead": "Tümünü okundu işaretle",
+    "settings": "Ayarlar",
+    "noNotifications": "Bildirim yok",
+    "newAlerts": "Yeni token uyarıları burada görünecek",
+    "unknown": "Bilinmiyor"
+  },
+  "preferences": {
+    "title": "Bildirim Ayarları",
+    "sound": {
+      "label": "Sesli bildirimler",
+      "description": "Yeni tokenler için ses çal"
+    },
+    "browser": {
+      "label": "Tarayıcı bildirimleri",
+      "description": "Sekme aktif değilken bildirim al"
+    },
+    "safetyScore": {
+      "label": "Minimum Güvenlik Puanı",
+      "description": "Yalnızca bu puan veya üzerindeki tokenler için bildir",
+      "all": "0 (Tümü)"
+    },
+    "sources": {
+      "label": "Kaynaklar",
+      "description": "Hangi kaynaklardan bildirim alınacağı"
+    }
+  },
+  "status": {
+    "live": "CANLI",
+    "offline": "ÇEVRİMDIŞI"
+  },
+  "priceChart": {
+    "loading": "Grafik yükleniyor...",
+    "noData": "Grafik verisi mevcut değil",
+    "noDataDesc": "İşlem başladığında fiyat verileri görünecektir",
+    "live": "CANLI"
+  },
+  "auth": {
+    "signIn": "Giriş Yap",
+    "loginTitle": "Tekrar hoş geldiniz",
+    "signupTitle": "Hesap oluştur",
+    "continueWithGoogle": "Google ile devam et",
+    "orContinueWith": "veya e-posta ile devam et",
+    "email": "E-posta",
+    "password": "Şifre",
+    "displayName": "Görünen ad",
+    "login": "Giriş Yap",
+    "createAccount": "Hesap Oluştur",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "checkEmail": "E-postanızı kontrol edin",
+    "confirmMessage": "E-postanıza bir onay bağlantısı gönderdik. Lütfen gelen kutunuzu kontrol edin ve hesabınızı etkinleştirmek için bağlantıya tıklayın.",
+    "myFavorites": "Favorilerim",
+    "signOut": "Çıkış Yap"
+  },
+  "favorites": {
+    "title": "Favoriler",
+    "noFavoritesTitle": "Henüz favori yok",
+    "noFavoritesDesc": "Favori tokenlerinizi kaydetmek ve kolayca takip etmek için giriş yapın.",
+    "noFavoritesDescLoggedIn": "Favorilere eklemek için herhangi bir tokenin kalp ikonuna dokunun.",
+    "signInToSave": "Favorileri kaydetmek için giriş yapın",
+    "count": "{count} favori"
+  }
+}

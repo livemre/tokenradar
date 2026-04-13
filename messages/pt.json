@@ -1,0 +1,269 @@
+{
+  "landing": {
+    "badge": "Ao vivo na Solana Mainnet",
+    "title1": "Solana Memecoin",
+    "title2": "Radar",
+    "subtitle": "Detecte novos tokens em tempo real, analise pontuacoes de seguranca e negocie — tudo em um unico painel. Nunca perca um lancamento, nunca entre cegamente.",
+    "openDashboard": "Abrir Painel",
+    "exploreTokens": "Explorar Tokens",
+    "launchApp": "Abrir App",
+    "stats": {
+      "speed": "Velocidade de deteccao",
+      "monitoring": "Monitoramento ao vivo",
+      "sources": "Fontes rastreadas",
+      "noSignup": "Sem necessidade de cadastro"
+    },
+    "features": {
+      "heading": "Tudo que voce precisa para <highlight>snipar com seguranca</highlight>",
+      "subheading": "Feito para degens que valorizam velocidade e seguranca igualmente.",
+      "realtime": {
+        "title": "Deteccao em Tempo Real",
+        "desc": "Novos tokens aparecem em segundos apos a criacao. O radar ao vivo rastreia cada lancamento na Solana."
+      },
+      "safety": {
+        "title": "Analise de Seguranca",
+        "desc": "Cada token recebe uma pontuacao de risco de rug-pull — autoridade de mint, autoridade de congelamento, status de LP e mais."
+      },
+      "charts": {
+        "title": "Graficos ao Vivo e Swap",
+        "desc": "Graficos OHLCV via GeckoTerminal, swap com um clique via Jupiter — tudo dentro do painel."
+      },
+      "multiDex": {
+        "title": "Cobertura Multi-DEX",
+        "desc": "Rastreia Pump.fun, Raydium e Moonshot simultaneamente. Nunca perca um lancamento."
+      }
+    },
+    "sources": {
+      "heading": "<highlight>Cobertura</highlight> Multi-DEX",
+      "subheading": "Rastreando as principais plataformas de lancamento da Solana simultaneamente.",
+      "pumpfun": "Lancamentos de curva de bonding",
+      "raydium": "Pools de liquidez AMM",
+      "moonshot": "Tokens de lancamento justo"
+    },
+    "howItWorks": {
+      "heading": "Como <highlight>funciona</highlight>",
+      "detect": { "title": "Detectar", "desc": "Nosso worker monitora as DEXes da Solana 24/7 e detecta novos tokens em segundos apos a criacao." },
+      "analyze": { "title": "Analisar", "desc": "Cada token e enriquecido com dados on-chain — autoridade de mint, status de LP, numero de holders e pontuacao de seguranca." },
+      "act": { "title": "Agir", "desc": "Veja graficos, verifique a seguranca e faca swap diretamente pelo Jupiter — tudo em um so lugar." }
+    },
+    "cta": {
+      "heading": "Pronto para comecar a <highlight>escanear</highlight>?",
+      "subheading": "Sem necessidade de cadastro. Abra o painel e comece a rastrear tokens instantaneamente.",
+      "button": "Abrir TokenRadar"
+    },
+    "footer": {
+      "tagline": "Solana Memecoin Radar",
+      "disclaimer": "Dados fornecidos como estao. Faca sua propria pesquisa. Nao e aconselhamento financeiro."
+    }
+  },
+  "header": {
+    "searchPlaceholder": "Buscar tokens...",
+    "launchApp": "Abrir App"
+  },
+  "footer": {
+    "tagline": "Deteccao de memecoins em tempo real e analise de seguranca para Solana.",
+    "resources": "Recursos",
+    "explorers": "Exploradores",
+    "branding": "TokenRadar — Solana Token Radar",
+    "disclaimer": "Dados fornecidos como estao. Faca sua propria pesquisa."
+  },
+  "donate": {
+    "title": "Apoie-nos",
+    "desc": "TokenRadar e gratuito. Ajude-nos a mante-lo funcionando doando SOL.",
+    "copied": "Endereco copiado!"
+  },
+  "stats": {
+    "rate": "Taxa",
+    "totalTokens": "Total de Tokens",
+    "safeRate": "Taxa de Seguranca",
+    "last5min": "Ultimos 5 min"
+  },
+  "tokens": {
+    "title": "Token",
+    "titleHighlight": "Radar",
+    "subtitle": "Deteccao de memecoins em tempo real na Solana",
+    "tracked": "tokens rastreados",
+    "tabs": {
+      "live": "Radar ao Vivo",
+      "explore": "Explorar",
+      "favorites": "Favoritos"
+    }
+  },
+  "feed": {
+    "waiting": "Aguardando novos tokens...",
+    "noLiveTokens": "Nenhum token ao vivo ainda",
+    "analysisMessage": "Tokens precisam de ~5 minutos para serem analisados. Novos aparecerao automaticamente.",
+    "showUnverified": "Mostrar {count} tokens nao verificados",
+    "hideDead": "Ocultar inativos",
+    "showHidden": "+{count} ocultos",
+    "liveTokens": "{count} tokens ao vivo"
+  },
+  "explorer": {
+    "cardView": "Visualizacao em cards",
+    "tableView": "Visualizacao em tabela",
+    "results": "{count} resultados",
+    "clearFilters": "Limpar filtros",
+    "noTokens": "Nenhum token encontrado",
+    "adjustFilters": "Tente ajustar seus filtros ou termos de busca.",
+    "noDatabase": "Nenhum token no banco de dados ainda.",
+    "clearAllFilters": "Limpar todos os filtros"
+  },
+  "tokenCard": {
+    "mcap": "MCap"
+  },
+  "detail": {
+    "backToRadar": "Voltar ao Radar",
+    "tokenNotFound": "Token nao encontrado",
+    "tokenNotFoundDesc": "Este token pode ainda nao estar sendo rastreado ou o endereco e invalido.",
+    "tabs": {
+      "overview": "Visao Geral",
+      "chart": "Grafico",
+      "trade": "Negociar",
+      "safety": "Seguranca"
+    },
+    "price": "Preco",
+    "mcap": "MCap",
+    "stats": {
+      "marketCap": "Cap. de Mercado",
+      "price": "Preco",
+      "liquidity": "Liquidez",
+      "volume24h": "Volume 24h",
+      "holders": "Holders"
+    },
+    "sidebar": {
+      "keyMetrics": "Metricas Principais",
+      "safety": "Seguranca",
+      "info": "Info"
+    },
+    "safety": {
+      "mintAuthority": "Autoridade de Mint",
+      "freezeAuthority": "Autoridade de Congelamento",
+      "top10Holders": "Top 10 Holders",
+      "unknown": "Desconhecido",
+      "enabled": "Ativado",
+      "revoked": "Revogado",
+      "rugStatus": "Status de Rug",
+      "rugged": "RUGGED",
+      "notRugged": "Nao Rugged",
+      "analysis": "Analise de Seguranca",
+      "riskDetails": "Detalhes de Risco"
+    },
+    "chart": {
+      "marketData": "Dados de Mercado",
+      "quickTrade": "Negociacao Rapida",
+      "buyOnJupiter": "Comprar no Jupiter"
+    },
+    "trade": {
+      "header": "Negociacao e Graficos",
+      "quickSwap": "Swap Rapido"
+    },
+    "info": {
+      "source": "Fonte",
+      "detected": "Detectado",
+      "analyzed": "Analisado"
+    }
+  },
+  "search": {
+    "placeholder": "Buscar por nome, simbolo ou endereco..."
+  },
+  "filters": {
+    "allSources": "Todas as Fontes",
+    "allSafety": "Toda Seguranca",
+    "safe": "Seguro",
+    "warning": "Alerta",
+    "danger": "Perigo"
+  },
+  "swap": {
+    "buy": "Comprar",
+    "sell": "Vender",
+    "youPay": "Voce paga",
+    "youReceive": "Voce recebe",
+    "priceImpact": "Impacto no Preco",
+    "route": "Rota",
+    "direct": "Direta",
+    "slippage": "Slippage",
+    "connectWallet": "Conectar Carteira",
+    "gettingQuote": "Obtendo cotacao...",
+    "swapping": "Trocando...",
+    "quoteFailed": "Falha ao obter cotacao. O token pode nao ter liquidez.",
+    "swapSuccessful": "Swap realizado com sucesso!",
+    "viewTransaction": "Ver transacao"
+  },
+  "table": {
+    "token": "Token",
+    "source": "Fonte",
+    "price": "Preco",
+    "mcap": "MCap",
+    "liquidity": "Liquidez",
+    "holders": "Holders",
+    "safety": "Seguranca",
+    "age": "Idade"
+  },
+  "pagination": {
+    "tokensFound": "{count} tokens encontrados"
+  },
+  "notifications": {
+    "title": "Notificacoes",
+    "markAllRead": "Marcar todas como lidas",
+    "settings": "Configuracoes",
+    "noNotifications": "Sem notificacoes",
+    "newAlerts": "Alertas de novos tokens aparecerao aqui",
+    "unknown": "Desconhecido"
+  },
+  "preferences": {
+    "title": "Configuracoes de Notificacao",
+    "sound": {
+      "label": "Notificacoes sonoras",
+      "description": "Reproduzir um som para novos tokens"
+    },
+    "browser": {
+      "label": "Notificacoes do navegador",
+      "description": "Ser notificado quando a aba estiver inativa"
+    },
+    "safetyScore": {
+      "label": "Pontuacao Minima de Seguranca",
+      "description": "Notificar apenas para tokens com essa pontuacao ou superior",
+      "all": "0 (Todos)"
+    },
+    "sources": {
+      "label": "Fontes",
+      "description": "De quais fontes receber notificacoes"
+    }
+  },
+  "status": {
+    "live": "AO VIVO",
+    "offline": "OFFLINE"
+  },
+  "priceChart": {
+    "loading": "Carregando grafico...",
+    "noData": "Nenhum dado de grafico disponivel",
+    "noDataDesc": "Os dados de preco aparecerao quando a negociacao comecar",
+    "live": "AO VIVO"
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "loginTitle": "Bem-vindo de volta",
+    "signupTitle": "Criar conta",
+    "continueWithGoogle": "Continuar com Google",
+    "orContinueWith": "ou continuar com email",
+    "email": "Email",
+    "password": "Senha",
+    "displayName": "Nome de exibicao",
+    "login": "Entrar",
+    "createAccount": "Criar conta",
+    "noAccount": "Nao tem uma conta?",
+    "hasAccount": "Ja tem uma conta?",
+    "checkEmail": "Verifique seu email",
+    "confirmMessage": "Enviamos um link de confirmacao para seu email. Por favor, verifique sua caixa de entrada e clique no link para ativar sua conta.",
+    "myFavorites": "Meus Favoritos",
+    "signOut": "Sair"
+  },
+  "favorites": {
+    "title": "Favoritos",
+    "noFavoritesTitle": "Sem favoritos ainda",
+    "noFavoritesDesc": "Entre para salvar seus tokens favoritos e rastrealos facilmente.",
+    "noFavoritesDescLoggedIn": "Toque no icone de coracao em qualquer token para adicionalo aos seus favoritos.",
+    "signInToSave": "Entre para salvar favoritos",
+    "count": "{count} favoritos"
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "landing": {
+    "badge": "Solana メインネットで稼働中",
+    "title1": "Solana ミームコイン",
+    "title2": "Radar",
+    "subtitle": "新しいトークンをリアルタイムで検出し、安全スコアを分析し、取引まで — すべてひとつのダッシュボードで。ローンチを見逃さない、盲目的なapeはしない。",
+    "openDashboard": "ダッシュボードを開く",
+    "exploreTokens": "トークンを探索",
+    "launchApp": "アプリを起動",
+    "stats": {
+      "speed": "検出速度",
+      "monitoring": "リアルタイム監視",
+      "sources": "追跡ソース",
+      "noSignup": "登録不要"
+    },
+    "features": {
+      "heading": "安全に<highlight>スナイプ</highlight>するために必要なすべて",
+      "subheading": "スピードと安全性を同等に重視するdegen向けに構築。",
+      "realtime": {
+        "title": "リアルタイム検出",
+        "desc": "新しいトークンが作成から数秒以内に表示されます。ライブレーダーがSolana上のすべてのローンチを追跡します。"
+      },
+      "safety": {
+        "title": "安全性分析",
+        "desc": "すべてのトークンがrug-pullリスクでスコアリングされます — ミント権限、フリーズ権限、LP状態など。"
+      },
+      "charts": {
+        "title": "ライブチャート & スワップ",
+        "desc": "GeckoTerminal経由のOHLCVチャート、Jupiter経由のワンクリックスワップ — すべてダッシュボード内で。"
+      },
+      "multiDex": {
+        "title": "マルチDEX対応",
+        "desc": "Pump.fun、Raydium、Moonshotを同時に追跡。ローンチを見逃しません。"
+      }
+    },
+    "sources": {
+      "heading": "マルチDEX <highlight>カバレッジ</highlight>",
+      "subheading": "主要なSolanaローンチプラットフォームを同時に追跡。",
+      "pumpfun": "ボンディングカーブローンチ",
+      "raydium": "AMM流動性プール",
+      "moonshot": "フェアローンチトークン"
+    },
+    "howItWorks": {
+      "heading": "仕組み<highlight>について</highlight>",
+      "detect": { "title": "検出", "desc": "ワーカーがSolana DEXを24時間365日監視し、新しいトークンを作成から数秒以内に検出します。" },
+      "analyze": { "title": "分析", "desc": "各トークンにオンチェーンデータを付加します — ミント権限、LP状態、ホルダー数、安全スコア。" },
+      "act": { "title": "行動", "desc": "チャートを確認し、安全性をチェックし、Jupiterを通じて直接スワップ — すべてひとつの場所から。" }
+    },
+    "cta": {
+      "heading": "<highlight>スキャン</highlight>を始める準備はできましたか？",
+      "subheading": "登録不要。ダッシュボードを開いて、すぐにトークンの追跡を始めましょう。",
+      "button": "TokenRadar を起動"
+    },
+    "footer": {
+      "tagline": "Solana ミームコインレーダー",
+      "disclaimer": "データは現状のまま提供されます。DYOR。投資助言ではありません。"
+    }
+  },
+  "header": {
+    "searchPlaceholder": "トークンを検索...",
+    "launchApp": "アプリを起動"
+  },
+  "footer": {
+    "tagline": "Solana向けリアルタイムミームコイン検出と安全性分析。",
+    "resources": "リソース",
+    "explorers": "エクスプローラー",
+    "branding": "TokenRadar — Solana Token Radar",
+    "disclaimer": "データは現状のまま提供されます。DYOR。"
+  },
+  "donate": {
+    "title": "サポートする",
+    "desc": "TokenRadarは無料でご利用いただけます。SOLの寄付で運営をサポートしてください。",
+    "copied": "アドレスをコピーしました！"
+  },
+  "stats": {
+    "rate": "レート",
+    "totalTokens": "トークン総数",
+    "safeRate": "安全率",
+    "last5min": "直近5分"
+  },
+  "tokens": {
+    "title": "トークン",
+    "titleHighlight": "Radar",
+    "subtitle": "Solana全体のリアルタイムミームコイン検出",
+    "tracked": "トークン追跡中",
+    "tabs": {
+      "live": "ライブレーダー",
+      "explore": "探索",
+      "favorites": "お気に入り"
+    }
+  },
+  "feed": {
+    "waiting": "新しいトークンを待機中...",
+    "noLiveTokens": "まだライブトークンがありません",
+    "analysisMessage": "トークンの分析には約5分かかります。新しいトークンは自動的に表示されます。",
+    "showUnverified": "未検証トークン {count} 件を表示",
+    "hideDead": "無効を非表示",
+    "showHidden": "+{count} 件非表示",
+    "liveTokens": "ライブトークン {count} 件"
+  },
+  "explorer": {
+    "cardView": "カード表示",
+    "tableView": "テーブル表示",
+    "results": "{count} 件の結果",
+    "clearFilters": "フィルターをクリア",
+    "noTokens": "トークンが見つかりません",
+    "adjustFilters": "フィルターや検索条件を調整してみてください。",
+    "noDatabase": "データベースにトークンがまだありません。",
+    "clearAllFilters": "すべてのフィルターをクリア"
+  },
+  "tokenCard": {
+    "mcap": "時価総額"
+  },
+  "detail": {
+    "backToRadar": "レーダーに戻る",
+    "tokenNotFound": "トークンが見つかりません",
+    "tokenNotFoundDesc": "このトークンはまだ追跡されていないか、アドレスが無効な可能性があります。",
+    "tabs": {
+      "overview": "概要",
+      "chart": "チャート",
+      "trade": "取引",
+      "safety": "安全性"
+    },
+    "price": "価格",
+    "mcap": "時価総額",
+    "stats": {
+      "marketCap": "時価総額",
+      "price": "価格",
+      "liquidity": "流動性",
+      "volume24h": "24時間取引量",
+      "holders": "ホルダー"
+    },
+    "sidebar": {
+      "keyMetrics": "主要指標",
+      "safety": "安全性",
+      "info": "情報"
+    },
+    "safety": {
+      "mintAuthority": "ミント権限",
+      "freezeAuthority": "フリーズ権限",
+      "top10Holders": "上位10ホルダー",
+      "unknown": "不明",
+      "enabled": "有効",
+      "revoked": "無効化済み",
+      "rugStatus": "ラグ状態",
+      "rugged": "ラグ済み",
+      "notRugged": "ラグなし",
+      "analysis": "安全性分析",
+      "riskDetails": "リスク詳細"
+    },
+    "chart": {
+      "marketData": "マーケットデータ",
+      "quickTrade": "クイックトレード",
+      "buyOnJupiter": "Jupiterで購入"
+    },
+    "trade": {
+      "header": "取引 & チャート",
+      "quickSwap": "クイックスワップ"
+    },
+    "info": {
+      "source": "ソース",
+      "detected": "検出日時",
+      "analyzed": "分析日時"
+    }
+  },
+  "search": {
+    "placeholder": "名前、シンボル、またはアドレスで検索..."
+  },
+  "filters": {
+    "allSources": "すべてのソース",
+    "allSafety": "すべての安全レベル",
+    "safe": "安全",
+    "warning": "警告",
+    "danger": "危険"
+  },
+  "swap": {
+    "buy": "購入",
+    "sell": "売却",
+    "youPay": "支払い額",
+    "youReceive": "受取額",
+    "priceImpact": "価格影響",
+    "route": "ルート",
+    "direct": "直接",
+    "slippage": "スリッページ",
+    "connectWallet": "ウォレットを接続",
+    "gettingQuote": "見積もり取得中...",
+    "swapping": "スワップ中...",
+    "quoteFailed": "見積もりの取得に失敗しました。トークンに流動性がない可能性があります。",
+    "swapSuccessful": "スワップ成功！",
+    "viewTransaction": "トランザクションを表示"
+  },
+  "table": {
+    "token": "トークン",
+    "source": "ソース",
+    "price": "価格",
+    "mcap": "時価総額",
+    "liquidity": "流動性",
+    "holders": "ホルダー",
+    "safety": "安全性",
+    "age": "経過時間"
+  },
+  "pagination": {
+    "tokensFound": "{count} 件のトークンが見つかりました"
+  },
+  "notifications": {
+    "title": "通知",
+    "markAllRead": "すべて既読にする",
+    "settings": "設定",
+    "noNotifications": "通知はありません",
+    "newAlerts": "新しいトークンのアラートがここに表示されます",
+    "unknown": "不明"
+  },
+  "preferences": {
+    "title": "通知設定",
+    "sound": {
+      "label": "サウンド通知",
+      "description": "新しいトークンの通知音を再生"
+    },
+    "browser": {
+      "label": "ブラウザ通知",
+      "description": "タブが非アクティブの時に通知を受け取る"
+    },
+    "safetyScore": {
+      "label": "最低安全スコア",
+      "description": "このスコア以上のトークンのみ通知",
+      "all": "0（すべて）"
+    },
+    "sources": {
+      "label": "ソース",
+      "description": "通知を受け取るソースを選択"
+    }
+  },
+  "status": {
+    "live": "ライブ",
+    "offline": "オフライン"
+  },
+  "priceChart": {
+    "loading": "チャート読み込み中...",
+    "noData": "チャートデータがありません",
+    "noDataDesc": "取引が開始されると価格データが表示されます",
+    "live": "ライブ"
+  },
+  "auth": {
+    "signIn": "ログイン",
+    "loginTitle": "おかえりなさい",
+    "signupTitle": "アカウント作成",
+    "continueWithGoogle": "Googleで続行",
+    "orContinueWith": "またはメールで続行",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "displayName": "表示名",
+    "login": "ログイン",
+    "createAccount": "アカウント作成",
+    "noAccount": "アカウントをお持ちでない方",
+    "hasAccount": "すでにアカウントをお持ちの方",
+    "checkEmail": "メールを確認してください",
+    "confirmMessage": "確認リンクをメールで送信しました。受信トレイを確認し、リンクをクリックしてアカウントを有効化してください。",
+    "myFavorites": "お気に入り",
+    "signOut": "ログアウト"
+  },
+  "favorites": {
+    "title": "お気に入り",
+    "noFavoritesTitle": "お気に入りはまだありません",
+    "noFavoritesDesc": "ログインしてお気に入りのトークンを保存し、簡単に追跡しましょう。",
+    "noFavoritesDescLoggedIn": "トークンのハートアイコンをタップしてお気に入りに追加してください。",
+    "signInToSave": "ログインしてお気に入りを保存",
+    "count": "お気に入り {count} 件"
+  }
+}

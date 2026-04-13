@@ -1,0 +1,148 @@
+'use client';
+
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
+import type { Token, TokenSource } from '@/lib/types/token';
+import { playNotificationSound } from '@/lib/utils/sound';
+
+export interface Notification {
+  id: string;
+  token: Token;
+  timestamp: number;
+  read: boolean;
+}
+
+export interface NotificationPreferences {
+  soundEnabled: boolean;
+  browserNotificationsEnabled: boolean;
+  minSafetyScore: number;
+  sources: TokenSource[];
+}
+
+const DEFAULT_PREFERENCES: NotificationPreferences = {
+  soundEnabled: true,
+  browserNotificationsEnabled: false,
+  minSafetyScore: 0,
+  sources: ['pumpfun', 'raydium', 'moonshot'],
+};
+
+const STORAGE_KEY = 'tokenradar-notification-prefs';
+const MAX_NOTIFICATIONS = 50;
+
+interface NotificationContextValue {
+  notifications: Notification[];
+  unreadCount: number;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  preferences: NotificationPreferences;
+  addNotification: (token: Token) => void;
+  markAllRead: () => void;
+  updatePreferences: (updates: Partial<NotificationPreferences>) => void;
+  requestBrowserPermission: () => Promise<void>;
+}
+
+const NotificationContext = createContext<NotificationContextValue | null>(null);
+
+function loadPreferences(): NotificationPreferences {
+  if (typeof window === 'undefined') return DEFAULT_PREFERENCES;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) };
+  } catch {}
+  return DEFAULT_PREFERENCES;
+}
+
+function savePreferences(prefs: NotificationPreferences) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+  } catch {}
+}
+
+function sendBrowserNotification(token: Token) {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(`New Token: $${token.symbol || 'Unknown'}`, {
+      body: `Source: ${token.source} | Score: ${token.safety_score ?? 'Pending'}`,
+      icon: token.image_url || undefined,
+    });
+  }
+}
+
+export function NotificationProvider({ children }: { children: ReactNode }) {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [preferences, setPreferences] = useState<NotificationPreferences>(DEFAULT_PREFERENCES);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setPreferences(loadPreferences());
+  }, []);
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const addNotification = useCallback(
+    (token: Token) => {
+      // Filter based on preferences
+      if (!preferences.sources.includes(token.source)) return;
+      if (token.safety_score !== null && token.safety_score < preferences.minSafetyScore) return;
+
+      const notification: Notification = {
+        id: `${token.mint}-${Date.now()}`,
+        token,
+        timestamp: Date.now(),
+        read: false,
+      };
+
+      setNotifications((prev) => [notification, ...prev].slice(0, MAX_NOTIFICATIONS));
+
+      if (preferences.soundEnabled) {
+        playNotificationSound();
+      }
+
+      if (preferences.browserNotificationsEnabled && document.hidden) {
+        sendBrowserNotification(token);
+      }
+    },
+    [preferences]
+  );
+
+  const markAllRead = useCallback(() => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  }, []);
+
+  const updatePreferences = useCallback((updates: Partial<NotificationPreferences>) => {
+    setPreferences((prev) => {
+      const next = { ...prev, ...updates };
+      savePreferences(next);
+      return next;
+    });
+  }, []);
+
+  const requestBrowserPermission = useCallback(async () => {
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      updatePreferences({ browserNotificationsEnabled: permission === 'granted' });
+    }
+  }, [updatePreferences]);
+
+  return (
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        unreadCount,
+        isOpen,
+        setIsOpen,
+        preferences,
+        addNotification,
+        markAllRead,
+        updatePreferences,
+        requestBrowserPermission,
+      }}
+    >
+      {children}
+    </NotificationContext.Provider>
+  );
+}
+
+export function useNotificationContext() {
+  const ctx = useContext(NotificationContext);
+  if (!ctx) throw new Error('useNotificationContext must be used within NotificationProvider');
+  return ctx;
+}
