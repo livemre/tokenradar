@@ -6,6 +6,10 @@ export interface DexScreenerTokenInfo {
   name: string | null;
   symbol: string | null;
   holderCount: number | null;
+  priceUsd: number | null;
+  marketCapUsd: number | null;
+  liquidityUsd: number | null;
+  volume24hUsd: number | null;
 }
 
 export async function fetchDexScreenerInfo(mint: string): Promise<DexScreenerTokenInfo | null> {
@@ -32,11 +36,20 @@ export async function fetchDexScreenerInfo(mint: string): Promise<DexScreenerTok
     const info = pair.info as Record<string, unknown> | undefined;
     const baseToken = pair.baseToken as Record<string, string> | undefined;
 
+    const priceStr = pair.priceUsd as string | undefined;
+    const mcap = pair.marketCap as number | undefined;
+    const liq = (pair.liquidity as Record<string, number> | undefined)?.usd;
+    const vol = (pair.volume as Record<string, number> | undefined)?.h24;
+
     return {
       imageUrl: (info?.imageUrl as string) || null,
       name: baseToken?.name || null,
       symbol: baseToken?.symbol || null,
       holderCount: typeof pair.holders === 'number' ? pair.holders : null,
+      priceUsd: priceStr ? parseFloat(priceStr) : null,
+      marketCapUsd: typeof mcap === 'number' ? mcap : null,
+      liquidityUsd: typeof liq === 'number' ? liq : null,
+      volume24hUsd: typeof vol === 'number' ? vol : null,
     };
   } catch {
     logger.warn(`DexScreener info fetch failed for ${mint}`);

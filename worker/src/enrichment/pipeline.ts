@@ -69,11 +69,11 @@ async function enrichToken(mint: string, uri: string | null, source: string, isR
     const dex = dexScreener.status === 'fulfilled' ? dexScreener.value : null;
     const pf = pumpFunData.status === 'fulfilled' ? pumpFunData.value : null;
 
-    // Resolve market data: prefer Jupiter, then PumpFun (bonding curve), then GeckoTerminal
-    const resolvedPrice = prc?.priceUsd ?? pf?.priceUsd ?? gk?.priceUsd ?? null;
-    const resolvedLiquidity = rug?.totalMarketLiquidity ?? pf?.liquidityUsd ?? gk?.liquidityUsd ?? null;
-    const resolvedMarketCap = pf?.marketCapUsd ?? gk?.marketCapUsd ?? null;
-    const resolvedVolume24h = gk?.volume24hUsd ?? null;
+    // Resolve market data: prefer Jupiter, then PumpFun (bonding curve), then DexScreener, then GeckoTerminal
+    const resolvedPrice = prc?.priceUsd ?? pf?.priceUsd ?? dex?.priceUsd ?? gk?.priceUsd ?? null;
+    const resolvedLiquidity = rug?.totalMarketLiquidity ?? pf?.liquidityUsd ?? dex?.liquidityUsd ?? gk?.liquidityUsd ?? null;
+    const resolvedMarketCap = pf?.marketCapUsd ?? dex?.marketCapUsd ?? gk?.marketCapUsd ?? null;
+    const resolvedVolume24h = dex?.volume24hUsd ?? gk?.volume24hUsd ?? null;
 
     // Resolve metadata: prefer RugCheck, fallback to URI metadata, PumpFun, GeckoTerminal, DexScreener
     const resolvedName = rug?.tokenMeta?.name || meta?.name || pf?.name || gk?.name || dex?.name || null;
