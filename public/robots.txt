@@ -1,5 +1,14 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /auth/
+
+User-agent: Googlebot
+Allow: /
+Allow: /tokens
+Allow: /tokens/
+Allow: /blog
+Allow: /blog/
+Disallow: /api/
 
 Sitemap: https://tokenradar.site/sitemap.xml
