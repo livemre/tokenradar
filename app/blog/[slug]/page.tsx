@@ -191,22 +191,60 @@ export default async function BlogPostPage({
       </div>
 
       <main className="max-w-3xl mx-auto px-4 py-10">
+        {/* Table of Contents */}
+        {minutes >= 8 && (() => {
+          const headings = post.content.rendered.match(/<h2[^>]*>(.*?)<\/h2>/gi) || [];
+          if (headings.length < 3) return null;
+          return (
+            <nav className="mb-10 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-muted mb-4 flex items-center gap-2">
+                <BookOpen size={14} />
+                Table of Contents
+              </h2>
+              <ol className="space-y-2">
+                {headings.map((h, i) => {
+                  const text = h.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
+                  const anchor = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                  return (
+                    <li key={i}>
+                      <a
+                        href={`#${anchor}`}
+                        className="text-sm text-muted hover:text-safe transition-colors flex items-center gap-2 py-1"
+                      >
+                        <span className="w-5 h-5 rounded-full bg-safe/10 text-safe text-[10px] font-bold flex items-center justify-center shrink-0">
+                          {i + 1}
+                        </span>
+                        {text}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
+          );
+        })()}
+
         {/* Article content */}
         <article>
           <div
-            className="prose prose-invert prose-lg max-w-none
+            className="blog-prose prose prose-invert prose-lg max-w-none
               prose-headings:font-bold prose-headings:tracking-tight
-              prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+              prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-5
               prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-              prose-p:text-[#b0b0b0] prose-p:leading-relaxed
-              prose-a:text-safe prose-a:no-underline hover:prose-a:underline
+              prose-p:text-[#b0b0b0] prose-p:leading-relaxed prose-p:text-base
               prose-strong:text-foreground
               prose-li:text-[#b0b0b0]
-              prose-ul:my-4 prose-ol:my-4
-              prose-code:text-accent prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-              prose-blockquote:border-safe/30 prose-blockquote:bg-white/[0.02] prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded-r-lg
               prose-img:rounded-xl prose-img:border prose-img:border-white/10"
-            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+            dangerouslySetInnerHTML={{
+              __html: post.content.rendered.replace(
+                /<h2([^>]*)>(.*?)<\/h2>/gi,
+                (_match: string, attrs: string, content: string) => {
+                  const text = content.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
+                  const anchor = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                  return `<h2${attrs} id="${anchor}">${content}</h2>`;
+                }
+              ),
+            }}
           />
         </article>
 

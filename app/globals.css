@@ -207,3 +207,161 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* ===== Blog Prose Enhancements ===== */
+
+.blog-prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  margin: 3rem 0;
+}
+
+.blog-prose h2 {
+  position: relative;
+  padding-left: 1rem;
+  border-left: 3px solid var(--safe);
+}
+
+.blog-prose h3 {
+  color: var(--text-primary);
+}
+
+/* Tables */
+.blog-prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.blog-prose thead {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.blog-prose thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--safe);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+}
+
+.blog-prose tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.blog-prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.blog-prose tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.blog-prose tbody td strong {
+  color: var(--text-primary);
+}
+
+/* Responsive tables */
+@media (max-width: 640px) {
+  .blog-prose table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Code blocks */
+.blog-prose pre {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem !important;
+  overflow-x: auto;
+  position: relative;
+}
+
+.blog-prose pre code {
+  background: none !important;
+  padding: 0 !important;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--accent);
+}
+
+.blog-prose :not(pre) > code {
+  background: rgba(0, 191, 255, 0.1);
+  color: var(--accent);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* Ordered lists with styled counters */
+.blog-prose ol {
+  counter-reset: blog-counter;
+  list-style: none;
+  padding-left: 0;
+}
+
+.blog-prose ol > li {
+  counter-increment: blog-counter;
+  position: relative;
+  padding-left: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.blog-prose ol > li::before {
+  content: counter(blog-counter);
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--safe);
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Unordered lists */
+.blog-prose ul > li::marker {
+  color: var(--safe);
+}
+
+/* Blockquotes */
+.blog-prose blockquote {
+  border-left: 3px solid var(--safe);
+  background: rgba(0, 255, 136, 0.04);
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.25rem;
+  font-style: normal;
+}
+
+/* Links */
+.blog-prose a {
+  color: var(--safe);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.blog-prose a:hover {
+  border-bottom-color: var(--safe);
+}

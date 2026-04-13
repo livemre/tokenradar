@@ -11,6 +11,7 @@ import { getTokenPrice } from './price.js';
 import { fetchTokenMetadata } from './metadata.js';
 import { getGeckoTokenData } from './gecko.js';
 import { fetchDexScreenerInfo } from './dexscreener.js';
+import { getPumpFunTokenData } from './pumpfun.js';
 import { logger } from '../utils/logger.js';
 import { ENRICHMENT_CONCURRENCY, ENRICHMENT_DELAY_MS } from '../utils/constants.js';
 
@@ -45,10 +46,10 @@ function computeSafetyLevel(input: {
   return 'danger';
 }
 
-async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean = false): Promise<void> {
+async function enrichToken(mint: string, uri: string | null, source: string, isReEnrich: boolean = false): Promise<void> {
   try {
     // Phase 1: Run all sources in parallel
-    const [rugReport, authority, holders, price, metadata, gecko, dexScreener] = await Promise.allSettled([
+    const [rugReport, authority, holders, price, metadata, gecko, dexScreener, pumpFunData] = await Promise.allSettled([
       fetchRugCheckReport(mint),
       checkMintFreezeAuthority(mint),
       getTopHolderConcentration(mint),
@@ -56,6 +57,7 @@ async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean
       fetchTokenMetadata(uri),
       getGeckoTokenData(mint),
       fetchDexScreenerInfo(mint),
+      source === 'pumpfun' ? getPumpFunTokenData(mint) : Promise.resolve(null),
     ]);
 
     const rug = rugReport.status === 'fulfilled' ? rugReport.value : null;
@@ -65,17 +67,18 @@ async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean
     const meta = metadata.status === 'fulfilled' ? metadata.value : null;
     const gk = gecko.status === 'fulfilled' ? gecko.value : null;
     const dex = dexScreener.status === 'fulfilled' ? dexScreener.value : null;
+    const pf = pumpFunData.status === 'fulfilled' ? pumpFunData.value : null;
 
-    // Resolve market data: prefer Jupiter/RugCheck, fallback to GeckoTerminal
-    const resolvedPrice = prc?.priceUsd ?? gk?.priceUsd ?? null;
-    const resolvedLiquidity = rug?.totalMarketLiquidity ?? gk?.liquidityUsd ?? null;
-    const resolvedMarketCap = gk?.marketCapUsd ?? null;
+    // Resolve market data: prefer Jupiter, then PumpFun (bonding curve), then GeckoTerminal
+    const resolvedPrice = prc?.priceUsd ?? pf?.priceUsd ?? gk?.priceUsd ?? null;
+    const resolvedLiquidity = rug?.totalMarketLiquidity ?? pf?.liquidityUsd ?? gk?.liquidityUsd ?? null;
+    const resolvedMarketCap = pf?.marketCapUsd ?? gk?.marketCapUsd ?? null;
     const resolvedVolume24h = gk?.volume24hUsd ?? null;
 
-    // Resolve metadata: prefer RugCheck, fallback to URI metadata, then GeckoTerminal, then DexScreener
-    const resolvedName = rug?.tokenMeta?.name || meta?.name || gk?.name || dex?.name || null;
-    const resolvedSymbol = rug?.tokenMeta?.symbol || meta?.symbol || gk?.symbol || dex?.symbol || null;
-    const resolvedImage = rug?.tokenMeta?.image || meta?.image || dex?.imageUrl || null;
+    // Resolve metadata: prefer RugCheck, fallback to URI metadata, PumpFun, GeckoTerminal, DexScreener
+    const resolvedName = rug?.tokenMeta?.name || meta?.name || pf?.name || gk?.name || dex?.name || null;
+    const resolvedSymbol = rug?.tokenMeta?.symbol || meta?.symbol || pf?.symbol || gk?.symbol || dex?.symbol || null;
+    const resolvedImage = rug?.tokenMeta?.image || meta?.image || pf?.imageUrl || dex?.imageUrl || null;
 
     const safetyLevel = computeSafetyLevel({
       rugCheckScore: rug?.score ?? null,
@@ -129,7 +132,7 @@ export async function startEnrichmentPipeline(): Promise<void> {
     const tokens = await fetchUnenrichedTokens(ENRICHMENT_CONCURRENCY, 5);
 
     if (tokens.length > 0) {
-      const promises = tokens.map((t) => enrichToken(t.mint, t.uri ?? null, false));
+      const promises = tokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, false));
       await Promise.allSettled(promises);
       await sleep(ENRICHMENT_DELAY_MS);
       continue;
@@ -140,7 +143,7 @@ export async function startEnrichmentPipeline(): Promise<void> {
 
     if (staleTokens.length > 0) {
       logger.info(`Re-enriching ${staleTokens.length} tokens with incomplete data`);
-      const promises = staleTokens.map((t) => enrichToken(t.mint, t.uri ?? null, true));
+      const promises = staleTokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, true));
       await Promise.allSettled(promises);
       await sleep(ENRICHMENT_DELAY_MS);
       continue;
