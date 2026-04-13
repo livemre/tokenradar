@@ -221,10 +221,12 @@
       "label": "Browser notifications",
       "description": "Get notified when tab is inactive"
     },
-    "safetyScore": {
-      "label": "Minimum Safety Score",
-      "description": "Only notify for tokens with this score or higher",
-      "all": "0 (All)"
+    "safetyLevel": {
+      "label": "Safety Levels",
+      "description": "Which safety levels to get notifications for",
+      "safe": "Safe",
+      "warning": "Warning",
+      "danger": "Danger"
     },
     "sources": {
       "label": "Sources",

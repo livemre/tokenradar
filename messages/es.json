@@ -221,10 +221,12 @@
       "label": "Notificaciones del navegador",
       "description": "Recibir notificaciones cuando la pestana este inactiva"
     },
-    "safetyScore": {
-      "label": "Puntaje Minimo de Seguridad",
-      "description": "Solo notificar para tokens con este puntaje o superior",
-      "all": "0 (Todos)"
+    "safetyLevel": {
+      "label": "Niveles de seguridad",
+      "description": "Niveles de seguridad para recibir notificaciones",
+      "safe": "Seguro",
+      "warning": "Advertencia",
+      "danger": "Peligro"
     },
     "sources": {
       "label": "Fuentes",

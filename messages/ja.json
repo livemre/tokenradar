@@ -221,10 +221,12 @@
       "label": "ブラウザ通知",
       "description": "タブが非アクティブの時に通知を受け取る"
     },
-    "safetyScore": {
-      "label": "最低安全スコア",
-      "description": "このスコア以上のトークンのみ通知",
-      "all": "0（すべて）"
+    "safetyLevel": {
+      "label": "安全レベル",
+      "description": "通知を受け取る安全レベル",
+      "safe": "安全",
+      "warning": "警告",
+      "danger": "危険"
     },
     "sources": {
       "label": "ソース",

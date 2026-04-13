@@ -3,7 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import type { NotificationPreferences as Prefs } from '@/lib/hooks/useNotifications';
-import type { TokenSource } from '@/lib/types/token';
+import type { TokenSource, SafetyLevel } from '@/lib/types/token';
+import { COLORS } from '@/lib/utils/constants';
 import { Volume2, VolumeX, Bell, BellOff, X } from 'lucide-react';
 
 interface NotificationPreferencesProps {
@@ -25,6 +26,13 @@ export function NotificationPreferences({
       ? preferences.sources.filter((s) => s !== source)
       : [...preferences.sources, source];
     onUpdate({ sources });
+  };
+
+  const toggleSafetyLevel = (level: SafetyLevel) => {
+    const levels = preferences.safetyLevels.includes(level)
+      ? preferences.safetyLevels.filter((l) => l !== level)
+      : [...preferences.safetyLevels, level];
+    onUpdate({ safetyLevels: levels });
   };
 
   return (
@@ -74,22 +82,36 @@ export function NotificationPreferences({
             }}
           />
 
-          {/* Min safety score */}
+          {/* Safety level filter */}
           <div>
-            <label className="text-sm font-medium">{t('safetyScore.label')}</label>
-            <p className="text-xs text-muted mb-2">{t('safetyScore.description')}</p>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={preferences.minSafetyScore}
-              onChange={(e) => onUpdate({ minSafetyScore: parseInt(e.target.value) })}
-              className="w-full accent-safe"
-            />
-            <div className="flex justify-between text-xs text-muted">
-              <span>{t('safetyScore.all')}</span>
-              <span className="font-mono text-foreground">{preferences.minSafetyScore}</span>
-              <span>100</span>
+            <label className="text-sm font-medium">{t('safetyLevel.label')}</label>
+            <p className="text-xs text-muted mb-2">{t('safetyLevel.description')}</p>
+            <div className="flex gap-2">
+              {([
+                { value: 'safe' as SafetyLevel, label: t('safetyLevel.safe'), color: COLORS.safe },
+                { value: 'warning' as SafetyLevel, label: t('safetyLevel.warning'), color: COLORS.warning },
+                { value: 'danger' as SafetyLevel, label: t('safetyLevel.danger'), color: COLORS.danger },
+              ]).map(({ value, label, color }) => (
+                <button
+                  key={value}
+                  onClick={() => toggleSafetyLevel(value)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    preferences.safetyLevels.includes(value)
+                      ? 'bg-white/10 text-foreground'
+                      : 'text-muted bg-white/[0.02]'
+                  }`}
+                  style={
+                    preferences.safetyLevels.includes(value)
+                      ? { color, backgroundColor: `${color}15`, border: `1px solid ${color}30` }
+                      : undefined
+                  }
+                >
+                  {preferences.safetyLevels.includes(value) && (
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }} />
+                  )}
+                  {label}
+                </button>
+              ))}
             </div>
           </div>
 

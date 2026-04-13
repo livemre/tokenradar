@@ -221,10 +221,12 @@
       "label": "Tarayıcı bildirimleri",
       "description": "Sekme aktif değilken bildirim al"
     },
-    "safetyScore": {
-      "label": "Minimum Güvenlik Puanı",
-      "description": "Yalnızca bu puan veya üzerindeki tokenler için bildir",
-      "all": "0 (Tümü)"
+    "safetyLevel": {
+      "label": "Güvenlik Seviyeleri",
+      "description": "Hangi güvenlik seviyeleri için bildirim alınacak",
+      "safe": "Güvenli",
+      "warning": "Uyarı",
+      "danger": "Tehlikeli"
     },
     "sources": {
       "label": "Kaynaklar",

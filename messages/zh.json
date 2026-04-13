@@ -221,10 +221,12 @@
       "label": "浏览器通知",
       "description": "标签页不活跃时接收通知"
     },
-    "safetyScore": {
-      "label": "最低安全评分",
-      "description": "仅在代币达到此评分或更高时通知",
-      "all": "0（全部）"
+    "safetyLevel": {
+      "label": "安全等级",
+      "description": "接收哪些安全等级的通知",
+      "safe": "安全",
+      "warning": "警告",
+      "danger": "危险"
     },
     "sources": {
       "label": "来源",

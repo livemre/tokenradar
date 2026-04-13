@@ -221,10 +221,12 @@
       "label": "브라우저 알림",
       "description": "탭이 비활성 상태일 때 알림 받기"
     },
-    "safetyScore": {
-      "label": "최소 안전 점수",
-      "description": "이 점수 이상의 토큰만 알림",
-      "all": "0 (전체)"
+    "safetyLevel": {
+      "label": "안전 등급",
+      "description": "어떤 안전 등급에 대해 알림을 받을지 설정",
+      "safe": "안전",
+      "warning": "경고",
+      "danger": "위험"
     },
     "sources": {
       "label": "소스",

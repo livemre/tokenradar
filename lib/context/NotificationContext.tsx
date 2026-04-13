@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
-import type { Token, TokenSource } from '@/lib/types/token';
+import type { Token, TokenSource, SafetyLevel } from '@/lib/types/token';
 import { playNotificationSound } from '@/lib/utils/sound';
 
 export interface Notification {
@@ -14,14 +14,14 @@ export interface Notification {
 export interface NotificationPreferences {
   soundEnabled: boolean;
   browserNotificationsEnabled: boolean;
-  minSafetyScore: number;
+  safetyLevels: SafetyLevel[];
   sources: TokenSource[];
 }
 
 const DEFAULT_PREFERENCES: NotificationPreferences = {
   soundEnabled: false,
   browserNotificationsEnabled: false,
-  minSafetyScore: 0,
+  safetyLevels: ['safe', 'warning', 'danger', 'unknown'],
   sources: ['pumpfun', 'raydium', 'moonshot'],
 };
 
@@ -46,7 +46,14 @@ function loadPreferences(): NotificationPreferences {
   if (typeof window === 'undefined') return DEFAULT_PREFERENCES;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) };
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Migrate old minSafetyScore to new safetyLevels
+      if ('minSafetyScore' in parsed && !('safetyLevels' in parsed)) {
+        delete parsed.minSafetyScore;
+      }
+      return { ...DEFAULT_PREFERENCES, ...parsed };
+    }
   } catch {}
   return DEFAULT_PREFERENCES;
 }
@@ -59,8 +66,11 @@ function savePreferences(prefs: NotificationPreferences) {
 
 function sendBrowserNotification(token: Token) {
   if ('Notification' in window && Notification.permission === 'granted') {
+    const safetyLabel = token.safety_level
+      ? token.safety_level.charAt(0).toUpperCase() + token.safety_level.slice(1)
+      : 'Pending';
     new Notification(`New Token: $${token.symbol || 'Unknown'}`, {
-      body: `Source: ${token.source} | Score: ${token.safety_score ?? 'Pending'}`,
+      body: `Source: ${token.source} | Safety: ${safetyLabel}`,
       icon: token.image_url || undefined,
     });
   }
@@ -81,7 +91,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     (token: Token) => {
       // Filter based on preferences
       if (!preferences.sources.includes(token.source)) return;
-      if (token.safety_score !== null && token.safety_score < preferences.minSafetyScore) return;
+      if (token.safety_level && !preferences.safetyLevels.includes(token.safety_level)) return;
 
       const notification: Notification = {
         id: `${token.mint}-${Date.now()}`,

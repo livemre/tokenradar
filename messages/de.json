@@ -221,10 +221,12 @@
       "label": "Browserbenachrichtigungen",
       "description": "Benachrichtigung erhalten, wenn der Tab inaktiv ist"
     },
-    "safetyScore": {
-      "label": "Mindestsicherheitsbewertung",
-      "description": "Nur bei Token mit dieser Bewertung oder höher benachrichtigen",
-      "all": "0 (Alle)"
+    "safetyLevel": {
+      "label": "Sicherheitsstufen",
+      "description": "Für welche Sicherheitsstufen Benachrichtigungen erhalten",
+      "safe": "Sicher",
+      "warning": "Warnung",
+      "danger": "Gefahr"
     },
     "sources": {
       "label": "Quellen",

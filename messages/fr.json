@@ -221,10 +221,12 @@
       "label": "Notifications du navigateur",
       "description": "Etre notifie lorsque l'onglet est inactif"
     },
-    "safetyScore": {
-      "label": "Score de securite minimum",
-      "description": "Notifier uniquement pour les tokens avec ce score ou plus",
-      "all": "0 (Tous)"
+    "safetyLevel": {
+      "label": "Niveaux de sécurité",
+      "description": "Niveaux de sécurité pour lesquels recevoir des notifications",
+      "safe": "Sûr",
+      "warning": "Avertissement",
+      "danger": "Danger"
     },
     "sources": {
       "label": "Sources",

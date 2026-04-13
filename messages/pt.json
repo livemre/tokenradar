@@ -221,10 +221,12 @@
       "label": "Notificacoes do navegador",
       "description": "Ser notificado quando a aba estiver inativa"
     },
-    "safetyScore": {
-      "label": "Pontuacao Minima de Seguranca",
-      "description": "Notificar apenas para tokens com essa pontuacao ou superior",
-      "all": "0 (Todos)"
+    "safetyLevel": {
+      "label": "Níveis de segurança",
+      "description": "Níveis de segurança para receber notificações",
+      "safe": "Seguro",
+      "warning": "Aviso",
+      "danger": "Perigo"
     },
     "sources": {
       "label": "Fontes",

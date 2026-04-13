@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import type { Token, TokenSource, SafetyLevel } from '@/lib/types/token';
+export type { SafetyLevel };
 import { playNotificationSound } from '@/lib/utils/sound';
 
 export interface Notification {
@@ -14,14 +15,14 @@ export interface Notification {
 export interface NotificationPreferences {
   soundEnabled: boolean;
   browserNotificationsEnabled: boolean;
-  minSafetyScore: number;
+  safetyLevels: SafetyLevel[];
   sources: TokenSource[];
 }
 
 const DEFAULT_PREFERENCES: NotificationPreferences = {
-  soundEnabled: true,
+  soundEnabled: false,
   browserNotificationsEnabled: false,
-  minSafetyScore: 0,
+  safetyLevels: ['safe', 'warning', 'danger', 'unknown'],
   sources: ['pumpfun', 'raydium', 'moonshot'],
 };
 
@@ -32,7 +33,13 @@ function loadPreferences(): NotificationPreferences {
   if (typeof window === 'undefined') return DEFAULT_PREFERENCES;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) };
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if ('minSafetyScore' in parsed && !('safetyLevels' in parsed)) {
+        delete parsed.minSafetyScore;
+      }
+      return { ...DEFAULT_PREFERENCES, ...parsed };
+    }
   } catch {}
   return DEFAULT_PREFERENCES;
 }
@@ -57,7 +64,7 @@ export function useNotifications() {
   const shouldNotify = useCallback(
     (token: Token): boolean => {
       if (!preferences.sources.includes(token.source)) return false;
-      if (token.safety_score !== null && token.safety_score < preferences.minSafetyScore) return false;
+      if (token.safety_level && !preferences.safetyLevels.includes(token.safety_level)) return false;
       return true;
     },
     [preferences]
@@ -123,8 +130,11 @@ export function useNotifications() {
 
 function sendBrowserNotification(token: Token) {
   if ('Notification' in window && Notification.permission === 'granted') {
+    const safetyLabel = token.safety_level
+      ? token.safety_level.charAt(0).toUpperCase() + token.safety_level.slice(1)
+      : 'Pending';
     new Notification(`New Token: $${token.symbol || 'Unknown'}`, {
-      body: `Source: ${token.source} | Score: ${token.safety_score ?? 'Pending'}`,
+      body: `Source: ${token.source} | Safety: ${safetyLabel}`,
       icon: token.image_url || undefined,
     });
   }
