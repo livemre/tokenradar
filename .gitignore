@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 worker/node_modules
+worker/dist
 /.pnp
 .pnp.*
 .yarn/*
