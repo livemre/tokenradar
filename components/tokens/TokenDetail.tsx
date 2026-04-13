@@ -10,7 +10,7 @@ import { FavoriteButton } from './FavoriteButton';
 import { PriceChart } from './PriceChart';
 import { SwapWidget } from './SwapWidget';
 import { Card } from '@/components/ui/Card';
-import { formatUSD, formatPercent, truncateAddress, timeAgo } from '@/lib/utils/format';
+import { formatUSD, formatPercent, truncateAddress, timeAgo, formatLocalTime } from '@/lib/utils/format';
 import {
   Shield,
   Clock,
@@ -206,12 +206,12 @@ export function TokenDetail({ token }: { token: Token }) {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted">{t('info.detected')}</span>
-                        <span>{timeAgo(token.detected_at)}</span>
+                        <span title={formatLocalTime(token.detected_at)}>{timeAgo(token.detected_at)}</span>
                       </div>
                       {token.enriched_at && (
                         <div className="flex justify-between">
                           <span className="text-muted">{t('info.analyzed')}</span>
-                          <span>{timeAgo(token.enriched_at)}</span>
+                          <span title={formatLocalTime(token.enriched_at)}>{timeAgo(token.enriched_at)}</span>
                         </div>
                       )}
                     </div>

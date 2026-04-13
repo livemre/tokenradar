@@ -57,6 +57,26 @@ export function getSourceLabel(source: string): string {
   }
 }
 
+export function formatLocalTime(date: string | Date): string {
+  const d = typeof date === 'string' ? new Date(date) : date;
+  return d.toLocaleString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
+
+export function formatLocalDate(date: string | Date): string {
+  const d = typeof date === 'string' ? new Date(date) : date;
+  return d.toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
 export function formatLiveAge(detectedAt: string): string {
   const seconds = Math.floor((Date.now() - new Date(detectedAt).getTime()) / 1000);
   if (seconds < 60) return `${seconds}s`;
