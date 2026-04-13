@@ -20,40 +20,79 @@ async function getMintFlexible(connection: Connection, mintPubkey: PublicKey): P
   }
 }
 
+/**
+ * Get holder count via Helius DAS getTokenAccounts API.
+ * This works for all tokens including very new ones.
+ */
+async function getHolderCountViaDAS(mint: string): Promise<number | null> {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
+    const res = await fetch(SOLANA_RPC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'getTokenAccounts',
+        params: {
+          mint,
+          limit: 1000,
+        },
+      }),
+    });
+    clearTimeout(timeout);
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    const accounts = data?.result?.token_accounts;
+    if (!Array.isArray(accounts)) return null;
+
+    return accounts.length;
+  } catch {
+    return null;
+  }
+}
+
 export async function getTopHolderConcentration(mint: string): Promise<HolderInfo | null> {
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      if (attempt > 0) await new Promise((r) => setTimeout(r, 2000));
+  // Try standard RPC for top holder concentration
+  let topHolderPct: number | null = null;
 
-      const connection = new Connection(SOLANA_RPC_URL, { commitment: 'confirmed' });
-      const mintPubkey = new PublicKey(mint);
+  try {
+    const connection = new Connection(SOLANA_RPC_URL, { commitment: 'confirmed' });
+    const mintPubkey = new PublicKey(mint);
 
-      const [largestAccounts, mintInfo] = await Promise.all([
-        connection.getTokenLargestAccounts(mintPubkey),
-        getMintFlexible(connection, mintPubkey),
-      ]);
+    const [largestAccounts, mintInfo] = await Promise.all([
+      connection.getTokenLargestAccounts(mintPubkey),
+      getMintFlexible(connection, mintPubkey),
+    ]);
 
-      const topAccounts = largestAccounts.value.slice(0, 10);
-      const totalSupply = Number(mintInfo.supply) / Math.pow(10, mintInfo.decimals);
+    const topAccounts = largestAccounts.value.slice(0, 10);
+    const totalSupply = Number(mintInfo.supply) / Math.pow(10, mintInfo.decimals);
 
-      if (totalSupply === 0) return { topHolderPct: 0, holderCount: 0 };
-
+    if (totalSupply > 0) {
       const topHoldersTotal = topAccounts.reduce((sum, account) => {
         return sum + Number(account.amount) / Math.pow(10, mintInfo.decimals);
       }, 0);
-
-      return {
-        topHolderPct: (topHoldersTotal / totalSupply) * 100,
-        holderCount: largestAccounts.value.length,
-      };
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      if (msg.includes('TokenInvalidAccountOwner')) return null;
-
-      if (attempt === 0) continue; // retry once
-      logger.warn(`Holder analysis failed for ${mint} (${SOLANA_RPC_URL.includes('helius') ? 'helius' : 'public'}): ${msg || err}`);
-      return null;
+      topHolderPct = (topHoldersTotal / totalSupply) * 100;
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (!msg.includes('TokenInvalidAccountOwner')) {
+      logger.warn(`Top holder analysis failed for ${mint}: ${msg}`);
     }
   }
-  return null;
+
+  // Get accurate holder count via Helius DAS API (works for all tokens)
+  const holderCount = await getHolderCountViaDAS(mint);
+
+  if (topHolderPct === null && holderCount === null) return null;
+
+  return {
+    topHolderPct: topHolderPct ?? 0,
+    holderCount: holderCount ?? 0,
+  };
 }
