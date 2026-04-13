@@ -38,8 +38,8 @@ const DEFAULT_FILTERS: TokenListFilters = {
   enrichedOnly: false,
 };
 
-export function useTokenList() {
-  const [filters, setFilters] = useState<TokenListFilters>(DEFAULT_FILTERS);
+export function useTokenList(initialFilters?: Partial<TokenListFilters>) {
+  const [filters, setFilters] = useState<TokenListFilters>({ ...DEFAULT_FILTERS, ...initialFilters });
   const [page, setPage] = useState(1);
   const pageSize = 30;
 

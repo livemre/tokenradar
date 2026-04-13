@@ -12,6 +12,7 @@ import { TokenExplorer } from '@/components/tokens/TokenExplorer';
 import { FavoritesList } from '@/components/tokens/FavoritesList';
 import { useTokenFeed } from '@/lib/hooks/useTokenFeed';
 import { useNotificationContext } from '@/lib/context/NotificationContext';
+import type { TokenSource } from '@/lib/types/token';
 import { Radio, Compass, Heart } from 'lucide-react';
 
 type Tab = 'live' | 'explore' | 'favorites';
@@ -27,6 +28,7 @@ function TokensContent() {
     if (tab === 'favorites') return 'favorites';
     return 'live';
   });
+  const [exploreSource, setExploreSource] = useState<TokenSource | ''>('');
   const [autoFocusSearch, setAutoFocusSearch] = useState(
     () => searchParams.get('tab') === 'explore'
   );
@@ -127,9 +129,9 @@ function TokensContent() {
             transition={{ duration: 0.2 }}
           >
             {activeTab === 'live' ? (
-              <TokenFeed tokens={tokens} newTokenIds={newTokenIds} onSwitchToExplore={() => setActiveTab('explore')} />
+              <TokenFeed tokens={tokens} newTokenIds={newTokenIds} onSwitchToExplore={(source) => { setExploreSource(source || ''); setActiveTab('explore'); }} />
             ) : activeTab === 'explore' ? (
-              <TokenExplorer autoFocusSearch={autoFocusSearch} onSearchFocused={() => setAutoFocusSearch(false)} />
+              <TokenExplorer autoFocusSearch={autoFocusSearch} onSearchFocused={() => setAutoFocusSearch(false)} initialSource={exploreSource} />
             ) : (
               <FavoritesList />
             )}

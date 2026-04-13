@@ -13,6 +13,7 @@ import { TokenFilters } from './TokenFilters';
 import { SortTabs } from './SortTabs';
 import { Pagination } from './Pagination';
 import { Spinner } from '@/components/ui/Spinner';
+import type { TokenSource } from '@/lib/types/token';
 import { RotateCw, LayoutGrid, LayoutList, SearchX } from 'lucide-react';
 
 type ViewMode = 'cards' | 'table';
@@ -20,9 +21,10 @@ type ViewMode = 'cards' | 'table';
 interface TokenExplorerProps {
   autoFocusSearch?: boolean;
   onSearchFocused?: () => void;
+  initialSource?: string;
 }
 
-export function TokenExplorer({ autoFocusSearch, onSearchFocused }: TokenExplorerProps = {}) {
+export function TokenExplorer({ autoFocusSearch, onSearchFocused, initialSource }: TokenExplorerProps = {}) {
   const {
     tokens,
     total,
@@ -33,7 +35,8 @@ export function TokenExplorer({ autoFocusSearch, onSearchFocused }: TokenExplore
     setPage,
     updateFilter,
     resetFilters,
-  } = useTokenList();
+  } = useTokenList(initialSource ? { source: initialSource as TokenSource } : undefined);
+
 
   const t = useTranslations('explorer');
   const [viewMode, setViewMode] = useState<ViewMode>('cards');
@@ -52,6 +55,7 @@ export function TokenExplorer({ autoFocusSearch, onSearchFocused }: TokenExplore
       {/* Filters + Sort + View toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <TokenFilters
+          defaultSource={(initialSource as TokenSource) || ''}
           onFilterChange={(f) => {
             if (f.source !== undefined) updateFilter('source', f.source || '');
             if (f.safety !== undefined) updateFilter('safety', f.safety || '');

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { TokenSource, SafetyLevel } from '@/lib/types/token';
 import { COLORS } from '@/lib/utils/constants';
 import { useTranslations } from 'next-intl';
@@ -10,6 +10,7 @@ interface TokenFiltersProps {
     source?: TokenSource;
     safety?: SafetyLevel;
   }) => void;
+  defaultSource?: TokenSource | '';
 }
 
 function getSources(t: ReturnType<typeof useTranslations>): { value: TokenSource | ''; label: string; color?: string }[] {
@@ -30,12 +31,19 @@ function getSafetyLevels(t: ReturnType<typeof useTranslations>): { value: Safety
   ];
 }
 
-export function TokenFilters({ onFilterChange }: TokenFiltersProps) {
+export function TokenFilters({ onFilterChange, defaultSource }: TokenFiltersProps) {
   const t = useTranslations('filters');
   const sources = getSources(t);
   const safetyLevels = getSafetyLevels(t);
-  const [activeSource, setActiveSource] = useState<TokenSource | ''>('');
+  const [activeSource, setActiveSource] = useState<TokenSource | ''>(defaultSource || '');
   const [activeSafety, setActiveSafety] = useState<SafetyLevel | ''>('');
+
+  // Sync when defaultSource changes externally (e.g. navigating from Live Feed)
+  useEffect(() => {
+    if (defaultSource !== undefined && defaultSource !== activeSource) {
+      setActiveSource(defaultSource);
+    }
+  }, [defaultSource]);
 
   const handleSourceChange = (source: TokenSource | '') => {
     setActiveSource(source);

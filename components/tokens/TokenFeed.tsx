@@ -7,16 +7,12 @@ import { TokenCard } from './TokenCard';
 import { TokenCardSkeleton } from './TokenCardSkeleton';
 import { TokenFilters } from './TokenFilters';
 import type { Token, TokenSource, SafetyLevel } from '@/lib/types/token';
-import { Eye, EyeOff, Radio, Compass, ArrowRight } from 'lucide-react';
-
-function isAlive(t: Token): boolean {
-  return !!(t.name || t.price_usd || (t.holder_count && t.holder_count > 0));
-}
+import { Radio, Compass, ArrowRight } from 'lucide-react';
 
 interface TokenFeedProps {
   tokens: Token[];
   newTokenIds: Set<string>;
-  onSwitchToExplore?: () => void;
+  onSwitchToExplore?: (source?: TokenSource) => void;
 }
 
 export function TokenFeed({ tokens, newTokenIds, onSwitchToExplore }: TokenFeedProps) {
@@ -25,32 +21,17 @@ export function TokenFeed({ tokens, newTokenIds, onSwitchToExplore }: TokenFeedP
     source?: TokenSource;
     safety?: SafetyLevel;
   }>({});
-  const [showDead, setShowDead] = useState(false);
-
   const filteredTokens = useMemo(() => {
-    return tokens.filter((t) => {
-      if (!showDead && !isAlive(t)) return false;
-      if (filters.source && t.source !== filters.source) return false;
-      if (filters.safety && t.safety_level !== filters.safety) return false;
+    return tokens.filter((tk) => {
+      if (filters.source && tk.source !== filters.source) return false;
+      if (filters.safety && tk.safety_level !== filters.safety) return false;
       return true;
     });
-  }, [tokens, filters, showDead]);
-
-  const deadCount = useMemo(() => tokens.filter((t) => !isAlive(t)).length, [tokens]);
+  }, [tokens, filters]);
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <TokenFilters onFilterChange={setFilters} />
-        <button
-          onClick={() => setShowDead(!showDead)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-muted hover:text-foreground hover:bg-white/5 transition-all btn-press"
-          title={showDead ? 'Hide dead tokens' : 'Show all tokens'}
-        >
-          {showDead ? <EyeOff size={12} /> : <Eye size={12} />}
-          {showDead ? t('hideDead') : t('showHidden', { count: deadCount })}
-        </button>
-      </div>
+      <TokenFilters onFilterChange={setFilters} />
 
       {tokens.length === 0 ? (
         <div className="space-y-2">
@@ -63,7 +44,7 @@ export function TokenFeed({ tokens, newTokenIds, onSwitchToExplore }: TokenFeedP
             </p>
             {onSwitchToExplore && (
               <button
-                onClick={onSwitchToExplore}
+                onClick={() => onSwitchToExplore(filters.source)}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-muted hover:text-foreground hover:bg-white/[0.08] hover:border-white/[0.12] transition-all btn-press"
               >
                 <Compass size={15} />
@@ -84,20 +65,12 @@ export function TokenFeed({ tokens, newTokenIds, onSwitchToExplore }: TokenFeedP
           </p>
           {onSwitchToExplore && (
             <button
-              onClick={onSwitchToExplore}
+              onClick={() => onSwitchToExplore(filters.source)}
               className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-safe/10 border border-safe/20 text-sm font-semibold text-safe hover:bg-safe/15 transition-all btn-press"
             >
               <Compass size={15} />
               {t('exploreOlderTokens')}
               <ArrowRight size={13} />
-            </button>
-          )}
-          {deadCount > 0 && (
-            <button
-              onClick={() => setShowDead(true)}
-              className="mt-3 block mx-auto text-xs text-muted hover:text-foreground underline transition-colors"
-            >
-              {t('showUnverified', { count: deadCount })}
             </button>
           )}
         </div>
