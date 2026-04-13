@@ -10,6 +10,7 @@ import { getTopHolderConcentration } from './holders.js';
 import { getTokenPrice } from './price.js';
 import { fetchTokenMetadata } from './metadata.js';
 import { getGeckoTokenData } from './gecko.js';
+import { fetchDexScreenerInfo } from './dexscreener.js';
 import { logger } from '../utils/logger.js';
 import { ENRICHMENT_CONCURRENCY, ENRICHMENT_DELAY_MS } from '../utils/constants.js';
 
@@ -47,13 +48,14 @@ function computeSafetyLevel(input: {
 async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean = false): Promise<void> {
   try {
     // Phase 1: Run all sources in parallel
-    const [rugReport, authority, holders, price, metadata, gecko] = await Promise.allSettled([
+    const [rugReport, authority, holders, price, metadata, gecko, dexScreener] = await Promise.allSettled([
       fetchRugCheckReport(mint),
       checkMintFreezeAuthority(mint),
       getTopHolderConcentration(mint),
       getTokenPrice(mint),
       fetchTokenMetadata(uri),
       getGeckoTokenData(mint),
+      fetchDexScreenerInfo(mint),
     ]);
 
     const rug = rugReport.status === 'fulfilled' ? rugReport.value : null;
@@ -62,6 +64,7 @@ async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean
     const prc = price.status === 'fulfilled' ? price.value : null;
     const meta = metadata.status === 'fulfilled' ? metadata.value : null;
     const gk = gecko.status === 'fulfilled' ? gecko.value : null;
+    const dex = dexScreener.status === 'fulfilled' ? dexScreener.value : null;
 
     // Resolve market data: prefer Jupiter/RugCheck, fallback to GeckoTerminal
     const resolvedPrice = prc?.priceUsd ?? gk?.priceUsd ?? null;
@@ -69,10 +72,10 @@ async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean
     const resolvedMarketCap = gk?.marketCapUsd ?? null;
     const resolvedVolume24h = gk?.volume24hUsd ?? null;
 
-    // Resolve metadata: prefer RugCheck, fallback to URI metadata, then GeckoTerminal
-    const resolvedName = rug?.tokenMeta?.name || meta?.name || gk?.name || null;
-    const resolvedSymbol = rug?.tokenMeta?.symbol || meta?.symbol || gk?.symbol || null;
-    const resolvedImage = rug?.tokenMeta?.image || meta?.image || null;
+    // Resolve metadata: prefer RugCheck, fallback to URI metadata, then GeckoTerminal, then DexScreener
+    const resolvedName = rug?.tokenMeta?.name || meta?.name || gk?.name || dex?.name || null;
+    const resolvedSymbol = rug?.tokenMeta?.symbol || meta?.symbol || gk?.symbol || dex?.symbol || null;
+    const resolvedImage = rug?.tokenMeta?.image || meta?.image || dex?.imageUrl || null;
 
     const safetyLevel = computeSafetyLevel({
       rugCheckScore: rug?.score ?? null,
@@ -89,7 +92,7 @@ async function enrichToken(mint: string, uri: string | null, isReEnrich: boolean
       mint_authority: auth?.mintAuthorityEnabled ?? null,
       freeze_authority: auth?.freezeAuthorityEnabled ?? null,
       top_holder_pct: hold?.topHolderPct ?? null,
-      holder_count: hold?.holderCount ?? null,
+      holder_count: hold?.holderCount ?? dex?.holderCount ?? null,
       price_usd: resolvedPrice,
       market_cap_usd: resolvedMarketCap,
       volume_24h_usd: resolvedVolume24h,
