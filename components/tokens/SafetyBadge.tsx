@@ -30,9 +30,6 @@ export function SafetyBadge({ level, score }: { level: SafetyLevel; score?: numb
     >
       <Icon size={12} />
       <span>{label}</span>
-      {score !== null && score !== undefined && (
-        <span className="opacity-60">{score}</span>
-      )}
     </motion.div>
   );
 }
