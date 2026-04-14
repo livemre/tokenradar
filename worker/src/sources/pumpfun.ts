@@ -128,6 +128,7 @@ function connect() {
 
   ws.on('error', (err) => {
     logger.error('PumpFun: WebSocket error', err.message);
+    if (heartbeatTimer) clearTimeout(heartbeatTimer);
   });
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useMemo, type ReactNode } from 'react';
 import type { Token, TokenSource, SafetyLevel } from '@/lib/types/token';
 import { playNotificationSound } from '@/lib/utils/sound';
 
@@ -132,20 +132,20 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
   }, [updatePreferences]);
 
+  const value = useMemo(() => ({
+    notifications,
+    unreadCount,
+    isOpen,
+    setIsOpen,
+    preferences,
+    addNotification,
+    markAllRead,
+    updatePreferences,
+    requestBrowserPermission,
+  }), [notifications, unreadCount, isOpen, preferences, addNotification, markAllRead, updatePreferences, requestBrowserPermission]);
+
   return (
-    <NotificationContext.Provider
-      value={{
-        notifications,
-        unreadCount,
-        isOpen,
-        setIsOpen,
-        preferences,
-        addNotification,
-        markAllRead,
-        updatePreferences,
-        requestBrowserPermission,
-      }}
-    >
+    <NotificationContext.Provider value={value}>
       {children}
     </NotificationContext.Provider>
   );

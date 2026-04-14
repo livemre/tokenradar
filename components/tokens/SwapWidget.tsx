@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
@@ -31,40 +31,53 @@ export function SwapWidget({ tokenMint, tokenSymbol }: { tokenMint: string; toke
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [direction, setDirection] = useState<'buy' | 'sell'>('buy');
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const abortRef = useRef<AbortController>(null);
 
   const inputMint = direction === 'buy' ? SOL_MINT : tokenMint;
   const outputMint = direction === 'buy' ? tokenMint : SOL_MINT;
   const inputSymbol = direction === 'buy' ? 'SOL' : tokenSymbol;
   const outputSymbol = direction === 'buy' ? tokenSymbol : 'SOL';
 
-  const fetchQuote = useCallback(async (inputAmount: string) => {
+  const fetchQuote = useCallback((inputAmount: string) => {
+    // Cancel pending debounce and in-flight request
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (abortRef.current) abortRef.current.abort();
+
     if (!inputAmount || parseFloat(inputAmount) <= 0) {
       setQuote(null);
+      setLoading(false);
       return;
     }
 
     setLoading(true);
     setError(null);
 
-    try {
-      // Convert to lamports (SOL) or smallest unit
-      const decimals = direction === 'buy' ? 9 : 6; // SOL = 9, most tokens = 6
-      const amountInSmallest = Math.floor(parseFloat(inputAmount) * 10 ** decimals);
+    debounceRef.current = setTimeout(async () => {
+      const controller = new AbortController();
+      abortRef.current = controller;
 
-      const res = await fetch(
-        `https://api.jup.ag/swap/v1/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amountInSmallest}&slippageBps=100`
-      );
+      try {
+        const decimals = direction === 'buy' ? 9 : 6;
+        const amountInSmallest = Math.floor(parseFloat(inputAmount) * 10 ** decimals);
 
-      if (!res.ok) throw new Error('Failed to get quote');
+        const res = await fetch(
+          `https://api.jup.ag/swap/v1/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amountInSmallest}&slippageBps=100`,
+          { signal: controller.signal }
+        );
 
-      const data = await res.json();
-      setQuote(data);
-    } catch {
-      setError(t('quoteFailed'));
-      setQuote(null);
-    } finally {
-      setLoading(false);
-    }
+        if (!res.ok) throw new Error('Failed to get quote');
+
+        const data = await res.json();
+        setQuote(data);
+      } catch (err) {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        setError(t('quoteFailed'));
+        setQuote(null);
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }, 300);
   }, [inputMint, outputMint, direction]);
 
   const executeSwap = async () => {

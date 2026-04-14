@@ -4,8 +4,8 @@ import { createServerSupabase } from '@/lib/supabase/server';
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
 
-  const page = parseInt(searchParams.get('page') || '1');
-  const pageSize = Math.min(parseInt(searchParams.get('pageSize') || '30'), 100);
+  const page = Math.max(1, parseInt(searchParams.get('page') || '1') || 1);
+  const pageSize = Math.min(Math.max(1, parseInt(searchParams.get('pageSize') || '30') || 30), 100);
   const source = searchParams.get('source');
   const safety = searchParams.get('safety');
   const minMcap = searchParams.get('minMcap');
@@ -37,9 +37,18 @@ export async function GET(request: NextRequest) {
 
   if (source) query = query.eq('source', source);
   if (safety) query = query.eq('safety_level', safety);
-  if (minMcap) query = query.gte('market_cap_usd', parseFloat(minMcap));
-  if (maxMcap) query = query.lte('market_cap_usd', parseFloat(maxMcap));
-  if (minHolders) query = query.gte('holder_count', parseInt(minHolders));
+  if (minMcap) {
+    const val = parseFloat(minMcap);
+    if (Number.isFinite(val) && val > 0) query = query.gte('market_cap_usd', val);
+  }
+  if (maxMcap) {
+    const val = parseFloat(maxMcap);
+    if (Number.isFinite(val) && val > 0) query = query.lte('market_cap_usd', val);
+  }
+  if (minHolders) {
+    const val = parseInt(minHolders);
+    if (Number.isFinite(val) && val > 0) query = query.gte('holder_count', val);
+  }
   if (enrichedOnly === 'true') query = query.eq('enriched', true);
 
   // Validate sort column to prevent injection
@@ -52,7 +61,7 @@ export async function GET(request: NextRequest) {
   const { data, error, count } = await query;
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch tokens' }, { status: 500 });
   }
 
   const res = NextResponse.json({

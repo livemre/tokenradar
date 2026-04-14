@@ -1,14 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Token } from '@/lib/types/token';
 import { SafetyBadge } from './SafetyBadge';
 import { SourceLabel } from './SourceLabel';
 import { FavoriteButton } from './FavoriteButton';
-import { PriceChart } from './PriceChart';
 import { SwapWidget } from './SwapWidget';
+
+const PriceChart = dynamic(
+  () => import('./PriceChart').then((m) => ({ default: m.PriceChart })),
+  {
+    loading: () => <div className="h-[400px] animate-pulse bg-white/5 rounded-xl" />,
+    ssr: false,
+  }
+);
 import { Card } from '@/components/ui/Card';
 import { formatUSD, formatPercent, truncateAddress, timeAgo, formatLocalTime } from '@/lib/utils/format';
 import {
@@ -59,7 +67,7 @@ export function TokenDetail({ token }: { token: Token }) {
             {token.image_url && !imgError ? (
               <img
                 src={token.image_url}
-                alt=""
+                alt={token.symbol ? `${token.symbol} logo` : 'Token logo'}
                 className="w-full h-full object-cover"
                 onError={() => setImgError(true)}
               />
@@ -123,10 +131,12 @@ export function TokenDetail({ token }: { token: Token }) {
       </div>
 
       {/* Tab navigation */}
-      <div className="flex gap-1 p-1 bg-white/[0.03] rounded-xl w-fit border border-white/5">
+      <div role="tablist" className="flex gap-1 p-1 bg-white/[0.03] rounded-xl w-fit border border-white/5">
         {tabs.map((tab) => (
           <button
             key={tab.key}
+            role="tab"
+            aria-selected={activeTab === tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all btn-press ${
               activeTab === tab.key

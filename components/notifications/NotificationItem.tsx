@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import type { Notification } from '@/lib/hooks/useNotifications';
+import type { Notification } from '@/lib/context/NotificationContext';
 import { SourceLabel } from '@/components/tokens/SourceLabel';
 import { SafetyBadge } from '@/components/tokens/SafetyBadge';
 import { timeAgo, formatUSD } from '@/lib/utils/format';

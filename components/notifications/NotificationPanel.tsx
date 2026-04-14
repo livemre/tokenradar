@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import type { Notification } from '@/lib/hooks/useNotifications';
+import type { Notification } from '@/lib/context/NotificationContext';
 import { NotificationItem } from './NotificationItem';
 import { CheckCheck, Settings, Bell } from 'lucide-react';
 

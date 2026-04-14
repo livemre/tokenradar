@@ -191,7 +191,7 @@ export async function startEnrichmentPipeline(): Promise<void> {
     }
 
     // When idle: re-enrich tokens with missing data (last 3 hours only)
-    const staleTokens = await fetchTokensForReEnrichment(5, 15, 1);
+    const staleTokens = await fetchTokensForReEnrichment(5, 15, 3);
 
     if (staleTokens.length > 0) {
       logger.info(`Re-enriching ${staleTokens.length} tokens with incomplete data`);

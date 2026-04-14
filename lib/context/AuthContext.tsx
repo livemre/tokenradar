@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   type ReactNode,
 } from 'react';
 import { createBrowserSupabase } from '@/lib/supabase/client';
@@ -38,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  const supabase = createBrowserSupabase();
+  const supabase = useMemo(() => createBrowserSupabase(), []);
 
   const fetchProfile = useCallback(async (userId: string) => {
     const { data } = await supabase
@@ -106,21 +107,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoginModalOpen(false);
   }, [supabase]);
 
+  const value = useMemo(() => ({
+    user,
+    profile,
+    isLoading,
+    isLoginModalOpen,
+    openLoginModal,
+    closeLoginModal,
+    signInWithOAuth,
+    signInWithEmail,
+    signUpWithEmail,
+    signOut,
+  }), [user, profile, isLoading, isLoginModalOpen, openLoginModal, closeLoginModal, signInWithOAuth, signInWithEmail, signUpWithEmail, signOut]);
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        profile,
-        isLoading,
-        isLoginModalOpen,
-        openLoginModal,
-        closeLoginModal,
-        signInWithOAuth,
-        signInWithEmail,
-        signUpWithEmail,
-        signOut,
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import type { NotificationPreferences as Prefs } from '@/lib/hooks/useNotifications';
+import type { NotificationPreferences as Prefs } from '@/lib/context/NotificationContext';
 import type { TokenSource, SafetyLevel } from '@/lib/types/token';
 import { COLORS } from '@/lib/utils/constants';
 import { Volume2, VolumeX, Bell, BellOff, X } from 'lucide-react';

@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
   type ReactNode,
 } from 'react';
 import { createBrowserSupabase } from '@/lib/supabase/client';
@@ -25,7 +26,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(false);
-  const supabase = createBrowserSupabase();
+  const supabase = useMemo(() => createBrowserSupabase(), []);
 
   // Load favorites when user signs in
   useEffect(() => {
@@ -55,40 +56,41 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       if (!user) return;
 
       const removing = favorites.has(mint);
+      const prev = new Set(favorites);
 
       // Optimistic update
-      setFavorites((prev) => {
+      setFavorites(() => {
         const next = new Set(prev);
         if (removing) next.delete(mint);
         else next.add(mint);
         return next;
       });
 
-      if (removing) {
-        await supabase
-          .from('favorites')
-          .delete()
-          .eq('user_id', user.id)
-          .eq('token_mint', mint);
-      } else {
-        await supabase
-          .from('favorites')
-          .insert({ user_id: user.id, token_mint: mint });
-      }
+      const { error } = removing
+        ? await supabase
+            .from('favorites')
+            .delete()
+            .eq('user_id', user.id)
+            .eq('token_mint', mint)
+        : await supabase
+            .from('favorites')
+            .insert({ user_id: user.id, token_mint: mint });
+
+      if (error) setFavorites(prev); // rollback on failure
     },
     [favorites, user, supabase]
   );
 
+  const value = useMemo(() => ({
+    favorites,
+    isFavorite,
+    toggleFavorite,
+    favoritesCount: favorites.size,
+    isLoading,
+  }), [favorites, isFavorite, toggleFavorite, isLoading]);
+
   return (
-    <FavoritesContext.Provider
-      value={{
-        favorites,
-        isFavorite,
-        toggleFavorite,
-        favoritesCount: favorites.size,
-        isLoading,
-      }}
-    >
+    <FavoritesContext.Provider value={value}>
       {children}
     </FavoritesContext.Provider>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import type { Token } from '@/lib/types/token';
@@ -44,7 +44,7 @@ function useLiveAge(detectedAt: string) {
   return age;
 }
 
-export function TokenCard({ token, isNew = false }: TokenCardProps) {
+export const TokenCard = memo(function TokenCard({ token, isNew = false }: TokenCardProps) {
   const age = useLiveAge(token.detected_at);
   const [imgError, setImgError] = useState(false);
 
@@ -74,7 +74,7 @@ export function TokenCard({ token, isNew = false }: TokenCardProps) {
               {token.image_url && !imgError ? (
                 <img
                   src={token.image_url}
-                  alt=""
+                  alt={token.symbol ? `${token.symbol} logo` : 'Token logo'}
                   className="w-full h-full object-cover"
                   onError={() => setImgError(true)}
                   loading="lazy"
@@ -149,4 +149,4 @@ export function TokenCard({ token, isNew = false }: TokenCardProps) {
       </Link>
     </motion.div>
   );
-}
+});

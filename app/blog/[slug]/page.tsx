@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import DOMPurify from 'isomorphic-dompurify';
 import { Radar, ArrowLeft, ArrowRight, Calendar, Tag, Clock, BookOpen, Shield, Newspaper, GraduationCap } from 'lucide-react';
 import { getPost, getPosts } from '@/lib/wordpress';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
@@ -33,6 +34,21 @@ const CATEGORY_STYLES: Record<string, { gradient: string; color: string }> = {
   safety: { gradient: 'from-orange-500/30 via-red-600/20 to-rose-500/10', color: 'text-orange-400' },
   education: { gradient: 'from-purple-500/30 via-violet-600/20 to-fuchsia-500/10', color: 'text-purple-400' },
 };
+
+function sanitizeContent(html: string): string {
+  const clean = DOMPurify.sanitize(html, {
+    ADD_TAGS: ['iframe'],
+    ADD_ATTR: ['target', 'allow', 'allowfullscreen', 'frameborder'],
+  });
+  return clean.replace(
+    /<h2([^>]*)>(.*?)<\/h2>/gi,
+    (_match: string, attrs: string, content: string) => {
+      const text = content.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
+      const anchor = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      return `<h2${attrs} id="${anchor}">${content}</h2>`;
+    }
+  );
+}
 
 function CategoryIcon({ slug, size = 28 }: { slug?: string; size?: number }) {
   switch (slug) {
@@ -236,14 +252,7 @@ export default async function BlogPostPage({
               prose-li:text-[#b0b0b0]
               prose-img:rounded-xl prose-img:border prose-img:border-white/10"
             dangerouslySetInnerHTML={{
-              __html: post.content.rendered.replace(
-                /<h2([^>]*)>(.*?)<\/h2>/gi,
-                (_match: string, attrs: string, content: string) => {
-                  const text = content.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
-                  const anchor = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                  return `<h2${attrs} id="${anchor}">${content}</h2>`;
-                }
-              ),
+              __html: sanitizeContent(post.content.rendered),
             }}
           />
         </article>
