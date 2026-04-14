@@ -298,7 +298,7 @@
     "title": "İzleme Listesi",
     "noFavoritesTitle": "İzleme listesi boş",
     "noFavoritesDesc": "Tokenları izleme listenize eklemek için giriş yapın.",
-    "noFavoritesDescLoggedIn": "İzleme listesine eklemek için herhangi bir tokenin kalp ikonuna dokunun.",
+    "noFavoritesDescLoggedIn": "İzleme listesine eklemek için herhangi bir tokenin yer imi ikonuna dokunun.",
     "signInToSave": "İzleme listesi için giriş yapın",
     "count": "{count} izleniyor"
   },

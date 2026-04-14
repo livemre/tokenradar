@@ -1,6 +1,6 @@
 'use client';
 
-import { Heart } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useFavorites } from '@/lib/context/FavoritesContext';
 import { useAuth } from '@/lib/context/AuthContext';
@@ -30,12 +30,12 @@ export function FavoriteButton({ mint, size = 16, className = '' }: FavoriteButt
       }}
       className={`p-1.5 rounded-lg transition-colors ${
         active
-          ? 'text-[#ff3366] bg-[#ff3366]/10'
+          ? 'text-accent bg-accent/10'
           : 'text-muted hover:text-foreground hover:bg-white/5'
       } ${className}`}
-      aria-label={active ? 'Remove from favorites' : 'Add to favorites'}
+      aria-label={active ? 'Remove from watchlist' : 'Add to watchlist'}
     >
-      <Heart
+      <Bookmark
         size={size}
         fill={active ? 'currentColor' : 'none'}
         strokeWidth={active ? 0 : 2}

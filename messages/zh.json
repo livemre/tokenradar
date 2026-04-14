@@ -298,7 +298,7 @@
     "title": "关注列表",
     "noFavoritesTitle": "关注列表为空",
     "noFavoritesDesc": "登录后可将代币添加到关注列表并轻松追踪。",
-    "noFavoritesDescLoggedIn": "点击任意代币的心形图标即可添加到关注列表。",
+    "noFavoritesDescLoggedIn": "点击任意代币的书签图标即可添加到关注列表。",
     "signInToSave": "登录以使用关注列表",
     "count": "{count}个关注中"
   },

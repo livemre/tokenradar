@@ -298,7 +298,7 @@
     "title": "Watchlist",
     "noFavoritesTitle": "No tokens in watchlist",
     "noFavoritesDesc": "Sign in to add tokens to your watchlist and track them easily.",
-    "noFavoritesDescLoggedIn": "Tap the heart icon on any token to add it to your watchlist.",
+    "noFavoritesDescLoggedIn": "Tap the bookmark icon on any token to add it to your watchlist.",
     "signInToSave": "Sign in to use watchlist",
     "count": "{count} watching"
   },

@@ -298,7 +298,7 @@
     "title": "ウォッチリスト",
     "noFavoritesTitle": "ウォッチリストにトークンがありません",
     "noFavoritesDesc": "ログインしてトークンをウォッチリストに追加しましょう。",
-    "noFavoritesDescLoggedIn": "ハートアイコンをタップしてウォッチリストに追加できます。",
+    "noFavoritesDescLoggedIn": "ブックマークアイコンをタップしてウォッチリストに追加できます。",
     "signInToSave": "ウォッチリスト利用にはログイン",
     "count": "{count}件ウォッチ中"
   },

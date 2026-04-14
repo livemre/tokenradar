@@ -21,7 +21,7 @@ function percentChange(oldVal: number | null, newVal: number | null): number | n
   return ((newVal - oldVal) / oldVal) * 100;
 }
 
-function getSnapshotNearTime(snapshots: TokenSnapshot[], targetTime: number): TokenSnapshot | null {
+function getSnapshotNearTime(snapshots: TokenSnapshot[], targetTime: number, toleranceMs: number = 2 * 60 * 60 * 1000): TokenSnapshot | null {
   if (snapshots.length === 0) return null;
 
   let closest = snapshots[0];
@@ -35,8 +35,7 @@ function getSnapshotNearTime(snapshots: TokenSnapshot[], targetTime: number): To
     }
   }
 
-  // Only use if within 2 hours of target
-  if (closestDiff > 2 * 60 * 60 * 1000) return null;
+  if (closestDiff > toleranceMs) return null;
   return closest;
 }
 
@@ -50,13 +49,22 @@ function computeTrendingScore(snapshots: TokenSnapshot[]): number {
 
   const now = Date.now();
   const latest = snapshots[snapshots.length - 1];
-  const oneHourAgo = getSnapshotNearTime(snapshots, now - 1 * 60 * 60 * 1000);
   const sixHoursAgo = getSnapshotNearTime(snapshots, now - 6 * 60 * 60 * 1000);
+  const oneHourAgo = getSnapshotNearTime(snapshots, now - 1 * 60 * 60 * 1000);
   const twentyFourHoursAgo = getSnapshotNearTime(snapshots, now - 24 * 60 * 60 * 1000);
 
-  // Prefer 6h comparison, fallback 1h or 24h
-  const compareSnapshot = sixHoursAgo || oneHourAgo || twentyFourHoursAgo;
-  if (!compareSnapshot) return 0;
+  // Prefer 6h, fallback 1h, 24h, or just the oldest snapshot we have
+  let compareSnapshot = sixHoursAgo || oneHourAgo || twentyFourHoursAgo;
+
+  // If no match within tolerances, use the oldest snapshot if it's at least 15 min old
+  if (!compareSnapshot) {
+    const oldest = snapshots[0];
+    const ageMs = now - new Date(oldest.snapshot_at).getTime();
+    if (ageMs >= 15 * 60 * 1000) {
+      compareSnapshot = oldest;
+    }
+  }
+  if (!compareSnapshot || compareSnapshot === latest) return 0;
 
   const volumeChange = percentChange(compareSnapshot.volume_24h_usd, latest.volume_24h_usd);
   const holderChange = percentChange(compareSnapshot.holder_count, latest.holder_count);

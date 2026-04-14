@@ -344,9 +344,7 @@ export async function fetchTrendingCandidates(limit: number = 200): Promise<{ mi
     .eq('enriched', true)
     .gte('detected_at', sevenDaysAgo)
     .not('price_usd', 'is', null)
-    .not('holder_count', 'is', null)
-    .gte('holder_count', 5)
-    .gte('liquidity_usd', 500)
+    .gte('liquidity_usd', 100)
     .order('market_cap_usd', { ascending: false, nullsFirst: false })
     .limit(limit);
 

@@ -298,7 +298,7 @@
     "title": "Watchlist",
     "noFavoritesTitle": "Nenhum token na watchlist",
     "noFavoritesDesc": "Faça login para adicionar tokens à sua watchlist e acompanhá-los facilmente.",
-    "noFavoritesDescLoggedIn": "Toque no ícone de coração em qualquer token para adicioná-lo à sua watchlist.",
+    "noFavoritesDescLoggedIn": "Toque no ícone de marcador em qualquer token para adicioná-lo à sua watchlist.",
     "signInToSave": "Faça login para usar watchlist",
     "count": "{count} acompanhando"
   },

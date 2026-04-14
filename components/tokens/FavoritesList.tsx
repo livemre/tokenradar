@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Eye } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 import { useFavorites } from '@/lib/context/FavoritesContext';
 import { useAuth } from '@/lib/context/AuthContext';
 import { TokenCard } from './TokenCard';
@@ -36,7 +36,7 @@ export function FavoritesList() {
     return (
       <div className="text-center py-20">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
-          <Eye size={28} className="text-muted" />
+          <Bookmark size={28} className="text-muted" />
         </div>
         <p className="text-lg font-medium">{t('noFavoritesTitle')}</p>
         <p className="text-sm text-muted mt-2 max-w-xs mx-auto">{t('noFavoritesDesc')}</p>
@@ -64,7 +64,7 @@ export function FavoritesList() {
     return (
       <div className="text-center py-20">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
-          <Eye size={28} className="text-muted" />
+          <Bookmark size={28} className="text-muted" />
         </div>
         <p className="text-lg font-medium">{t('noFavoritesTitle')}</p>
         <p className="text-sm text-muted mt-2 max-w-xs mx-auto">{t('noFavoritesDescLoggedIn')}</p>

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Heart, LogOut } from 'lucide-react';
+import { User, Bookmark, LogOut } from 'lucide-react';
 import { useAuth } from '@/lib/context/AuthContext';
 
 export function UserMenu() {
@@ -59,7 +59,7 @@ export function UserMenu() {
                 onClick={() => setIsOpen(false)}
                 className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-muted hover:text-foreground hover:bg-white/5 transition-colors"
               >
-                <Heart size={14} />
+                <Bookmark size={14} />
                 {t('myFavorites')}
               </Link>
               <button
