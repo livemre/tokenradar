@@ -8,6 +8,7 @@ import { SafetyBadge } from './SafetyBadge';
 import { SourceLabel } from './SourceLabel';
 import { FavoriteButton } from './FavoriteButton';
 import { formatUSD, truncateAddress } from '@/lib/utils/format';
+import { isTokenDead } from '@/lib/utils/safety';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Clock, Users, Droplets } from 'lucide-react';
 
@@ -47,16 +48,19 @@ function useLiveAge(detectedAt: string) {
 export const TokenCard = memo(function TokenCard({ token, isNew = false }: TokenCardProps) {
   const age = useLiveAge(token.detected_at);
   const [imgError, setImgError] = useState(false);
+  const dead = isTokenDead(token);
 
-  const glowClass = token.enriched
-    ? token.safety_level === 'safe'
-      ? 'glow-safe'
-      : token.safety_level === 'warning'
-        ? 'glow-warning'
-        : token.safety_level === 'danger'
-          ? 'glow-danger'
-          : ''
-    : '';
+  const glowClass = dead
+    ? 'glow-dead'
+    : token.enriched
+      ? token.safety_level === 'safe'
+        ? 'glow-safe'
+        : token.safety_level === 'warning'
+          ? 'glow-warning'
+          : token.safety_level === 'danger'
+            ? 'glow-danger'
+            : ''
+      : '';
 
   return (
     <motion.div
@@ -134,7 +138,7 @@ export const TokenCard = memo(function TokenCard({ token, isNew = false }: Token
           <div className="flex items-center gap-2 shrink-0">
             <div className="flex flex-col items-end gap-1">
               {token.enriched ? (
-                <SafetyBadge level={token.safety_level} score={token.safety_score} />
+                <SafetyBadge level={token.safety_level} score={token.safety_score} dead={dead} />
               ) : (
                 <Skeleton className="w-16 h-6" />
               )}

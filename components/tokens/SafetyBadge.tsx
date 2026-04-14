@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import type { SafetyLevel } from '@/lib/types/token';
 import { getSafetyColor, getSafetyLabel } from '@/lib/utils/safety';
-import { Shield, ShieldAlert, ShieldX, ShieldQuestion } from 'lucide-react';
+import { Shield, ShieldAlert, ShieldX, ShieldQuestion, Skull } from 'lucide-react';
 
 const icons = {
   safe: Shield,
@@ -12,10 +12,10 @@ const icons = {
   unknown: ShieldQuestion,
 };
 
-export function SafetyBadge({ level, score }: { level: SafetyLevel; score?: number | null }) {
-  const color = getSafetyColor(level);
-  const label = getSafetyLabel(level);
-  const Icon = icons[level];
+export function SafetyBadge({ level, score, dead }: { level: SafetyLevel; score?: number | null; dead?: boolean }) {
+  const color = dead ? '#666666' : getSafetyColor(level);
+  const label = dead ? 'Dead' : getSafetyLabel(level);
+  const Icon = dead ? Skull : icons[level];
 
   return (
     <motion.div

@@ -8,6 +8,7 @@ export interface SafetyInput {
   topHolderPct: number | null;
   holderCount: number | null;
   liquidityUsd: number | null;
+  volume24hUsd: number | null;
   isRugged: boolean;
 }
 
@@ -39,6 +40,14 @@ function scoreLiquidity(usd: number): number {
   if (usd >= 5_000) return 60;
   if (usd >= 1_000) return 40;
   return 15;
+}
+
+function scoreVolume(usd: number): number {
+  if (usd >= 10_000) return 100;
+  if (usd >= 1_000) return 80;
+  if (usd >= 100) return 50;
+  if (usd >= 10) return 20;
+  return 0;
 }
 
 /**
@@ -99,6 +108,12 @@ export function computeSafety(input: SafetyInput): SafetyResult {
     totalWeight += SAFETY_WEIGHTS.LIQUIDITY;
   }
 
+  // Factor 7: Volume
+  if (input.volume24hUsd !== null) {
+    totalScore += scoreVolume(input.volume24hUsd) * SAFETY_WEIGHTS.VOLUME;
+    totalWeight += SAFETY_WEIGHTS.VOLUME;
+  }
+
   // No data at all → unknown
   if (totalWeight === 0) return { score: 0, level: 'unknown' };
 
@@ -133,4 +148,25 @@ export function getSafetyLabel(level: SafetyLevel): string {
     case 'danger': return 'Danger';
     default: return 'Unknown';
   }
+}
+
+/** Token is "dead" when enriched but has no meaningful liquidity/price/activity */
+export function isTokenDead(token: {
+  enriched: boolean;
+  liquidity_usd: number | null;
+  price_usd: number | null;
+  volume_24h_usd: number | null;
+  holder_count: number | null;
+}): boolean {
+  if (!token.enriched) return false;
+  if (token.liquidity_usd !== null && token.liquidity_usd < 100) return true;
+  if (token.price_usd === null || token.price_usd === 0) return true;
+  if (token.volume_24h_usd === 0 && token.holder_count !== null && token.holder_count <= 1) return true;
+  return false;
+}
+
+/** Data is stale when last enrichment was more than `thresholdMinutes` ago */
+export function isDataStale(enrichedAt: string | null, thresholdMinutes = 30): boolean {
+  if (!enrichedAt) return false;
+  return Date.now() - new Date(enrichedAt).getTime() > thresholdMinutes * 60 * 1000;
 }

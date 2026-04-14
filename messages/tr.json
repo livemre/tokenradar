@@ -187,7 +187,9 @@
       "source": "Kaynak",
       "detected": "Tespit Edildi",
       "analyzed": "Analiz Edildi"
-    }
+    },
+    "deadWarning": "Bu token aktif değil görünüyor — likidite veya işlem aktivitesi yok.",
+    "staleWarning": "Veriler en son {time} güncellendi. Piyasa koşulları değişmiş olabilir."
   },
   "search": {
     "placeholder": "Ad, sembol veya adres ile ara..."

@@ -101,6 +101,12 @@ body {
   border-color: rgba(255, 51, 102, 0.3);
 }
 
+.glow-dead {
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.05);
+  opacity: 0.6;
+}
+
 .glow-new {
   animation: glow-flash 3s ease-out forwards;
 }

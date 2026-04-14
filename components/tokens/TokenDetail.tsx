@@ -19,6 +19,7 @@ const PriceChart = dynamic(
 );
 import { Card } from '@/components/ui/Card';
 import { formatUSD, formatPercent, truncateAddress, timeAgo, formatLocalTime } from '@/lib/utils/format';
+import { isTokenDead, isDataStale } from '@/lib/utils/safety';
 import {
   Shield,
   Clock,
@@ -43,6 +44,8 @@ export function TokenDetail({ token }: { token: Token }) {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<DetailTab>('overview');
   const [imgError, setImgError] = useState(false);
+  const dead = isTokenDead(token);
+  const stale = isDataStale(token.enriched_at);
 
   const copyMint = () => {
     navigator.clipboard.writeText(token.mint);
@@ -81,7 +84,7 @@ export function TokenDetail({ token }: { token: Token }) {
               <h1 className="text-2xl font-bold">{token.symbol || 'Unknown'}</h1>
               {token.name && <span className="text-sm text-muted">{token.name}</span>}
               <SourceLabel source={token.source} />
-              <SafetyBadge level={token.safety_level} score={token.safety_score} />
+              <SafetyBadge level={token.safety_level} score={token.safety_score} dead={dead} />
               <FavoriteButton mint={token.mint} size={20} />
             </div>
 
@@ -129,6 +132,20 @@ export function TokenDetail({ token }: { token: Token }) {
           <MiniStat label={t('stats.holders')} value={token.holder_count?.toLocaleString() || '-'} icon={<Users size={12} />} />
         </div>
       </div>
+
+      {/* Status banners */}
+      {dead && (
+        <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-danger/10 border border-danger/20 text-sm text-danger">
+          <AlertTriangle size={16} />
+          {t('deadWarning')}
+        </div>
+      )}
+      {!dead && stale && (
+        <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-warning/10 border border-warning/20 text-sm text-warning">
+          <Clock size={16} />
+          {t('staleWarning', { time: timeAgo(token.enriched_at!) })}
+        </div>
+      )}
 
       {/* Tab navigation */}
       <div role="tablist" className="flex gap-1 p-1 bg-white/[0.03] rounded-xl w-fit border border-white/5">

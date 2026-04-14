@@ -187,7 +187,9 @@
       "source": "Source",
       "detected": "Detecte",
       "analyzed": "Analyse"
-    }
+    },
+    "deadWarning": "Ce token semble inactif — pas de liquidité ni d'activité de trading.",
+    "staleWarning": "Données mises à jour {time}. Les conditions du marché peuvent avoir changé."
   },
   "search": {
     "placeholder": "Rechercher par nom, symbole ou adresse..."

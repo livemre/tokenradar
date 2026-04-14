@@ -157,6 +157,32 @@ export async function cleanupDeadTokens(maxAgeHours: number = 2): Promise<number
  * - Detected within `maxAgeHours` (skip ancient dead tokens)
  * - Still have null price, holders, safety, or mcap
  */
+/**
+ * Fetch "safe" tokens that should be re-validated to catch dead/inactive tokens.
+ * Re-checks every `reCheckAfterMinutes` for tokens within `maxAgeHours`.
+ */
+export async function fetchSafeTokensForReValidation(limit: number, reCheckAfterMinutes: number = 10, maxAgeHours: number = 2): Promise<UnenrichedToken[]> {
+  const db = getSupabase();
+  const cutoff = new Date(Date.now() - reCheckAfterMinutes * 60 * 1000).toISOString();
+  const maxAgeCutoff = new Date(Date.now() - maxAgeHours * 60 * 60 * 1000).toISOString();
+
+  const { data, error } = await db
+    .from('tokens')
+    .select('mint, name, symbol, uri, source, detected_at')
+    .eq('enriched', true)
+    .eq('safety_level', 'safe')
+    .lte('enriched_at', cutoff)
+    .gte('detected_at', maxAgeCutoff)
+    .order('enriched_at', { ascending: true })
+    .limit(limit);
+
+  if (error) {
+    logger.error(`Failed to fetch safe tokens for re-validation: ${error.message}`);
+    return [];
+  }
+  return data || [];
+}
+
 export async function fetchTokensForReEnrichment(limit: number, reEnrichAfterMinutes: number = 15, maxAgeHours: number = 3): Promise<UnenrichedToken[]> {
   const db = getSupabase();
   const cutoff = new Date(Date.now() - reEnrichAfterMinutes * 60 * 1000).toISOString();

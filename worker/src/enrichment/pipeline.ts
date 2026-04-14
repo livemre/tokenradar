@@ -1,6 +1,7 @@
 import {
   fetchUnenrichedTokens,
   fetchTokensForReEnrichment,
+  fetchSafeTokensForReValidation,
   updateTokenEnrichment,
   markEnrichmentError,
 } from '../db/supabase.js';
@@ -16,7 +17,7 @@ import { logger } from '../utils/logger.js';
 import { ENRICHMENT_CONCURRENCY, ENRICHMENT_DELAY_MS } from '../utils/constants.js';
 
 // Safety scoring: weighted factor system (mirrored from lib/utils/safety.ts)
-const SAFETY_WEIGHTS = { RUGCHECK: 25, MINT_AUTHORITY: 20, FREEZE_AUTHORITY: 15, HOLDER_CONCENTRATION: 15, HOLDER_COUNT: 10, LIQUIDITY: 15 };
+const SAFETY_WEIGHTS = { RUGCHECK: 25, MINT_AUTHORITY: 20, FREEZE_AUTHORITY: 15, HOLDER_CONCENTRATION: 15, HOLDER_COUNT: 5, LIQUIDITY: 15, VOLUME: 5 };
 
 function scoreHolderConcentration(pct: number): number {
   if (pct < 30) return 100;
@@ -42,6 +43,14 @@ function scoreLiquidity(usd: number): number {
   return 15;
 }
 
+function scoreVolume(usd: number): number {
+  if (usd >= 10_000) return 100;
+  if (usd >= 1_000) return 80;
+  if (usd >= 100) return 50;
+  if (usd >= 10) return 20;
+  return 0;
+}
+
 function computeSafety(input: {
   rugCheckNormalised: number | null;
   mintAuthority: boolean | null;
@@ -49,6 +58,7 @@ function computeSafety(input: {
   topHolderPct: number | null;
   holderCount: number | null;
   liquidityUsd: number | null;
+  volume24hUsd: number | null;
   isRugged: boolean;
 }): { score: number; level: string } {
   if (input.isRugged) return { score: 0, level: 'danger' };
@@ -84,6 +94,10 @@ function computeSafety(input: {
   if (input.liquidityUsd !== null) {
     totalScore += scoreLiquidity(input.liquidityUsd) * SAFETY_WEIGHTS.LIQUIDITY;
     totalWeight += SAFETY_WEIGHTS.LIQUIDITY;
+  }
+  if (input.volume24hUsd !== null) {
+    totalScore += scoreVolume(input.volume24hUsd) * SAFETY_WEIGHTS.VOLUME;
+    totalWeight += SAFETY_WEIGHTS.VOLUME;
   }
 
   if (totalWeight === 0) return { score: 0, level: 'unknown' };
@@ -138,6 +152,7 @@ async function enrichToken(mint: string, uri: string | null, source: string, isR
       topHolderPct: hold?.topHolderPct ?? null,
       holderCount: hold?.holderCount ?? null,
       liquidityUsd: resolvedLiquidity,
+      volume24hUsd: resolvedVolume24h,
       isRugged: rug?.rugged ?? false,
     });
 
@@ -196,6 +211,17 @@ export async function startEnrichmentPipeline(): Promise<void> {
     if (staleTokens.length > 0) {
       logger.info(`Re-enriching ${staleTokens.length} tokens with incomplete data`);
       const promises = staleTokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, true));
+      await Promise.allSettled(promises);
+      await sleep(ENRICHMENT_DELAY_MS);
+      continue;
+    }
+
+    // When idle: re-validate "safe" tokens to catch dead/inactive ones (every 10 min, last 2h)
+    const safeTokens = await fetchSafeTokensForReValidation(3, 10, 2);
+
+    if (safeTokens.length > 0) {
+      logger.info(`Re-validating ${safeTokens.length} safe tokens for dead/inactive detection`);
+      const promises = safeTokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, true));
       await Promise.allSettled(promises);
       await sleep(ENRICHMENT_DELAY_MS);
       continue;

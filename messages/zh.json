@@ -187,7 +187,9 @@
       "source": "来源",
       "detected": "检测时间",
       "analyzed": "分析时间"
-    }
+    },
+    "deadWarning": "此代币似乎已不活跃 — 没有流动性或交易活动。",
+    "staleWarning": "数据最后更新于 {time}。市场条件可能已发生变化。"
   },
   "search": {
     "placeholder": "按名称、符号或地址搜索..."
