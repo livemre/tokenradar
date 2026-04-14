@@ -166,7 +166,7 @@ export function isTokenDead(token: {
 }
 
 /** Data is stale when last enrichment was more than `thresholdMinutes` ago */
-export function isDataStale(enrichedAt: string | null, thresholdMinutes = 30): boolean {
+export function isDataStale(enrichedAt: string | null, thresholdMinutes = 360): boolean {
   if (!enrichedAt) return false;
   return Date.now() - new Date(enrichedAt).getTime() > thresholdMinutes * 60 * 1000;
 }
