@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { startPumpFunListener, stopPumpFunListener } from './sources/pumpfun.js';
 import { startMoonshotPoller, stopMoonshotPoller } from './sources/moonshot.js';
 import { startEnrichmentPipeline, stopEnrichmentPipeline } from './enrichment/pipeline.js';
-import { cleanupDeadTokens } from './db/supabase.js';
+import { cleanupDeadTokens, cleanupOldTokens } from './db/supabase.js';
 import { calculateTrendingScores } from './enrichment/trending.js';
 import { logger } from './utils/logger.js';
 
@@ -19,12 +19,16 @@ async function main() {
   // Start enrichment pipeline
   startEnrichmentPipeline();
 
-  // Periodic cleanup of dead tokens (every 30 min)
+  // Periodic cleanup (every 30 min)
   const cleanupLoop = setInterval(async () => {
     try {
-      const deleted = await cleanupDeadTokens(2);
-      if (deleted > 0) {
-        logger.info(`Cleanup: deleted ${deleted} dead tokens (>2h old, no data)`);
+      const deadDeleted = await cleanupDeadTokens(2);
+      if (deadDeleted > 0) {
+        logger.info(`Cleanup: deleted ${deadDeleted} dead tokens (>2h old, no data)`);
+      }
+      const oldDeleted = await cleanupOldTokens(2);
+      if (oldDeleted > 0) {
+        logger.info(`Cleanup: deleted ${oldDeleted} old inactive tokens (>2 days)`);
       }
     } catch (err) {
       logger.error('Cleanup error:', err);
@@ -32,9 +36,10 @@ async function main() {
   }, CLEANUP_INTERVAL_MS);
 
   // Run initial cleanup
-  const initialDeleted = await cleanupDeadTokens(2);
-  if (initialDeleted > 0) {
-    logger.info(`Initial cleanup: deleted ${initialDeleted} dead tokens`);
+  const initialDead = await cleanupDeadTokens(2);
+  const initialOld = await cleanupOldTokens(2);
+  if (initialDead + initialOld > 0) {
+    logger.info(`Initial cleanup: ${initialDead} dead + ${initialOld} old inactive tokens deleted`);
   }
 
   // Periodic trending score calculation (every 15 min)

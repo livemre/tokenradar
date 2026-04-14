@@ -152,6 +152,61 @@ export async function cleanupDeadTokens(maxAgeHours: number = 2): Promise<number
 }
 
 /**
+ * Delete old tokens (>maxAgeDays) that are inactive/dead.
+ * Keeps trending tokens alive. Snapshots cascade-deleted automatically.
+ */
+export async function cleanupOldTokens(maxAgeDays: number = 2): Promise<number> {
+  const db = getSupabase();
+  const cutoff = new Date(Date.now() - maxAgeDays * 24 * 60 * 60 * 1000).toISOString();
+
+  // Delete tokens older than maxAgeDays that:
+  // - Have no meaningful activity (liquidity < $100 OR no price OR abandoned)
+  // - Are NOT trending (trending_score = 0 or null)
+  // - Are NOT in anyone's favorites
+  const { data: favMints } = await db.from('favorites').select('token_mint');
+  const favSet = new Set((favMints || []).map((f) => f.token_mint));
+
+  // Fetch candidates for deletion
+  const { data: candidates, error: fetchErr } = await db
+    .from('tokens')
+    .select('mint, price_usd, liquidity_usd, volume_24h_usd, holder_count, trending_score')
+    .lte('detected_at', cutoff)
+    .eq('enriched', true);
+
+  if (fetchErr || !candidates) {
+    logger.error(`Old token cleanup fetch failed: ${fetchErr?.message}`);
+    return 0;
+  }
+
+  // Filter: delete if dead AND not trending AND not favorited
+  const toDelete = candidates.filter((t) => {
+    if ((t.trending_score ?? 0) > 0) return false; // keep trending
+    if (favSet.has(t.mint)) return false; // keep favorited
+    const isDead =
+      (t.liquidity_usd !== null && t.liquidity_usd < 100) ||
+      t.price_usd === null || t.price_usd === 0 ||
+      (t.volume_24h_usd === 0 && (t.holder_count === null || t.holder_count <= 1));
+    return isDead;
+  });
+
+  if (toDelete.length === 0) return 0;
+
+  // Delete in batches of 100
+  let deleted = 0;
+  for (let i = 0; i < toDelete.length; i += 100) {
+    const batch = toDelete.slice(i, i + 100).map((t) => t.mint);
+    const { error } = await db.from('tokens').delete().in('mint', batch);
+    if (error) {
+      logger.error(`Old token batch delete failed: ${error.message}`);
+    } else {
+      deleted += batch.length;
+    }
+  }
+
+  return deleted;
+}
+
+/**
  * Fetch tokens that were enriched but need re-enrichment:
  * - Enriched more than `reEnrichAfterMinutes` ago
  * - Detected within `maxAgeHours` (skip ancient dead tokens)
