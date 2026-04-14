@@ -295,5 +295,36 @@
     "noFavoritesDescLoggedIn": "Favorilere eklemek için herhangi bir tokenin kalp ikonuna dokunun.",
     "signInToSave": "Favorileri kaydetmek için giriş yapın",
     "count": "{count} favori"
+  },
+  "tokensPage": {
+    "stats": {
+      "totalAnalyzed": "Analiz Edilen Token",
+      "markedSafe": "Güvenli Olarak İşaretlenen"
+    },
+    "seo": {
+      "title": "Gerçek Zamanlı Solana Memecoin Takipçisi",
+      "p1": "TokenRadar, Pump.fun, Raydium ve Moonshot üzerindeki yeni token lansmanlarını gerçek zamanlı olarak izler. Her token, mint otoritesi, freeze otoritesi, en büyük holder yoğunlaşması, likidite derinliği ve işlem hacmi dahil olmak üzere rug-pull riskleri açısından otomatik olarak analiz edilir.",
+      "p2": "Canlı radar, lansmanın 5 saniye içinde yeni tokenleri tespit eder. Her token sayfasında GeckoTerminal'den OHLCV fiyat grafikleri, anında işlem için entegre Jupiter swap, detaylı holder analizi ve RugCheck'ten kapsamlı risk dökümü bulunur."
+    },
+    "features": {
+      "title": "Platform Özellikleri",
+      "detection": { "title": "Gerçek Zamanlı Tespit", "desc": "Pump.fun'dan WebSocket ve Raydium & Moonshot migrasyonları için DexScreener yoklama ile 5 saniye içinde yeni token tespiti." },
+      "safety": { "title": "Güvenlik Analizi", "desc": "7 faktörlü ağırlıklı güvenlik puanlama: RugCheck, mint otoritesi, freeze otoritesi, holder yoğunlaşması, holder sayısı, likidite ve hacim." },
+      "holders": { "title": "Holder Analizi", "desc": "Helius DAS API kullanarak ilk 10 holder yoğunlaşma analizi. Token başına 1.000'e kadar benzersiz holder takibi." },
+      "charts": { "title": "Canlı Fiyat Grafikleri", "desc": "GeckoTerminal verileriyle OHLCV mum grafikleri, 1 dakikadan 1 güne kadar çoklu zaman dilimleri." },
+      "swap": { "title": "Jupiter Swap", "desc": "Jupiter toplayıcı ile detay sayfasından doğrudan token alım satımı. Gerçek zamanlı kotasyonlar ve ayarlanabilir slipaj." },
+      "dead": { "title": "Ölü Token Tespiti", "desc": "Sıfıra yakın likidite, fiyat verisi olmayan veya terk edilmiş holder aktiviteli inaktif tokenleri otomatik olarak tanımlar." }
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "q1": "TokenRadar yeni tokenleri nasıl bu kadar hızlı tespit ediyor?",
+      "a1": "TokenRadar, anlık yeni token ve migrasyon etkinlikleri için Pump.fun'a doğrudan WebSocket ile bağlanır. Moonshot tokenleri, DexScreener'ın her 30 saniyede yoklanmasıyla tespit edilir.",
+      "q2": "Güvenlik puanı ne anlama geliyor?",
+      "a2": "Güvenlik puanı (0-100), 7 ağırlıklı faktörden hesaplanır: RugCheck analizi (%25), mint otoritesi (%20), freeze otoritesi (%15), holder yoğunlaşması (%15), likidite (%15), holder sayısı (%5) ve işlem hacmi (%5). 70 üstü Güvenli, 40-70 Uyarı, 40 altı Tehlikeli.",
+      "q3": "Bir token neden Ölü olarak görünüyor?",
+      "a3": "Bir token, 100$'dan az likiditeye, sıfır fiyata veya yalnızca 1 holder ile işlem aktivitesi olmadığında Ölü olarak işaretlenir.",
+      "q4": "TokenRadar'da doğrudan token alım satımı yapabilir miyim?",
+      "a4": "Evet. Token detay sayfasındaki Trade sekmesi Jupiter toplayıcısını entegre eder. Solana cüzdanınızı bağlayın, miktar girin ve doğrudan swap yapın."
+    }
   }
 }

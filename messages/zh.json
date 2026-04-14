@@ -295,5 +295,33 @@
     "noFavoritesDescLoggedIn": "点击任意代币的爱心图标将其添加到收藏。",
     "signInToSave": "登录以保存收藏",
     "count": "{count} 个收藏"
+  },
+  "tokensPage": {
+    "stats": { "totalAnalyzed": "已分析代币", "markedSafe": "标记为安全" },
+    "seo": {
+      "title": "实时 Solana 模因币追踪器",
+      "p1": "TokenRadar 实时监控 Pump.fun、Raydium 和 Moonshot 上的新代币发行。每个代币都会自动分析 rug-pull 风险，包括铸造权限、冻结权限、持有者集中度、流动性深度和交易量。",
+      "p2": "实时雷达在发行后 5 秒内检测到新代币。每个代币页面包含 OHLCV 价格图表、集成的 Jupiter 交换、详细的持有者分析和 RugCheck 的全面风险分析。"
+    },
+    "features": {
+      "title": "平台功能",
+      "detection": { "title": "实时检测", "desc": "通过 Pump.fun 的 WebSocket 和 DexScreener 轮询 Raydium 和 Moonshot 迁移，在 5 秒内检测新代币。" },
+      "safety": { "title": "安全分析", "desc": "7 因素加权安全评分：RugCheck、铸造权限、冻结权限、持有者集中度、持有者数量、流动性和交易量。" },
+      "holders": { "title": "持有者分析", "desc": "使用 Helius DAS API 进行前 10 持有者集中度分析。每个代币追踪多达 1,000 个独立持有者。" },
+      "charts": { "title": "实时价格图表", "desc": "由 GeckoTerminal 数据驱动的 OHLCV K线图，支持 1 分钟到 1 天的多个时间框架。" },
+      "swap": { "title": "Jupiter 交换", "desc": "使用 Jupiter 聚合器直接从详情页交易任何代币，提供实时报价和可配置滑点。" },
+      "dead": { "title": "死亡代币检测", "desc": "自动识别流动性接近零、无价格数据或持有者活动已停止的不活跃代币。" }
+    },
+    "faq": {
+      "title": "常见问题",
+      "q1": "TokenRadar 如何如此快速地检测新代币？",
+      "a1": "TokenRadar 通过 WebSocket 直接连接到 Pump.fun 以获取即时事件。Moonshot 代币通过每 30 秒轮询 DexScreener 来检测。",
+      "q2": "安全评分是什么意思？",
+      "a2": "安全评分（0-100）由 7 个加权因素计算。70 以上为安全，40-70 为警告，40 以下为危险。",
+      "q3": "为什么代币显示为已死亡？",
+      "a3": "当代币流动性低于 100 美元、价格为零或只剩 1 个持有者且无交易活动时，会被标记为已死亡。",
+      "q4": "我可以直接在 TokenRadar 上交易代币吗？",
+      "a4": "是的。代币详情页的交易选项卡集成了 Jupiter 聚合器。连接您的 Solana 钱包，输入金额并直接交换。"
+    }
   }
 }

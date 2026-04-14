@@ -295,5 +295,33 @@
     "noFavoritesDescLoggedIn": "Appuyez sur l'icone coeur sur n'importe quel token pour l'ajouter a vos favoris.",
     "signInToSave": "Connectez-vous pour sauvegarder vos favoris",
     "count": "{count} favoris"
+  },
+  "tokensPage": {
+    "stats": { "totalAnalyzed": "Tokens Analysés", "markedSafe": "Marqués Sûrs" },
+    "seo": {
+      "title": "Traqueur de Memecoins Solana en Temps Réel",
+      "p1": "TokenRadar surveille les nouveaux lancements de tokens sur Pump.fun, Raydium et Moonshot en temps réel. Chaque token est automatiquement analysé pour les risques de rug-pull incluant l'autorité de mint, l'autorité de freeze, la concentration des holders, la profondeur de liquidité et le volume de trading.",
+      "p2": "Le radar en direct détecte les nouveaux tokens en 5 secondes. Chaque page de token inclut des graphiques OHLCV, le swap Jupiter intégré, une analyse détaillée des holders et des analyses de risque complètes de RugCheck."
+    },
+    "features": {
+      "title": "Fonctionnalités de la Plateforme",
+      "detection": { "title": "Détection en Temps Réel", "desc": "Nouveaux tokens détectés en 5 secondes via WebSocket de Pump.fun et polling DexScreener pour les migrations Raydium & Moonshot." },
+      "safety": { "title": "Analyse de Sécurité", "desc": "Score de sécurité pondéré à 7 facteurs : RugCheck, autorité de mint, autorité de freeze, concentration des holders, nombre de holders, liquidité et volume." },
+      "holders": { "title": "Analyse des Holders", "desc": "Analyse de concentration des 10 principaux holders via Helius DAS API. Suit jusqu'à 1 000 holders uniques par token." },
+      "charts": { "title": "Graphiques de Prix en Direct", "desc": "Graphiques en chandeliers OHLCV avec données GeckoTerminal et multiples intervalles de 1 minute à 1 jour." },
+      "swap": { "title": "Jupiter Swap", "desc": "Échangez n'importe quel token directement depuis la page de détail via l'agrégateur Jupiter avec cotations en temps réel." },
+      "dead": { "title": "Détection de Tokens Morts", "desc": "Identifie automatiquement les tokens inactifs avec une liquidité proche de zéro, sans données de prix ou activité de holders abandonnée." }
+    },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "q1": "Comment TokenRadar détecte-t-il les nouveaux tokens si rapidement ?",
+      "a1": "TokenRadar se connecte directement à Pump.fun via WebSocket pour les événements instantanés. Les tokens Moonshot sont détectés en interrogeant DexScreener toutes les 30 secondes.",
+      "q2": "Que signifie le score de sécurité ?",
+      "a2": "Le score de sécurité (0-100) est calculé à partir de 7 facteurs pondérés. Les scores supérieurs à 70 sont classés Sûrs, 40-70 Avertissement et inférieurs à 40 Dangereux.",
+      "q3": "Pourquoi un token apparaît-il comme Mort ?",
+      "a3": "Un token est marqué Mort lorsqu'il a moins de 100$ de liquidité, un prix nul ou aucune activité de trading avec seulement 1 holder restant.",
+      "q4": "Puis-je échanger des tokens directement sur TokenRadar ?",
+      "a4": "Oui. L'onglet Trade sur la page de détail intègre l'agrégateur Jupiter. Connectez votre portefeuille Solana, entrez un montant et échangez directement."
+    }
   }
 }

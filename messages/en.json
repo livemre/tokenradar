@@ -295,5 +295,54 @@
     "noFavoritesDescLoggedIn": "Tap the heart icon on any token to add it to your favorites.",
     "signInToSave": "Sign in to save favorites",
     "count": "{count} favorites"
+  },
+  "tokensPage": {
+    "stats": {
+      "totalAnalyzed": "Tokens Analyzed",
+      "markedSafe": "Marked Safe"
+    },
+    "seo": {
+      "title": "Real-Time Solana Memecoin Tracker",
+      "p1": "TokenRadar monitors new token launches across Pump.fun, Raydium, and Moonshot in real-time. Every token is automatically analyzed for rug-pull risks including mint authority status, freeze authority, top holder concentration, liquidity depth, and trading volume. Tokens are rated as Safe, Warning, or Danger based on a weighted composite safety score.",
+      "p2": "The live radar detects new tokens within 5 seconds of launch. Each token page includes OHLCV price charts from GeckoTerminal, integrated Jupiter swap for instant trading, detailed holder analysis, and comprehensive risk breakdowns from RugCheck. Dead or inactive tokens are automatically flagged with zero-liquidity detection."
+    },
+    "features": {
+      "title": "Platform Features",
+      "detection": {
+        "title": "Real-Time Detection",
+        "desc": "New tokens detected within 5 seconds via WebSocket from Pump.fun and DexScreener polling for Raydium & Moonshot migrations."
+      },
+      "safety": {
+        "title": "Safety Analysis",
+        "desc": "7-factor weighted safety scoring: RugCheck, mint authority, freeze authority, holder concentration, holder count, liquidity, and volume."
+      },
+      "holders": {
+        "title": "Holder Analysis",
+        "desc": "Top 10 holder concentration analysis using Helius DAS API. Tracks up to 1,000 unique holders per token."
+      },
+      "charts": {
+        "title": "Live Price Charts",
+        "desc": "OHLCV candlestick charts powered by GeckoTerminal data with multiple timeframes from 1 minute to 1 day."
+      },
+      "swap": {
+        "title": "Jupiter Swap",
+        "desc": "Trade any token directly from the detail page using Jupiter aggregator with real-time quotes and configurable slippage."
+      },
+      "dead": {
+        "title": "Dead Token Detection",
+        "desc": "Automatically identifies inactive tokens with near-zero liquidity, no price data, or abandoned holder activity."
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How does TokenRadar detect new tokens so fast?",
+      "a1": "TokenRadar connects directly to Pump.fun via WebSocket for instant new token and migration events. Moonshot tokens are detected by polling DexScreener every 30 seconds. This allows detection within 5 seconds of token creation.",
+      "q2": "What does the safety score mean?",
+      "a2": "The safety score (0-100) is calculated from 7 weighted factors: RugCheck analysis (25%), mint authority (20%), freeze authority (15%), holder concentration (15%), liquidity (15%), holder count (5%), and trading volume (5%). Scores above 70 are rated Safe, 40-70 Warning, and below 40 Danger.",
+      "q3": "Why does a token show as Dead?",
+      "a3": "A token is marked Dead when it has less than $100 in liquidity, zero price, or no trading activity with only 1 holder remaining. This helps you avoid tokens that may have been technically safe but have since been abandoned.",
+      "q4": "Can I trade tokens directly on TokenRadar?",
+      "a4": "Yes. The Trade tab on any token detail page integrates Jupiter aggregator. Connect your Solana wallet, enter an amount, and swap directly. Jupiter finds the best route across all Solana DEXs."
+    }
   }
 }

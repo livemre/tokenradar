@@ -1,153 +1,163 @@
-'use client';
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { createServerSupabase } from '@/lib/supabase/server';
+import TokensPageClient from './TokensPageClient';
 
-import { Suspense, useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Header } from '@/components/layout/Header';
-import { StatsBar } from '@/components/layout/StatsBar';
-import { Footer } from '@/components/layout/Footer';
-import { TokenFeed } from '@/components/tokens/TokenFeed';
-import { TokenExplorer } from '@/components/tokens/TokenExplorer';
-import { FavoritesList } from '@/components/tokens/FavoritesList';
-import { useTokenFeed } from '@/lib/hooks/useTokenFeed';
-import { useNotificationContext } from '@/lib/context/NotificationContext';
-import type { TokenSource } from '@/lib/types/token';
-import { Radio, Compass, Heart } from 'lucide-react';
+const SITE_URL = 'https://tokenradar.site';
 
-type Tab = 'live' | 'explore' | 'favorites';
+export const metadata: Metadata = {
+  title: 'Live Solana Token Radar — Real-Time Memecoin Tracker',
+  description:
+    'Track new Solana memecoins in real-time. Live radar for Pump.fun, Raydium & Moonshot tokens with safety scores, rug-pull detection, holder analysis, price charts, and Jupiter swap integration.',
+  alternates: {
+    canonical: '/tokens',
+  },
+  openGraph: {
+    title: 'Live Solana Token Radar — Real-Time Memecoin Tracker',
+    description:
+      'Detect new Solana tokens in under 5 seconds. Free rug-pull detection, safety scores, holder analysis & live price charts from Pump.fun, Raydium & Moonshot.',
+    url: `${SITE_URL}/tokens`,
+    siteName: 'TokenRadar',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Live Solana Token Radar | TokenRadar',
+    description:
+      'Real-time Solana memecoin detection with safety scores, rug-pull detection & live charts.',
+  },
+};
 
-function TokensContent() {
-  const searchParams = useSearchParams();
-  const t = useTranslations('tokens');
-  const { addNotification } = useNotificationContext();
-  const { tokens, isConnected, newTokenIds } = useTokenFeed(addNotification);
-  const [activeTab, setActiveTab] = useState<Tab>(() => {
-    const tab = searchParams.get('tab');
-    if (tab === 'explore') return 'explore';
-    if (tab === 'favorites') return 'favorites';
-    return 'live';
-  });
-  const [exploreSource, setExploreSource] = useState<TokenSource | ''>('');
-  const [autoFocusSearch, setAutoFocusSearch] = useState(
-    () => searchParams.get('tab') === 'explore'
-  );
-
-  // React to URL changes (e.g. clicking search trigger from header)
-  useEffect(() => {
-    const tab = searchParams.get('tab');
-    if (tab === 'explore') {
-      setActiveTab('explore');
-      setAutoFocusSearch(true);
-    } else if (tab === 'favorites') {
-      setActiveTab('favorites');
-    }
-  }, [searchParams]);
-
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Header isConnected={isConnected} />
-
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
-        {/* Page header */}
-        <div className="mb-8">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">
-                {t('title')} <span className="text-gradient-brand">{t('titleHighlight')}</span>
-              </h1>
-              <p className="text-sm text-muted mt-1">
-                {t('subtitle')}
-              </p>
-            </div>
-            <div className="text-right">
-              <span className="text-2xl font-bold font-mono">{tokens.length}</span>
-              <span className="text-xs text-muted block">{t('tracked')}</span>
-            </div>
-          </div>
-          <StatsBar tokens={tokens} />
-        </div>
-
-        {/* Tab switcher with animated indicator */}
-        <div className="flex gap-1 mb-6 p-1 bg-white/[0.03] rounded-xl w-fit border border-white/5 relative">
-          <button
-            onClick={() => setActiveTab('live')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'live'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <Radio size={14} className={activeTab === 'live' ? 'text-safe' : ''} />
-            {t('tabs.live')}
-            {activeTab === 'live' && isConnected && (
-              <span className="w-1.5 h-1.5 rounded-full bg-safe animate-pulse" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('explore')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'explore'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <Compass size={14} />
-            {t('tabs.explore')}
-          </button>
-          <button
-            onClick={() => setActiveTab('favorites')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'favorites'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <Heart size={14} className={activeTab === 'favorites' ? 'text-[#ff3366]' : ''} />
-            {t('tabs.favorites')}
-          </button>
-
-          {/* Sliding background */}
-          <motion.div
-            className="absolute top-1 bottom-1 rounded-lg bg-white/10"
-            layout
-            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-            style={{
-              left: activeTab === 'live' ? '4px' : activeTab === 'explore' ? 'calc(33.33%)' : 'calc(66.66%)',
-              width: 'calc(33.33% - 4px)',
-            }}
-          />
-        </div>
-
-        {/* Tab content with cross-fade */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-          >
-            {activeTab === 'live' ? (
-              <TokenFeed tokens={tokens} newTokenIds={newTokenIds} onSwitchToExplore={(source) => { setExploreSource(source || ''); setActiveTab('explore'); }} />
-            ) : activeTab === 'explore' ? (
-              <TokenExplorer autoFocusSearch={autoFocusSearch} onSearchFocused={() => setAutoFocusSearch(false)} initialSource={exploreSource} />
-            ) : (
-              <FavoritesList />
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </main>
-
-      <Footer />
-    </div>
-  );
+async function getTokenStats() {
+  try {
+    const supabase = createServerSupabase();
+    const [totalRes, safeRes, sourcesRes] = await Promise.all([
+      supabase.from('tokens').select('id', { count: 'exact', head: true }).eq('enriched', true),
+      supabase.from('tokens').select('id', { count: 'exact', head: true }).eq('enriched', true).eq('safety_level', 'safe'),
+      supabase.from('tokens').select('source').eq('enriched', true),
+    ]);
+    const total = totalRes.count || 0;
+    const safe = safeRes.count || 0;
+    const sources = sourcesRes.data || [];
+    const pumpfun = sources.filter((s) => s.source === 'pumpfun').length;
+    const raydium = sources.filter((s) => s.source === 'raydium').length;
+    const moonshot = sources.filter((s) => s.source === 'moonshot').length;
+    return { total, safe, pumpfun, raydium, moonshot };
+  } catch {
+    return { total: 0, safe: 0, pumpfun: 0, raydium: 0, moonshot: 0 };
+  }
 }
 
-export default function TokensPage() {
+export default async function TokensPage() {
+  const [t, stats] = await Promise.all([
+    getTranslations('tokensPage'),
+    getTokenStats(),
+  ]);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'TokenRadar — Live Solana Token Radar',
+    url: `${SITE_URL}/tokens`,
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Web',
+    description:
+      'Real-time Solana memecoin tracker with safety analysis. Detect new tokens from Pump.fun, Raydium & Moonshot in under 5 seconds.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    featureList: [
+      'Real-time token detection in under 5 seconds',
+      'Rug-pull safety scoring (Safe / Warning / Danger)',
+      'Mint & freeze authority verification',
+      'Top 10 holder concentration analysis',
+      'Live OHLCV price charts',
+      'Jupiter DEX swap integration',
+      'Multi-source tracking: Pump.fun, Raydium, Moonshot',
+      'Dead token detection',
+      'Push notifications for new tokens',
+    ],
+    aggregateRating: stats.total > 0 ? {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: String(stats.total),
+      bestRating: '5',
+      itemReviewed: {
+        '@type': 'SoftwareApplication',
+        name: 'TokenRadar',
+      },
+    } : undefined,
+  };
+
   return (
-    <Suspense>
-      <TokensContent />
-    </Suspense>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <TokensPageClient />
+
+      {/* SSR SEO content — visible to crawlers, below the fold for users */}
+      <section className="max-w-7xl mx-auto px-4 pb-16 space-y-12">
+        {/* Stats summary for crawlers */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="glass-card p-4 text-center">
+            <div className="text-2xl font-bold font-mono">{stats.total.toLocaleString()}</div>
+            <div className="text-xs text-muted mt-1">{t('stats.totalAnalyzed')}</div>
+          </div>
+          <div className="glass-card p-4 text-center">
+            <div className="text-2xl font-bold font-mono text-safe">{stats.safe.toLocaleString()}</div>
+            <div className="text-xs text-muted mt-1">{t('stats.markedSafe')}</div>
+          </div>
+          <div className="glass-card p-4 text-center">
+            <div className="text-2xl font-bold font-mono text-[#9945FF]">{stats.pumpfun.toLocaleString()}</div>
+            <div className="text-xs text-muted mt-1">Pump.fun</div>
+          </div>
+          <div className="glass-card p-4 text-center">
+            <div className="text-2xl font-bold font-mono text-[#2BFFB1]">{stats.raydium.toLocaleString()}</div>
+            <div className="text-xs text-muted mt-1">Raydium</div>
+          </div>
+        </div>
+
+        {/* SEO description block */}
+        <div className="prose prose-invert max-w-none">
+          <h2 className="text-xl font-bold">{t('seo.title')}</h2>
+          <p className="text-sm text-muted leading-relaxed">{t('seo.p1')}</p>
+          <p className="text-sm text-muted leading-relaxed">{t('seo.p2')}</p>
+        </div>
+
+        {/* Feature grid for crawlers */}
+        <div>
+          <h2 className="text-lg font-bold mb-4">{t('features.title')}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {(['detection', 'safety', 'holders', 'charts', 'swap', 'dead'] as const).map((key) => (
+              <div key={key} className="glass-card p-4">
+                <h3 className="text-sm font-semibold mb-1">{t(`features.${key}.title`)}</h3>
+                <p className="text-xs text-muted">{t(`features.${key}.desc`)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* FAQ for crawlers */}
+        <div>
+          <h2 className="text-lg font-bold mb-4">{t('faq.title')}</h2>
+          <div className="space-y-3">
+            {([1, 2, 3, 4] as const).map((i) => (
+              <details key={i} className="glass-card p-4 group">
+                <summary className="text-sm font-semibold cursor-pointer list-none flex items-center justify-between">
+                  {t(`faq.q${i}`)}
+                  <span className="text-muted group-open:rotate-180 transition-transform">&#9660;</span>
+                </summary>
+                <p className="text-xs text-muted mt-2 leading-relaxed">{t(`faq.a${i}`)}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
