@@ -206,7 +206,6 @@ export default async function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#0a0a12" />
-        <link rel="canonical" href={SITE_URL} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

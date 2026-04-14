@@ -51,9 +51,34 @@
       "subheading": "Keine Registrierung erforderlich. Öffne das Dashboard und beginne sofort mit der Token-Verfolgung.",
       "button": "TokenRadar starten"
     },
+    "faq": {
+      "heading": "Häufig gestellte <highlight>Fragen</highlight>",
+      "q1": "Was ist TokenRadar?",
+      "a1": "TokenRadar ist ein kostenloser Echtzeit-Solana-Memecoin-Tracker, der neue Token von Pump.fun, Raydium und Moonshot in unter 5 Sekunden erkennt. Er bietet Sicherheitsbewertungen, Rug-Pull-Erkennung, Holder-Analyse und Live-Preischarts.",
+      "q2": "Wie schnell erkennt TokenRadar neue Token?",
+      "a2": "TokenRadar erkennt neue Solana-Token in unter 5 Sekunden über Echtzeit-WebSocket-Verbindungen und DEX-Abfragen.",
+      "q3": "Ist TokenRadar kostenlos?",
+      "a3": "Ja, TokenRadar ist vollständig kostenlos. Token verfolgen, Sicherheitsbewertungen einsehen, Charts prüfen und Benachrichtigungen erhalten — ohne Zahlung oder Registrierung.",
+      "q4": "Wie funktioniert die Sicherheitsbewertung?",
+      "a4": "TokenRadar analysiert mehrere On-Chain-Datenpunkte: RugCheck-Analyse, Mint- und Freeze-Authority-Status, Top-Holder-Konzentration, Holder-Anzahl und Liquiditätsniveaus. Token werden als Sicher, Warnung oder Gefahr eingestuft.",
+      "q5": "Welche DEX-Quellen überwacht TokenRadar?",
+      "a5": "TokenRadar überwacht drei Solana-DEX-Quellen rund um die Uhr: Pump.fun (neue Token-Launches), Raydium (graduierte Token) und Moonshot von DEXScreener (Fair-Launch-Token)."
+    },
+    "blog": {
+      "heading": "Neuestes aus dem <highlight>Blog</highlight>",
+      "subheading": "Anleitungen, Sicherheitstipps und Ökosystem-Nachrichten.",
+      "readMore": "Weiterlesen",
+      "viewAll": "Alle Artikel anzeigen"
+    },
     "footer": {
       "tagline": "Solana Memecoin Radar",
-      "disclaimer": "Daten ohne Gewähr. Eigene Recherche durchführen. Keine Finanzberatung."
+      "disclaimer": "Daten ohne Gewähr. Eigene Recherche durchführen. Keine Finanzberatung.",
+      "product": "Produkt",
+      "learn": "Lernen",
+      "liveRadar": "Live Radar",
+      "explore": "Token erkunden",
+      "blog": "Blog",
+      "copyright": "© {year} TokenRadar. Alle Rechte vorbehalten."
     }
   },
   "header": {

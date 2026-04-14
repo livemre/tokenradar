@@ -51,9 +51,34 @@
       "subheading": "No sign-up required. Open the dashboard and start tracking tokens instantly.",
       "button": "Launch TokenRadar"
     },
+    "faq": {
+      "heading": "Frequently asked <highlight>questions</highlight>",
+      "q1": "What is TokenRadar?",
+      "a1": "TokenRadar is a free real-time Solana memecoin tracker that detects new tokens from Pump.fun, Raydium, and Moonshot in under 5 seconds. It provides safety scores, rug-pull detection, holder analysis, and live price charts.",
+      "q2": "How fast does TokenRadar detect new tokens?",
+      "a2": "TokenRadar detects new Solana tokens in under 5 seconds using real-time WebSocket connections and DEX polling. You'll see new launches faster than most traders.",
+      "q3": "Is TokenRadar free to use?",
+      "a3": "Yes, TokenRadar is completely free. Track tokens, view safety scores, check charts, and receive notifications — no payment or sign-up required.",
+      "q4": "How does the safety score work?",
+      "a4": "TokenRadar analyzes multiple on-chain data points: RugCheck analysis, mint and freeze authority status, top holder concentration, holder count, and liquidity levels. Tokens are rated as Safe, Warning, or Danger.",
+      "q5": "What DEX sources does TokenRadar monitor?",
+      "a5": "TokenRadar monitors three Solana DEX sources 24/7: Pump.fun (new token launches), Raydium (graduated tokens with AMM pools), and Moonshot by DEXScreener (fair launch tokens)."
+    },
+    "blog": {
+      "heading": "Latest from the <highlight>blog</highlight>",
+      "subheading": "Guides, safety tips, and ecosystem news.",
+      "readMore": "Read more",
+      "viewAll": "View all articles"
+    },
     "footer": {
       "tagline": "Solana Memecoin Radar",
-      "disclaimer": "Data provided as-is. DYOR. Not financial advice."
+      "disclaimer": "Data provided as-is. DYOR. Not financial advice.",
+      "product": "Product",
+      "learn": "Learn",
+      "liveRadar": "Live Radar",
+      "explore": "Explore Tokens",
+      "blog": "Blog",
+      "copyright": "© {year} TokenRadar. All rights reserved."
     }
   },
   "header": {

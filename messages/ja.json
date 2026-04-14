@@ -51,9 +51,34 @@
       "subheading": "登録不要。ダッシュボードを開いて、すぐにトークンの追跡を始めましょう。",
       "button": "TokenRadar を起動"
     },
+    "faq": {
+      "heading": "よくある<highlight>質問</highlight>",
+      "q1": "TokenRadarとは何ですか？",
+      "a1": "TokenRadarは、Pump.fun、Raydium、Moonshotから5秒以内に新しいトークンを検出する無料のリアルタイムSolanaミームコイントラッカーです。安全スコア、ラグプル検出、ホルダー分析、ライブ価格チャートを提供します。",
+      "q2": "TokenRadarはどのくらい速く新しいトークンを検出しますか？",
+      "a2": "TokenRadarはリアルタイムWebSocket接続とDEXポーリングを使用して、5秒以内に新しいSolanaトークンを検出します。",
+      "q3": "TokenRadarは無料ですか？",
+      "a3": "はい、TokenRadarは完全に無料です。トークンの追跡、安全スコアの確認、チャートの閲覧、通知の受信 — 支払いや登録は不要です。",
+      "q4": "安全スコアはどのように機能しますか？",
+      "a4": "TokenRadarは複数のオンチェーンデータを分析します：RugCheck分析、mint・freeze権限ステータス、上位ホルダー集中度、ホルダー数、流動性レベル。トークンは安全、警告、危険に分類されます。",
+      "q5": "TokenRadarはどのDEXソースを監視していますか？",
+      "a5": "TokenRadarは3つのSolana DEXソースを24時間監視しています：Pump.fun（新トークンローンチ）、Raydium（卒業トークン）、DEXScreenerのMoonshot（フェアローンチトークン）。"
+    },
+    "blog": {
+      "heading": "<highlight>ブログ</highlight>の最新記事",
+      "subheading": "ガイド、セキュリティのヒント、エコシステムニュース。",
+      "readMore": "続きを読む",
+      "viewAll": "すべての記事を見る"
+    },
     "footer": {
       "tagline": "Solana ミームコインレーダー",
-      "disclaimer": "データは現状のまま提供されます。DYOR。投資助言ではありません。"
+      "disclaimer": "データは現状のまま提供されます。DYOR。投資助言ではありません。",
+      "product": "製品",
+      "learn": "学ぶ",
+      "liveRadar": "ライブレーダー",
+      "explore": "トークンを探索",
+      "blog": "ブログ",
+      "copyright": "© {year} TokenRadar. All rights reserved."
     }
   },
   "header": {

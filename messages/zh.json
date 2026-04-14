@@ -51,9 +51,34 @@
       "subheading": "无需注册。打开仪表盘，立即开始追踪代币。",
       "button": "启动 TokenRadar"
     },
+    "faq": {
+      "heading": "常见<highlight>问题</highlight>",
+      "q1": "什么是 TokenRadar？",
+      "a1": "TokenRadar 是一个免费的实时 Solana memecoin 追踪器，能在 5 秒内检测来自 Pump.fun、Raydium 和 Moonshot 的新代币。它提供安全评分、拉地毯检测、持有者分析和实时价格图表。",
+      "q2": "TokenRadar 检测新代币有多快？",
+      "a2": "TokenRadar 使用实时 WebSocket 连接和 DEX 轮询，在 5 秒内检测新的 Solana 代币。",
+      "q3": "TokenRadar 免费吗？",
+      "a3": "是的，TokenRadar 完全免费。追踪代币、查看安全评分、查看图表、接收通知——无需付费或注册。",
+      "q4": "安全评分如何运作？",
+      "a4": "TokenRadar 分析多个链上数据：RugCheck 分析、铸造和冻结权限状态、主要持有者集中度、持有者数量和流动性水平。代币被评为安全、警告或危险。",
+      "q5": "TokenRadar 监控哪些 DEX 来源？",
+      "a5": "TokenRadar 全天候监控三个 Solana DEX 来源：Pump.fun（新代币发布）、Raydium（毕业代币）和 DEXScreener 的 Moonshot（公平发布代币）。"
+    },
+    "blog": {
+      "heading": "<highlight>博客</highlight>最新文章",
+      "subheading": "指南、安全提示和生态系统新闻。",
+      "readMore": "阅读更多",
+      "viewAll": "查看所有文章"
+    },
     "footer": {
       "tagline": "Solana Memecoin 雷达",
-      "disclaimer": "数据按原样提供。DYOR。非投资建议。"
+      "disclaimer": "数据按原样提供。DYOR。非投资建议。",
+      "product": "产品",
+      "learn": "学习",
+      "liveRadar": "实时雷达",
+      "explore": "探索代币",
+      "blog": "博客",
+      "copyright": "© {year} TokenRadar. All rights reserved."
     }
   },
   "header": {

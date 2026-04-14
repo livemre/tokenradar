@@ -51,9 +51,34 @@
       "subheading": "Kayıt gerekmez. Paneli açın ve tokenleri anında takip etmeye başlayın.",
       "button": "TokenRadar'ı Başlat"
     },
+    "faq": {
+      "heading": "Sıkça sorulan <highlight>sorular</highlight>",
+      "q1": "TokenRadar nedir?",
+      "a1": "TokenRadar, Pump.fun, Raydium ve Moonshot'tan yeni tokenleri 5 saniyeden kısa sürede tespit eden ücretsiz bir gerçek zamanlı Solana memecoin takipçisidir. Güvenlik puanları, rug-pull tespiti, holder analizi ve canlı fiyat grafikleri sunar.",
+      "q2": "TokenRadar yeni tokenleri ne kadar hızlı tespit eder?",
+      "a2": "TokenRadar, gerçek zamanlı WebSocket bağlantıları ve DEX sorgulaması kullanarak yeni Solana tokenlerini 5 saniyeden kısa sürede tespit eder.",
+      "q3": "TokenRadar ücretsiz mi?",
+      "a3": "Evet, TokenRadar tamamen ücretsizdir. Token takibi, güvenlik puanları, grafikler ve bildirimler — ödeme veya kayıt gerekmez.",
+      "q4": "Güvenlik puanı nasıl çalışır?",
+      "a4": "TokenRadar birden fazla zincir üstü veriyi analiz eder: RugCheck analizi, mint ve freeze yetki durumu, en büyük holder yoğunluğu, holder sayısı ve likidite seviyeleri. Tokenler Güvenli, Uyarı veya Tehlike olarak derecelendirilir.",
+      "q5": "TokenRadar hangi DEX kaynaklarını izler?",
+      "a5": "TokenRadar 7/24 üç Solana DEX kaynağını izler: Pump.fun (yeni token lansmanları), Raydium (mezun tokenler) ve DEXScreener tarafından Moonshot (adil lansman tokenleri)."
+    },
+    "blog": {
+      "heading": "Blogdan <highlight>son yazılar</highlight>",
+      "subheading": "Rehberler, güvenlik ipuçları ve ekosistem haberleri.",
+      "readMore": "Devamını oku",
+      "viewAll": "Tüm yazıları gör"
+    },
     "footer": {
       "tagline": "Solana Memecoin Radarı",
-      "disclaimer": "Veriler olduğu gibi sunulmaktadır. Kendi araştırmanızı yapın. Finansal tavsiye değildir."
+      "disclaimer": "Veriler olduğu gibi sunulmaktadır. Kendi araştırmanızı yapın. Finansal tavsiye değildir.",
+      "product": "Ürün",
+      "learn": "Öğren",
+      "liveRadar": "Canlı Radar",
+      "explore": "Tokenleri Keşfet",
+      "blog": "Blog",
+      "copyright": "© {year} TokenRadar. Tüm hakları saklıdır."
     }
   },
   "header": {

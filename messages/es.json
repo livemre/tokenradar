@@ -51,9 +51,34 @@
       "subheading": "Sin registro requerido. Abre el panel y empieza a rastrear tokens al instante.",
       "button": "Iniciar TokenRadar"
     },
+    "faq": {
+      "heading": "Preguntas <highlight>frecuentes</highlight>",
+      "q1": "¿Qué es TokenRadar?",
+      "a1": "TokenRadar es un rastreador gratuito de memecoins en Solana en tiempo real que detecta nuevos tokens de Pump.fun, Raydium y Moonshot en menos de 5 segundos. Proporciona puntuaciones de seguridad, detección de rug-pull, análisis de holders y gráficos de precios en vivo.",
+      "q2": "¿Qué tan rápido detecta TokenRadar nuevos tokens?",
+      "a2": "TokenRadar detecta nuevos tokens de Solana en menos de 5 segundos usando conexiones WebSocket en tiempo real y sondeo de DEX.",
+      "q3": "¿Es TokenRadar gratuito?",
+      "a3": "Sí, TokenRadar es completamente gratuito. Rastrea tokens, consulta puntuaciones de seguridad, revisa gráficos y recibe notificaciones — sin pago ni registro.",
+      "q4": "¿Cómo funciona la puntuación de seguridad?",
+      "a4": "TokenRadar analiza múltiples datos on-chain: análisis RugCheck, estado de mint y freeze authority, concentración de holders principales, cantidad de holders y niveles de liquidez. Los tokens se clasifican como Seguro, Advertencia o Peligro.",
+      "q5": "¿Qué fuentes DEX monitorea TokenRadar?",
+      "a5": "TokenRadar monitorea tres fuentes DEX de Solana 24/7: Pump.fun (lanzamientos de tokens), Raydium (tokens graduados) y Moonshot de DEXScreener (tokens de lanzamiento justo)."
+    },
+    "blog": {
+      "heading": "Últimas del <highlight>blog</highlight>",
+      "subheading": "Guías, consejos de seguridad y noticias del ecosistema.",
+      "readMore": "Leer más",
+      "viewAll": "Ver todos los artículos"
+    },
     "footer": {
       "tagline": "Solana Memecoin Radar",
-      "disclaimer": "Datos proporcionados tal cual. Haz tu propia investigacion. No es consejo financiero."
+      "disclaimer": "Datos proporcionados tal cual. Haz tu propia investigacion. No es consejo financiero.",
+      "product": "Producto",
+      "learn": "Aprender",
+      "liveRadar": "Radar en Vivo",
+      "explore": "Explorar Tokens",
+      "blog": "Blog",
+      "copyright": "© {year} TokenRadar. Todos los derechos reservados."
     }
   },
   "header": {

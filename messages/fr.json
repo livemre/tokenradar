@@ -51,9 +51,34 @@
       "subheading": "Aucune inscription requise. Ouvrez le tableau de bord et commencez a suivre les tokens instantanement.",
       "button": "Lancer TokenRadar"
     },
+    "faq": {
+      "heading": "Questions <highlight>fréquentes</highlight>",
+      "q1": "Qu'est-ce que TokenRadar ?",
+      "a1": "TokenRadar est un traqueur gratuit de memecoins Solana en temps réel qui détecte les nouveaux tokens de Pump.fun, Raydium et Moonshot en moins de 5 secondes. Il fournit des scores de sécurité, la détection de rug-pull, l'analyse des holders et des graphiques de prix en direct.",
+      "q2": "À quelle vitesse TokenRadar détecte-t-il les nouveaux tokens ?",
+      "a2": "TokenRadar détecte les nouveaux tokens Solana en moins de 5 secondes grâce à des connexions WebSocket en temps réel et au sondage des DEX.",
+      "q3": "TokenRadar est-il gratuit ?",
+      "a3": "Oui, TokenRadar est entièrement gratuit. Suivez les tokens, consultez les scores de sécurité, vérifiez les graphiques et recevez des notifications — sans paiement ni inscription.",
+      "q4": "Comment fonctionne le score de sécurité ?",
+      "a4": "TokenRadar analyse plusieurs données on-chain : analyse RugCheck, statut des autorités mint et freeze, concentration des principaux holders, nombre de holders et niveaux de liquidité. Les tokens sont classés comme Sûr, Avertissement ou Danger.",
+      "q5": "Quelles sources DEX TokenRadar surveille-t-il ?",
+      "a5": "TokenRadar surveille trois sources DEX Solana 24h/24 : Pump.fun (lancements de tokens), Raydium (tokens gradués) et Moonshot de DEXScreener (tokens à lancement équitable)."
+    },
+    "blog": {
+      "heading": "Derniers articles du <highlight>blog</highlight>",
+      "subheading": "Guides, conseils de sécurité et actualités de l'écosystème.",
+      "readMore": "Lire la suite",
+      "viewAll": "Voir tous les articles"
+    },
     "footer": {
       "tagline": "Solana Memecoin Radar",
-      "disclaimer": "Donnees fournies telles quelles. Faites vos propres recherches. Ceci n'est pas un conseil financier."
+      "disclaimer": "Donnees fournies telles quelles. Faites vos propres recherches. Ceci n'est pas un conseil financier.",
+      "product": "Produit",
+      "learn": "Apprendre",
+      "liveRadar": "Radar en Direct",
+      "explore": "Explorer les Tokens",
+      "blog": "Blog",
+      "copyright": "© {year} TokenRadar. Tous droits réservés."
     }
   },
   "header": {

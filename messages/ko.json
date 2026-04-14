@@ -51,9 +51,34 @@
       "subheading": "회원가입이 필요 없습니다. 대시보드를 열고 즉시 토큰 추적을 시작하세요.",
       "button": "TokenRadar 실행"
     },
+    "faq": {
+      "heading": "자주 묻는 <highlight>질문</highlight>",
+      "q1": "TokenRadar란 무엇인가요?",
+      "a1": "TokenRadar는 Pump.fun, Raydium, Moonshot의 새 토큰을 5초 이내에 감지하는 무료 실시간 Solana 밈코인 트래커입니다. 안전 점수, 러그풀 감지, 홀더 분석, 실시간 가격 차트를 제공합니다.",
+      "q2": "TokenRadar는 새 토큰을 얼마나 빨리 감지하나요?",
+      "a2": "TokenRadar는 실시간 WebSocket 연결과 DEX 폴링을 사용하여 5초 이내에 새 Solana 토큰을 감지합니다.",
+      "q3": "TokenRadar는 무료인가요?",
+      "a3": "네, TokenRadar는 완전히 무료입니다. 토큰 추적, 안전 점수 확인, 차트 조회, 알림 수신 — 결제나 가입이 필요 없습니다.",
+      "q4": "안전 점수는 어떻게 작동하나요?",
+      "a4": "TokenRadar는 여러 온체인 데이터를 분석합니다: RugCheck 분석, mint 및 freeze 권한 상태, 상위 홀더 집중도, 홀더 수, 유동성 수준. 토큰은 안전, 경고, 위험으로 분류됩니다.",
+      "q5": "TokenRadar는 어떤 DEX 소스를 모니터링하나요?",
+      "a5": "TokenRadar는 24시간 세 가지 Solana DEX 소스를 모니터링합니다: Pump.fun (새 토큰 출시), Raydium (졸업 토큰), DEXScreener의 Moonshot (공정 출시 토큰)."
+    },
+    "blog": {
+      "heading": "<highlight>블로그</highlight> 최신 글",
+      "subheading": "가이드, 보안 팁, 생태계 뉴스.",
+      "readMore": "더 읽기",
+      "viewAll": "모든 글 보기"
+    },
     "footer": {
       "tagline": "Solana 밈코인 레이더",
-      "disclaimer": "데이터는 있는 그대로 제공됩니다. DYOR. 투자 조언이 아닙니다."
+      "disclaimer": "데이터는 있는 그대로 제공됩니다. DYOR. 투자 조언이 아닙니다.",
+      "product": "제품",
+      "learn": "학습",
+      "liveRadar": "실시간 레이더",
+      "explore": "토큰 탐색",
+      "blog": "블로그",
+      "copyright": "© {year} TokenRadar. All rights reserved."
     }
   },
   "header": {
