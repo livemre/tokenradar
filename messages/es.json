@@ -98,10 +98,10 @@
     "copied": "Direccion copiada!"
   },
   "stats": {
-    "rate": "Tasa",
     "totalTokens": "Tokens Totales",
-    "safeRate": "Tasa de Seguridad",
-    "last5min": "Ultimos 5 min"
+    "safeRate": "Tasa Segura",
+    "last24h": "Últimas 24h",
+    "trending": "Tendencias"
   },
   "tokens": {
     "title": "Token",

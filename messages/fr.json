@@ -98,10 +98,10 @@
     "copied": "Adresse copiee !"
   },
   "stats": {
-    "rate": "Cadence",
-    "totalTokens": "Total des tokens",
-    "safeRate": "Taux de securite",
-    "last5min": "5 dernieres min"
+    "totalTokens": "Total Tokens",
+    "safeRate": "Taux Sûr",
+    "last24h": "Dernières 24h",
+    "trending": "Tendances"
   },
   "tokens": {
     "title": "Token",

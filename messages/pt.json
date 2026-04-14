@@ -98,10 +98,10 @@
     "copied": "Endereco copiado!"
   },
   "stats": {
-    "rate": "Taxa",
     "totalTokens": "Total de Tokens",
-    "safeRate": "Taxa de Seguranca",
-    "last5min": "Ultimos 5 min"
+    "safeRate": "Taxa Segura",
+    "last24h": "Últimas 24h",
+    "trending": "Em Alta"
   },
   "tokens": {
     "title": "Token",

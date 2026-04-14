@@ -98,10 +98,10 @@
     "copied": "アドレスをコピーしました！"
   },
   "stats": {
-    "rate": "レート",
     "totalTokens": "トークン総数",
     "safeRate": "安全率",
-    "last5min": "直近5分"
+    "last24h": "過去24時間",
+    "trending": "トレンド"
   },
   "tokens": {
     "title": "トークン",

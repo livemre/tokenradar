@@ -98,10 +98,10 @@
     "copied": "주소가 복사되었습니다!"
   },
   "stats": {
-    "rate": "비율",
     "totalTokens": "전체 토큰",
     "safeRate": "안전 비율",
-    "last5min": "최근 5분"
+    "last24h": "최근 24시간",
+    "trending": "인기 상승"
   },
   "tokens": {
     "title": "토큰",

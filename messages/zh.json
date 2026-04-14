@@ -98,10 +98,10 @@
     "copied": "地址已复制！"
   },
   "stats": {
-    "rate": "速率",
     "totalTokens": "代币总数",
     "safeRate": "安全率",
-    "last5min": "最近 5 分钟"
+    "last24h": "过去24小时",
+    "trending": "热门上升"
   },
   "tokens": {
     "title": "代币",

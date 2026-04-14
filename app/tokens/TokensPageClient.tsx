@@ -69,7 +69,7 @@ function TokensContent() {
               <span className="text-xs text-muted block">{t('tracked')}</span>
             </div>
           </div>
-          <StatsBar tokens={tokens} />
+          <StatsBar />
         </div>
 
         {/* Tab switcher with animated indicator */}

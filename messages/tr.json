@@ -98,10 +98,10 @@
     "copied": "Adres kopyalandı!"
   },
   "stats": {
-    "rate": "Oran",
     "totalTokens": "Toplam Token",
-    "safeRate": "Güvenli Oranı",
-    "last5min": "Son 5 dk"
+    "safeRate": "Güvenli Oran",
+    "last24h": "Son 24 saat",
+    "trending": "Yükselen"
   },
   "tokens": {
     "title": "Token",

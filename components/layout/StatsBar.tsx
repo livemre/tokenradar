@@ -1,38 +1,39 @@
 'use client';
 
-import type { Token } from '@/lib/types/token';
-import { Activity, TrendingUp, Shield, Coins } from 'lucide-react';
+import useSWR from 'swr';
+import { Activity, Shield, Coins, TrendingUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-interface StatsBarProps {
-  tokens: Token[];
+interface StatsData {
+  total: number;
+  safe: number;
+  safePercent: number;
+  recent5min: number;
+  ratePerMin: number;
+  today: number;
+  trending: number;
 }
 
-export function StatsBar({ tokens }: StatsBarProps) {
-  const t = useTranslations('stats');
-  const totalTokens = tokens.length;
-  const safeTokens = tokens.filter((t) => t.safety_level === 'safe').length;
-  const safePercent = totalTokens > 0 ? Math.round((safeTokens / totalTokens) * 100) : 0;
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-  const fiveMinAgo = Date.now() - 5 * 60 * 1000;
-  const recentCount = tokens.filter(
-    (t) => new Date(t.detected_at).getTime() > fiveMinAgo
-  ).length;
-  const tokensPerMin = totalTokens > 0 ? Math.round(recentCount / 5) : 0;
+export function StatsBar() {
+  const t = useTranslations('stats');
+  const { data } = useSWR<StatsData>('/api/tokens/stats', fetcher, {
+    refreshInterval: 15000,
+    keepPreviousData: true,
+  });
+
+  const total = data?.total ?? 0;
+  const safePercent = data?.safePercent ?? 0;
+  const today = data?.today ?? 0;
+  const trending = data?.trending ?? 0;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
       <StatCard
-        icon={<Activity size={14} />}
-        label={t('rate')}
-        value={`${tokensPerMin}/min`}
-        gradient="from-green-500/10 to-cyan-500/10"
-        iconColor="text-safe"
-      />
-      <StatCard
         icon={<Coins size={14} />}
         label={t('totalTokens')}
-        value={totalTokens.toString()}
+        value={total.toLocaleString()}
         gradient="from-blue-500/10 to-purple-500/10"
         iconColor="text-accent"
       />
@@ -45,9 +46,16 @@ export function StatsBar({ tokens }: StatsBarProps) {
         iconColor="text-safe"
       />
       <StatCard
+        icon={<Activity size={14} />}
+        label={t('last24h')}
+        value={today.toLocaleString()}
+        gradient="from-green-500/10 to-cyan-500/10"
+        iconColor="text-safe"
+      />
+      <StatCard
         icon={<TrendingUp size={14} />}
-        label={t('last5min')}
-        value={recentCount.toString()}
+        label={t('trending')}
+        value={trending.toLocaleString()}
         gradient="from-orange-500/10 to-yellow-500/10"
         iconColor="text-warning"
       />

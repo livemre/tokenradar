@@ -98,10 +98,10 @@
     "copied": "Address copied!"
   },
   "stats": {
-    "rate": "Rate",
     "totalTokens": "Total Tokens",
     "safeRate": "Safe Rate",
-    "last5min": "Last 5 min"
+    "last24h": "Last 24h",
+    "trending": "Trending"
   },
   "tokens": {
     "title": "Token",
