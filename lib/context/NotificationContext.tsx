@@ -89,6 +89,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const addNotification = useCallback(
     (token: Token) => {
+      // Skip tokens without a name/symbol (unenriched noise)
+      if (!token.symbol) return;
       // Filter based on preferences
       if (!preferences.sources.includes(token.source)) return;
       if (token.safety_level && !preferences.safetyLevels.includes(token.safety_level)) return;
