@@ -111,8 +111,14 @@
     "tabs": {
       "live": "Radar en direct",
       "explore": "Explorer",
+      "trending": "Tendances",
       "favorites": "Watchlist"
     }
+  },
+  "trending": {
+    "noTrending": "Aucun token en tendance",
+    "noTrendingDesc": "Les tokens en tendance apparaîtront lorsqu'ils gagneront en popularité.",
+    "trendingCount": "{count} tokens en tendance"
   },
   "feed": {
     "waiting": "En attente de nouveaux tokens...",

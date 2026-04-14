@@ -54,6 +54,20 @@ export interface RiskDetail {
   score: number;
 }
 
+export interface TrendingMetrics {
+  volume_change_pct: number | null;
+  holder_change_pct: number | null;
+  price_change_pct: number | null;
+  liquidity_change_pct: number | null;
+}
+
+export interface TrendingToken extends Token {
+  trending_score: number;
+  trending_metrics: TrendingMetrics;
+}
+
+export type TrendingPeriod = '1h' | '6h' | '24h';
+
 export interface TokenFilters {
   source?: TokenSource;
   safety?: SafetyLevel;

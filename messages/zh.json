@@ -111,8 +111,14 @@
     "tabs": {
       "live": "实时雷达",
       "explore": "浏览",
+      "trending": "热门上升",
       "favorites": "关注列表"
     }
+  },
+  "trending": {
+    "noTrending": "暂无热门上升代币",
+    "noTrendingDesc": "代币获得关注后将在此显示。",
+    "trendingCount": "{count}个热门上升代币"
   },
   "feed": {
     "waiting": "等待新代币...",

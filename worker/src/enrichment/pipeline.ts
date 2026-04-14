@@ -4,6 +4,7 @@ import {
   fetchSafeTokensForReValidation,
   updateTokenEnrichment,
   markEnrichmentError,
+  insertSnapshot,
 } from '../db/supabase.js';
 import { fetchRugCheckReport } from './rugcheck.js';
 import { checkMintFreezeAuthority } from './authority.js';
@@ -178,6 +179,16 @@ async function enrichToken(mint: string, uri: string | null, source: string, isR
     if (resolvedSymbol) enrichmentData.symbol = resolvedSymbol;
 
     await updateTokenEnrichment(mint, enrichmentData);
+
+    // Insert snapshot for trending analysis (fire-and-forget)
+    insertSnapshot({
+      mint,
+      price_usd: resolvedPrice,
+      volume_24h_usd: resolvedVolume24h,
+      market_cap_usd: resolvedMarketCap,
+      holder_count: hold?.holderCount ?? null,
+      liquidity_usd: resolvedLiquidity,
+    }).catch(() => {});
 
     const tag = isReEnrich ? 'Re-enriched' : 'Enriched';
     logger.info(`${tag}: ${mint} → ${safety.level} (safety: ${safety.score}/100, price: ${resolvedPrice ? '$' + resolvedPrice : 'N/A'}, mcap: ${resolvedMarketCap ? '$' + resolvedMarketCap : 'N/A'}, holders: ${hold?.holderCount ?? 0}, name: ${resolvedName ?? 'unknown'})`);

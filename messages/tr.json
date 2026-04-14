@@ -111,8 +111,14 @@
     "tabs": {
       "live": "Canlı Radar",
       "explore": "Keşfet",
+      "trending": "Yükselen",
       "favorites": "İzleme Listesi"
     }
+  },
+  "trending": {
+    "noTrending": "Henüz yükselen token yok",
+    "noTrendingDesc": "Tokenler zaman içinde ivme kazandıkça burada görünecek.",
+    "trendingCount": "{count} yükselen token"
   },
   "feed": {
     "waiting": "Yeni tokenler bekleniyor...",

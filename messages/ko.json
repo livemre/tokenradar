@@ -111,8 +111,14 @@
     "tabs": {
       "live": "라이브 레이더",
       "explore": "탐색",
+      "trending": "인기 상승",
       "favorites": "관심목록"
     }
+  },
+  "trending": {
+    "noTrending": "아직 인기 상승 토큰이 없습니다",
+    "noTrendingDesc": "토큰이 주목받기 시작하면 여기에 표시됩니다.",
+    "trendingCount": "{count}개 인기 상승 토큰"
   },
   "feed": {
     "waiting": "새로운 토큰을 기다리는 중...",

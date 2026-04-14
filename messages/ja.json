@@ -111,8 +111,14 @@
     "tabs": {
       "live": "ライブレーダー",
       "explore": "探索",
+      "trending": "トレンド",
       "favorites": "ウォッチリスト"
     }
+  },
+  "trending": {
+    "noTrending": "トレンドトークンはまだありません",
+    "noTrendingDesc": "トークンが注目を集め始めると、ここに表示されます。",
+    "trendingCount": "{count}件のトレンドトークン"
   },
   "feed": {
     "waiting": "新しいトークンを待機中...",

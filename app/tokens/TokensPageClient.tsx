@@ -10,12 +10,13 @@ import { Footer } from '@/components/layout/Footer';
 import { TokenFeed } from '@/components/tokens/TokenFeed';
 import { TokenExplorer } from '@/components/tokens/TokenExplorer';
 import { FavoritesList } from '@/components/tokens/FavoritesList';
+import { TrendingFeed } from '@/components/tokens/TrendingFeed';
 import { useTokenFeed } from '@/lib/hooks/useTokenFeed';
 import { useNotificationContext } from '@/lib/context/NotificationContext';
 import type { TokenSource } from '@/lib/types/token';
-import { Radio, Compass, Eye } from 'lucide-react';
+import { Radio, Compass, TrendingUp, Eye } from 'lucide-react';
 
-type Tab = 'live' | 'explore' | 'favorites';
+type Tab = 'live' | 'explore' | 'trending' | 'favorites';
 
 function TokensContent() {
   const searchParams = useSearchParams();
@@ -25,6 +26,7 @@ function TokensContent() {
   const [activeTab, setActiveTab] = useState<Tab>(() => {
     const tab = searchParams.get('tab');
     if (tab === 'explore') return 'explore';
+    if (tab === 'trending') return 'trending';
     if (tab === 'favorites') return 'favorites';
     return 'live';
   });
@@ -39,6 +41,8 @@ function TokensContent() {
     if (tab === 'explore') {
       setActiveTab('explore');
       setAutoFocusSearch(true);
+    } else if (tab === 'trending') {
+      setActiveTab('trending');
     } else if (tab === 'favorites') {
       setActiveTab('favorites');
     }
@@ -96,6 +100,17 @@ function TokensContent() {
             {t('tabs.explore')}
           </button>
           <button
+            onClick={() => setActiveTab('trending')}
+            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
+              activeTab === 'trending'
+                ? 'text-foreground'
+                : 'text-muted hover:text-foreground'
+            }`}
+          >
+            <TrendingUp size={14} className={activeTab === 'trending' ? 'text-warning' : ''} />
+            {t('tabs.trending')}
+          </button>
+          <button
             onClick={() => setActiveTab('favorites')}
             className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
               activeTab === 'favorites'
@@ -113,8 +128,8 @@ function TokensContent() {
             layout
             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             style={{
-              left: activeTab === 'live' ? '4px' : activeTab === 'explore' ? 'calc(33.33%)' : 'calc(66.66%)',
-              width: 'calc(33.33% - 4px)',
+              left: activeTab === 'live' ? '4px' : activeTab === 'explore' ? 'calc(25%)' : activeTab === 'trending' ? 'calc(50%)' : 'calc(75%)',
+              width: 'calc(25% - 4px)',
             }}
           />
         </div>
@@ -132,6 +147,8 @@ function TokensContent() {
               <TokenFeed tokens={tokens} newTokenIds={newTokenIds} onSwitchToExplore={(source) => { setExploreSource(source || ''); setActiveTab('explore'); }} />
             ) : activeTab === 'explore' ? (
               <TokenExplorer autoFocusSearch={autoFocusSearch} onSearchFocused={() => setAutoFocusSearch(false)} initialSource={exploreSource} />
+            ) : activeTab === 'trending' ? (
+              <TrendingFeed />
             ) : (
               <FavoritesList />
             )}

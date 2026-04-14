@@ -204,3 +204,123 @@ export async function fetchTokensForReEnrichment(limit: number, reEnrichAfterMin
   }
   return data || [];
 }
+
+// ===== Trending / Snapshot functions =====
+
+export interface SnapshotData {
+  mint: string;
+  price_usd: number | null;
+  volume_24h_usd: number | null;
+  market_cap_usd: number | null;
+  holder_count: number | null;
+  liquidity_usd: number | null;
+}
+
+export async function insertSnapshot(data: SnapshotData): Promise<void> {
+  const db = getSupabase();
+  const { error } = await db
+    .from('token_snapshots')
+    .insert({
+      mint: data.mint,
+      price_usd: data.price_usd,
+      volume_24h_usd: data.volume_24h_usd,
+      market_cap_usd: data.market_cap_usd,
+      holder_count: data.holder_count,
+      liquidity_usd: data.liquidity_usd,
+      snapshot_at: new Date().toISOString(),
+    });
+
+  if (error) {
+    logger.error(`Failed to insert snapshot for ${data.mint}: ${error.message}`);
+  }
+}
+
+export async function cleanupOldSnapshots(maxAgeDays: number = 7): Promise<number> {
+  const db = getSupabase();
+  const cutoff = new Date(Date.now() - maxAgeDays * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data, error } = await db
+    .from('token_snapshots')
+    .delete()
+    .lte('snapshot_at', cutoff)
+    .select('id');
+
+  if (error) {
+    logger.error(`Snapshot cleanup failed: ${error.message}`);
+    return 0;
+  }
+  return data?.length || 0;
+}
+
+export interface TokenSnapshot {
+  price_usd: number | null;
+  volume_24h_usd: number | null;
+  market_cap_usd: number | null;
+  holder_count: number | null;
+  liquidity_usd: number | null;
+  snapshot_at: string;
+}
+
+export async function fetchSnapshotsForToken(mint: string, hoursAgo: number = 48): Promise<TokenSnapshot[]> {
+  const db = getSupabase();
+  const cutoff = new Date(Date.now() - hoursAgo * 60 * 60 * 1000).toISOString();
+
+  const { data, error } = await db
+    .from('token_snapshots')
+    .select('price_usd, volume_24h_usd, market_cap_usd, holder_count, liquidity_usd, snapshot_at')
+    .eq('mint', mint)
+    .gte('snapshot_at', cutoff)
+    .order('snapshot_at', { ascending: true });
+
+  if (error) {
+    logger.error(`Failed to fetch snapshots for ${mint}: ${error.message}`);
+    return [];
+  }
+  return data || [];
+}
+
+export async function fetchTrendingCandidates(limit: number = 200): Promise<{ mint: string }[]> {
+  const db = getSupabase();
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data, error } = await db
+    .from('tokens')
+    .select('mint')
+    .eq('enriched', true)
+    .gte('detected_at', sevenDaysAgo)
+    .not('price_usd', 'is', null)
+    .not('holder_count', 'is', null)
+    .gte('holder_count', 5)
+    .gte('liquidity_usd', 500)
+    .order('market_cap_usd', { ascending: false, nullsFirst: false })
+    .limit(limit);
+
+  if (error) {
+    logger.error(`Failed to fetch trending candidates: ${error.message}`);
+    return [];
+  }
+  return data || [];
+}
+
+export async function updateTrendingScore(mint: string, score: number): Promise<void> {
+  const db = getSupabase();
+  const { error } = await db
+    .from('tokens')
+    .update({ trending_score: score })
+    .eq('mint', mint);
+
+  if (error) {
+    logger.error(`Failed to update trending score for ${mint}: ${error.message}`);
+  }
+}
+
+export async function resetStaleTrendingScores(): Promise<void> {
+  const db = getSupabase();
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+  await db
+    .from('tokens')
+    .update({ trending_score: 0 })
+    .lt('detected_at', sevenDaysAgo)
+    .gt('trending_score', 0);
+}

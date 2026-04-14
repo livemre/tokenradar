@@ -111,8 +111,14 @@
     "tabs": {
       "live": "Live Radar",
       "explore": "Explore",
+      "trending": "Trending",
       "favorites": "Watchlist"
     }
+  },
+  "trending": {
+    "noTrending": "No trending tokens yet",
+    "noTrendingDesc": "Trending tokens will appear as they gain traction over time.",
+    "trendingCount": "{count} trending tokens"
   },
   "feed": {
     "waiting": "Waiting for new tokens...",
