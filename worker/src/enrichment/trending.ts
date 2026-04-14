@@ -49,12 +49,13 @@ function computeTrendingScore(snapshots: TokenSnapshot[]): number {
 
   const now = Date.now();
   const latest = snapshots[snapshots.length - 1];
-  const sixHoursAgo = getSnapshotNearTime(snapshots, now - 6 * 60 * 60 * 1000);
   const oneHourAgo = getSnapshotNearTime(snapshots, now - 1 * 60 * 60 * 1000);
-  const twentyFourHoursAgo = getSnapshotNearTime(snapshots, now - 24 * 60 * 60 * 1000);
+  const sixHoursAgo = getSnapshotNearTime(snapshots, now - 6 * 60 * 60 * 1000);
+  const twentyFourHoursAgo = getSnapshotNearTime(snapshots, now - 24 * 60 * 60 * 1000, 4 * 60 * 60 * 1000);
+  const sevenDaysAgo = getSnapshotNearTime(snapshots, now - 7 * 24 * 60 * 60 * 1000, 24 * 60 * 60 * 1000);
 
-  // Prefer 6h, fallback 1h, 24h, or just the oldest snapshot we have
-  let compareSnapshot = sixHoursAgo || oneHourAgo || twentyFourHoursAgo;
+  // Prefer 6h, fallback 1h, 24h, 7d, or just the oldest snapshot we have
+  let compareSnapshot = sixHoursAgo || oneHourAgo || twentyFourHoursAgo || sevenDaysAgo;
 
   // If no match within tolerances, use the oldest snapshot if it's at least 15 min old
   if (!compareSnapshot) {
@@ -102,7 +103,7 @@ export async function calculateTrendingScores(): Promise<void> {
 
   await resetStaleTrendingScores();
 
-  const cleaned = await cleanupOldSnapshots(7);
+  const cleaned = await cleanupOldSnapshots(30);
   if (cleaned > 0) {
     logger.info(`Cleaned up ${cleaned} old snapshots`);
   }
@@ -112,7 +113,7 @@ export async function calculateTrendingScores(): Promise<void> {
 
   let updated = 0;
   for (const { mint } of candidates) {
-    const snapshots = await fetchSnapshotsForToken(mint, 48);
+    const snapshots = await fetchSnapshotsForToken(mint, 24 * 30);
     const score = computeTrendingScore(snapshots);
     await updateTrendingScore(mint, score);
     if (score > 0) updated++;

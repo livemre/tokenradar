@@ -21,9 +21,9 @@ export async function GET(request: NextRequest) {
     .gt('trending_score', 0)
     .order('trending_score', { ascending: false, nullsFirst: false });
 
-  // 7-day window
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  query = query.gte('detected_at', sevenDaysAgo);
+  // 30-day window
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  query = query.gte('detected_at', thirtyDaysAgo).not('symbol', 'is', null);
 
   if (source) query = query.eq('source', source);
   if (safety) query = query.eq('safety_level', safety);
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Fetch change metrics from snapshots for each token
-  const periodHours = period === '1h' ? 1 : period === '24h' ? 24 : 6;
+  const periodHours = period === '1h' ? 1 : period === '24h' ? 24 : period === '7d' ? 168 : period === '30d' ? 720 : 6;
   const periodCutoff = new Date(Date.now() - periodHours * 60 * 60 * 1000).toISOString();
 
   const metricsMap = new Map<string, {

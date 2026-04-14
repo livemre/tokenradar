@@ -6,6 +6,8 @@ const PERIOD_OPTIONS: { value: TrendingPeriod; label: string }[] = [
   { value: '1h', label: '1H' },
   { value: '6h', label: '6H' },
   { value: '24h', label: '24H' },
+  { value: '7d', label: '7D' },
+  { value: '30d', label: '30D' },
 ];
 
 interface TrendingPeriodTabsProps {

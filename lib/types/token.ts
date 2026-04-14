@@ -66,7 +66,7 @@ export interface TrendingToken extends Token {
   trending_metrics: TrendingMetrics;
 }
 
-export type TrendingPeriod = '1h' | '6h' | '24h';
+export type TrendingPeriod = '1h' | '6h' | '24h' | '7d' | '30d';
 
 export interface TokenFilters {
   source?: TokenSource;

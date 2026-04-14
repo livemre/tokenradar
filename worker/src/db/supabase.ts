@@ -336,14 +336,15 @@ export async function fetchSnapshotsForToken(mint: string, hoursAgo: number = 48
 
 export async function fetchTrendingCandidates(limit: number = 200): Promise<{ mint: string }[]> {
   const db = getSupabase();
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
   const { data, error } = await db
     .from('tokens')
     .select('mint')
     .eq('enriched', true)
-    .gte('detected_at', sevenDaysAgo)
+    .gte('detected_at', thirtyDaysAgo)
     .not('price_usd', 'is', null)
+    .not('symbol', 'is', null)
     .gte('liquidity_usd', 100)
     .order('market_cap_usd', { ascending: false, nullsFirst: false })
     .limit(limit);
@@ -369,11 +370,11 @@ export async function updateTrendingScore(mint: string, score: number): Promise<
 
 export async function resetStaleTrendingScores(): Promise<void> {
   const db = getSupabase();
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
   await db
     .from('tokens')
     .update({ trending_score: 0 })
-    .lt('detected_at', sevenDaysAgo)
+    .lt('detected_at', thirtyDaysAgo)
     .gt('trending_score', 0);
 }
