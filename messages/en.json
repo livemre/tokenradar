@@ -100,8 +100,8 @@
   "stats": {
     "totalTokens": "Total Tokens",
     "safeRate": "Safe Rate",
-    "last24h": "Last 24h",
-    "trending": "Trending"
+    "last5min": "Last 5 min",
+    "last24h": "Last 24h"
   },
   "tokens": {
     "title": "Token",

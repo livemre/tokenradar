@@ -1,7 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
-import { Activity, Shield, Coins, TrendingUp } from 'lucide-react';
+import { Activity, Shield, Coins, Clock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface StatsData {
@@ -25,8 +25,8 @@ export function StatsBar() {
 
   const total = data?.total ?? 0;
   const safePercent = data?.safePercent ?? 0;
+  const recent5min = data?.recent5min ?? 0;
   const today = data?.today ?? 0;
-  const trending = data?.trending ?? 0;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
@@ -47,15 +47,15 @@ export function StatsBar() {
       />
       <StatCard
         icon={<Activity size={14} />}
-        label={t('last24h')}
-        value={today.toLocaleString()}
+        label={t('last5min')}
+        value={recent5min.toLocaleString()}
         gradient="from-green-500/10 to-cyan-500/10"
         iconColor="text-safe"
       />
       <StatCard
-        icon={<TrendingUp size={14} />}
-        label={t('trending')}
-        value={trending.toLocaleString()}
+        icon={<Clock size={14} />}
+        label={t('last24h')}
+        value={today.toLocaleString()}
         gradient="from-orange-500/10 to-yellow-500/10"
         iconColor="text-warning"
       />

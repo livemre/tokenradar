@@ -72,66 +72,28 @@ function TokensContent() {
           <StatsBar />
         </div>
 
-        {/* Tab switcher with animated indicator */}
-        <div className="flex gap-1 mb-6 p-1 bg-white/[0.03] rounded-xl w-fit border border-white/5 relative">
-          <button
-            onClick={() => setActiveTab('live')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'live'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <Radio size={14} className={activeTab === 'live' ? 'text-safe' : ''} />
-            {t('tabs.live')}
-            {activeTab === 'live' && isConnected && (
-              <span className="w-1.5 h-1.5 rounded-full bg-safe animate-pulse" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('explore')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'explore'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <Compass size={14} />
-            {t('tabs.explore')}
-          </button>
-          <button
-            onClick={() => setActiveTab('trending')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'trending'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <TrendingUp size={14} className={activeTab === 'trending' ? 'text-warning' : ''} />
-            {t('tabs.trending')}
-          </button>
-          <button
-            onClick={() => setActiveTab('favorites')}
-            className={`relative z-10 flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors btn-press ${
-              activeTab === 'favorites'
-                ? 'text-foreground'
-                : 'text-muted hover:text-foreground'
-            }`}
-          >
-            <Eye size={14} className={activeTab === 'favorites' ? 'text-accent' : ''} />
-            {t('tabs.favorites')}
-          </button>
-
-          {/* Sliding background */}
-          <motion.div
-            className="absolute top-1 bottom-1 rounded-lg bg-white/10"
-            layout
-            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-            style={{
-              left: activeTab === 'live' ? '4px' : activeTab === 'explore' ? 'calc(25%)' : activeTab === 'trending' ? 'calc(50%)' : 'calc(75%)',
-              width: 'calc(25% - 4px)',
-            }}
-          />
+        {/* Tab switcher */}
+        <div className="flex gap-1 mb-6 p-1 bg-white/[0.03] rounded-xl border border-white/5 overflow-x-auto no-scrollbar">
+          {([
+            { id: 'live' as Tab, icon: <Radio size={14} className={activeTab === 'live' ? 'text-safe' : ''} />, label: t('tabs.live'), extra: activeTab === 'live' && isConnected ? <span className="w-1.5 h-1.5 rounded-full bg-safe animate-pulse" /> : null },
+            { id: 'explore' as Tab, icon: <Compass size={14} />, label: t('tabs.explore') },
+            { id: 'trending' as Tab, icon: <TrendingUp size={14} className={activeTab === 'trending' ? 'text-warning' : ''} />, label: t('tabs.trending') },
+            { id: 'favorites' as Tab, icon: <Eye size={14} className={activeTab === 'favorites' ? 'text-accent' : ''} />, label: t('tabs.favorites') },
+          ]).map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors btn-press ${
+                activeTab === tab.id
+                  ? 'text-foreground bg-white/10'
+                  : 'text-muted hover:text-foreground hover:bg-white/5'
+              }`}
+            >
+              {tab.icon}
+              {tab.label}
+              {tab.extra}
+            </button>
+          ))}
         </div>
 
         {/* Tab content with cross-fade */}

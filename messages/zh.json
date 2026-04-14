@@ -100,8 +100,8 @@
   "stats": {
     "totalTokens": "代币总数",
     "safeRate": "安全率",
-    "last24h": "过去24小时",
-    "trending": "热门上升"
+    "last5min": "过去5分钟",
+    "last24h": "过去24小时"
   },
   "tokens": {
     "title": "代币",

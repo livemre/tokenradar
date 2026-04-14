@@ -100,8 +100,8 @@
   "stats": {
     "totalTokens": "Toplam Token",
     "safeRate": "Güvenli Oran",
-    "last24h": "Son 24 saat",
-    "trending": "Yükselen"
+    "last5min": "Son 5 dk",
+    "last24h": "Son 24 saat"
   },
   "tokens": {
     "title": "Token",

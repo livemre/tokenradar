@@ -100,8 +100,8 @@
   "stats": {
     "totalTokens": "トークン総数",
     "safeRate": "安全率",
-    "last24h": "過去24時間",
-    "trending": "トレンド"
+    "last5min": "過去5分",
+    "last24h": "過去24時間"
   },
   "tokens": {
     "title": "トークン",

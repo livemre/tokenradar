@@ -100,8 +100,8 @@
   "stats": {
     "totalTokens": "전체 토큰",
     "safeRate": "안전 비율",
-    "last24h": "최근 24시간",
-    "trending": "인기 상승"
+    "last5min": "최근 5분",
+    "last24h": "최근 24시간"
   },
   "tokens": {
     "title": "토큰",
