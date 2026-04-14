@@ -14,23 +14,46 @@ export async function GET(request: NextRequest) {
 
   const LIST_COLUMNS = 'mint,name,symbol,image_url,source,safety_level,safety_score,price_usd,market_cap_usd,liquidity_usd,holder_count,volume_24h_usd,detected_at,enriched,enriched_at,trending_score';
 
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  // First try: tokens with trending_score > 0
   let query = supabase
     .from('tokens')
     .select(LIST_COLUMNS, { count: 'exact' })
     .eq('enriched', true)
     .gt('trending_score', 0)
+    .gte('detected_at', thirtyDaysAgo)
+    .not('symbol', 'is', null)
     .order('trending_score', { ascending: false, nullsFirst: false });
-
-  // 30-day window
-  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-  query = query.gte('detected_at', thirtyDaysAgo).not('symbol', 'is', null);
 
   if (source) query = query.eq('source', source);
   if (safety) query = query.eq('safety_level', safety);
-
   query = query.range((page - 1) * pageSize, page * pageSize - 1);
 
-  const { data: tokens, error, count } = await query;
+  let { data: tokens, error, count } = await query;
+
+  // Fallback: if no scored tokens, show top tokens by market cap (potential tokens)
+  if (!error && (!tokens || tokens.length === 0) && page === 1) {
+    let fallbackQuery = supabase
+      .from('tokens')
+      .select(LIST_COLUMNS, { count: 'exact' })
+      .eq('enriched', true)
+      .gte('detected_at', thirtyDaysAgo)
+      .not('symbol', 'is', null)
+      .not('price_usd', 'is', null)
+      .gte('liquidity_usd', 100)
+      .order('market_cap_usd', { ascending: false, nullsFirst: false });
+
+    if (source) fallbackQuery = fallbackQuery.eq('source', source);
+    if (safety) fallbackQuery = fallbackQuery.eq('safety_level', safety);
+    fallbackQuery = fallbackQuery.range(0, pageSize - 1);
+
+    const fallback = await fallbackQuery;
+    if (!fallback.error) {
+      tokens = fallback.data;
+      count = fallback.count;
+    }
+  }
 
   if (error) {
     return NextResponse.json({ error: 'Failed to fetch trending tokens' }, { status: 500 });
