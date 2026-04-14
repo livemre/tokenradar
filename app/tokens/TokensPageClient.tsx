@@ -13,7 +13,7 @@ import { FavoritesList } from '@/components/tokens/FavoritesList';
 import { useTokenFeed } from '@/lib/hooks/useTokenFeed';
 import { useNotificationContext } from '@/lib/context/NotificationContext';
 import type { TokenSource } from '@/lib/types/token';
-import { Radio, Compass, Heart } from 'lucide-react';
+import { Radio, Compass, Eye } from 'lucide-react';
 
 type Tab = 'live' | 'explore' | 'favorites';
 
@@ -103,7 +103,7 @@ function TokensContent() {
                 : 'text-muted hover:text-foreground'
             }`}
           >
-            <Heart size={14} className={activeTab === 'favorites' ? 'text-[#ff3366]' : ''} />
+            <Eye size={14} className={activeTab === 'favorites' ? 'text-accent' : ''} />
             {t('tabs.favorites')}
           </button>
 

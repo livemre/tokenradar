@@ -111,7 +111,7 @@
     "tabs": {
       "live": "Canlı Radar",
       "explore": "Keşfet",
-      "favorites": "Favoriler"
+      "favorites": "İzleme Listesi"
     }
   },
   "feed": {
@@ -285,16 +285,16 @@
     "hasAccount": "Zaten hesabınız var mı?",
     "checkEmail": "E-postanızı kontrol edin",
     "confirmMessage": "E-postanıza bir onay bağlantısı gönderdik. Lütfen gelen kutunuzu kontrol edin ve hesabınızı etkinleştirmek için bağlantıya tıklayın.",
-    "myFavorites": "Favorilerim",
+    "myFavorites": "İzleme Listem",
     "signOut": "Çıkış Yap"
   },
   "favorites": {
-    "title": "Favoriler",
-    "noFavoritesTitle": "Henüz favori yok",
-    "noFavoritesDesc": "Favori tokenlerinizi kaydetmek ve kolayca takip etmek için giriş yapın.",
-    "noFavoritesDescLoggedIn": "Favorilere eklemek için herhangi bir tokenin kalp ikonuna dokunun.",
-    "signInToSave": "Favorileri kaydetmek için giriş yapın",
-    "count": "{count} favori"
+    "title": "İzleme Listesi",
+    "noFavoritesTitle": "İzleme listesi boş",
+    "noFavoritesDesc": "Tokenları izleme listenize eklemek için giriş yapın.",
+    "noFavoritesDescLoggedIn": "İzleme listesine eklemek için herhangi bir tokenin kalp ikonuna dokunun.",
+    "signInToSave": "İzleme listesi için giriş yapın",
+    "count": "{count} izleniyor"
   },
   "tokensPage": {
     "stats": {

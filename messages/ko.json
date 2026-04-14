@@ -111,7 +111,7 @@
     "tabs": {
       "live": "라이브 레이더",
       "explore": "탐색",
-      "favorites": "즐겨찾기"
+      "favorites": "관심목록"
     }
   },
   "feed": {
@@ -285,16 +285,16 @@
     "hasAccount": "이미 계정이 있으신가요?",
     "checkEmail": "이메일을 확인하세요",
     "confirmMessage": "확인 링크를 이메일로 보냈습니다. 받은 편지함을 확인하고 링크를 클릭하여 계정을 활성화하세요.",
-    "myFavorites": "내 즐겨찾기",
+    "myFavorites": "내 관심목록",
     "signOut": "로그아웃"
   },
   "favorites": {
-    "title": "즐겨찾기",
-    "noFavoritesTitle": "즐겨찾기가 없습니다",
-    "noFavoritesDesc": "즐겨찾기 토큰을 저장하고 쉽게 추적하려면 로그인하세요.",
-    "noFavoritesDescLoggedIn": "토큰의 하트 아이콘을 탭하여 즐겨찾기에 추가하세요.",
-    "signInToSave": "즐겨찾기를 저장하려면 로그인",
-    "count": "즐겨찾기 {count}개"
+    "title": "관심목록",
+    "noFavoritesTitle": "관심목록이 비어있습니다",
+    "noFavoritesDesc": "로그인하여 토큰을 관심목록에 추가하고 쉽게 추적하세요.",
+    "noFavoritesDescLoggedIn": "하트 아이콘을 탭하여 관심목록에 추가하세요.",
+    "signInToSave": "관심목록 사용을 위해 로그인",
+    "count": "{count}개 관심"
   },
   "tokensPage": {
     "stats": { "totalAnalyzed": "분석된 토큰", "markedSafe": "안전으로 표시됨" },

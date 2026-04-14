@@ -111,7 +111,7 @@
     "tabs": {
       "live": "ライブレーダー",
       "explore": "探索",
-      "favorites": "お気に入り"
+      "favorites": "ウォッチリスト"
     }
   },
   "feed": {
@@ -285,16 +285,16 @@
     "hasAccount": "すでにアカウントをお持ちの方",
     "checkEmail": "メールを確認してください",
     "confirmMessage": "確認リンクをメールで送信しました。受信トレイを確認し、リンクをクリックしてアカウントを有効化してください。",
-    "myFavorites": "お気に入り",
+    "myFavorites": "マイウォッチリスト",
     "signOut": "ログアウト"
   },
   "favorites": {
-    "title": "お気に入り",
-    "noFavoritesTitle": "お気に入りはまだありません",
-    "noFavoritesDesc": "ログインしてお気に入りのトークンを保存し、簡単に追跡しましょう。",
-    "noFavoritesDescLoggedIn": "トークンのハートアイコンをタップしてお気に入りに追加してください。",
-    "signInToSave": "ログインしてお気に入りを保存",
-    "count": "お気に入り {count} 件"
+    "title": "ウォッチリスト",
+    "noFavoritesTitle": "ウォッチリストにトークンがありません",
+    "noFavoritesDesc": "ログインしてトークンをウォッチリストに追加しましょう。",
+    "noFavoritesDescLoggedIn": "ハートアイコンをタップしてウォッチリストに追加できます。",
+    "signInToSave": "ウォッチリスト利用にはログイン",
+    "count": "{count}件ウォッチ中"
   },
   "tokensPage": {
     "stats": { "totalAnalyzed": "分析されたトークン", "markedSafe": "安全と評価" },

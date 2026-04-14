@@ -111,7 +111,7 @@
     "tabs": {
       "live": "Radar en direct",
       "explore": "Explorer",
-      "favorites": "Favoris"
+      "favorites": "Watchlist"
     }
   },
   "feed": {
@@ -285,16 +285,16 @@
     "hasAccount": "Deja un compte ?",
     "checkEmail": "Verifiez votre email",
     "confirmMessage": "Nous avons envoye un lien de confirmation a votre email. Veuillez verifier votre boite de reception et cliquer sur le lien pour activer votre compte.",
-    "myFavorites": "Mes Favoris",
+    "myFavorites": "Ma Watchlist",
     "signOut": "Se deconnecter"
   },
   "favorites": {
-    "title": "Favoris",
-    "noFavoritesTitle": "Pas encore de favoris",
-    "noFavoritesDesc": "Connectez-vous pour sauvegarder vos tokens favoris et les suivre facilement.",
-    "noFavoritesDescLoggedIn": "Appuyez sur l'icone coeur sur n'importe quel token pour l'ajouter a vos favoris.",
-    "signInToSave": "Connectez-vous pour sauvegarder vos favoris",
-    "count": "{count} favoris"
+    "title": "Watchlist",
+    "noFavoritesTitle": "Aucun token dans la watchlist",
+    "noFavoritesDesc": "Connectez-vous pour ajouter des tokens à votre watchlist.",
+    "noFavoritesDescLoggedIn": "Appuyez sur l'icône cœur pour ajouter un token à votre watchlist.",
+    "signInToSave": "Connectez-vous pour la watchlist",
+    "count": "{count} suivis"
   },
   "tokensPage": {
     "stats": { "totalAnalyzed": "Tokens Analysés", "markedSafe": "Marqués Sûrs" },

@@ -111,7 +111,7 @@
     "tabs": {
       "live": "实时雷达",
       "explore": "浏览",
-      "favorites": "收藏"
+      "favorites": "关注列表"
     }
   },
   "feed": {
@@ -285,16 +285,16 @@
     "hasAccount": "已有账户？",
     "checkEmail": "请查收邮件",
     "confirmMessage": "我们已向您的邮箱发送了确认链接。请检查收件箱并点击链接以激活您的账户。",
-    "myFavorites": "我的收藏",
+    "myFavorites": "我的关注列表",
     "signOut": "退出登录"
   },
   "favorites": {
-    "title": "收藏",
-    "noFavoritesTitle": "暂无收藏",
-    "noFavoritesDesc": "登录以保存您喜欢的代币并轻松追踪。",
-    "noFavoritesDescLoggedIn": "点击任意代币的爱心图标将其添加到收藏。",
-    "signInToSave": "登录以保存收藏",
-    "count": "{count} 个收藏"
+    "title": "关注列表",
+    "noFavoritesTitle": "关注列表为空",
+    "noFavoritesDesc": "登录后可将代币添加到关注列表并轻松追踪。",
+    "noFavoritesDescLoggedIn": "点击任意代币的心形图标即可添加到关注列表。",
+    "signInToSave": "登录以使用关注列表",
+    "count": "{count}个关注中"
   },
   "tokensPage": {
     "stats": { "totalAnalyzed": "已分析代币", "markedSafe": "标记为安全" },
