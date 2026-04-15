@@ -64,7 +64,7 @@ export function useTokenList(initialFilters?: Partial<TokenListFilters>) {
   const { data, error, isLoading, mutate } = useSWR<TokenListResponse>(
     `/api/tokens?${queryString}`,
     fetcher,
-    { refreshInterval: 15000, keepPreviousData: true }
+    { refreshInterval: 60_000, keepPreviousData: true }
   );
 
   const updateFilter = useCallback((key: keyof TokenListFilters, value: string | boolean) => {

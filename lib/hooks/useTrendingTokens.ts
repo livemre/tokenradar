@@ -42,7 +42,7 @@ export function useTrendingTokens() {
   const { data, error, isLoading, mutate } = useSWR<TrendingListResponse>(
     `/api/tokens/trending?${queryString}`,
     fetcher,
-    { refreshInterval: 30000, keepPreviousData: true }
+    { refreshInterval: 120_000, keepPreviousData: true }
   );
 
   const updateFilter = useCallback((key: keyof TrendingFilters, value: string) => {

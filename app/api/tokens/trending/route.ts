@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
 
   if (!tokens || tokens.length === 0) {
     const res = NextResponse.json({ data: [], total: 0, page, pageSize, totalPages: 0 });
-    res.headers.set('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
+    res.headers.set('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
     return res;
   }
 
@@ -124,6 +124,6 @@ export async function GET(request: NextRequest) {
     totalPages: Math.ceil((count || 0) / pageSize),
   });
 
-  res.headers.set('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
+  res.headers.set('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
   return res;
 }

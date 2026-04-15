@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
     totalPages: Math.ceil((count || 0) / pageSize),
   });
 
-  // Edge cache: 10s fresh, serve stale up to 30s while revalidating
-  res.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate=30');
+  // Edge cache: 60s fresh, serve stale up to 120s while revalidating
+  res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
   return res;
 }

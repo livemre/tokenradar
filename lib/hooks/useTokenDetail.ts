@@ -9,7 +9,7 @@ export function useTokenDetail(mint: string) {
   const { data, error, isLoading } = useSWR(
     mint ? `/api/tokens/${mint}` : null,
     fetcher,
-    { refreshInterval: 10000 }
+    { refreshInterval: 60_000 }
   );
 
   return {

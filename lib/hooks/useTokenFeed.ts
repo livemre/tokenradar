@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import type { Token } from '@/lib/types/token';
 
 const MAX_TOKENS = 50;
-const POLL_INTERVAL_MS = 15_000; // 15 seconds
+const POLL_INTERVAL_MS = 60_000; // 60 seconds
 
 /**
  * Polls /api/tokens every 10s instead of Supabase Realtime.

@@ -19,7 +19,7 @@ export async function GET(
   }
 
   const res = NextResponse.json({ data });
-  // Edge cache: 30s fresh, serve stale up to 60s while revalidating
-  res.headers.set('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
+  // Edge cache: 60s fresh, serve stale up to 120s while revalidating
+  res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
   return res;
 }

@@ -31,12 +31,12 @@ interface CandleData {
 const TIMEFRAMES = ['1m', '5m', '15m', '1h', '4h', '1d'] as const;
 
 const POLL_INTERVALS: Record<string, number> = {
-  '1m': 15_000,
-  '5m': 30_000,
-  '15m': 30_000,
-  '1h': 60_000,
-  '4h': 60_000,
-  '1d': 120_000,
+  '1m': 60_000,
+  '5m': 60_000,
+  '15m': 120_000,
+  '1h': 120_000,
+  '4h': 300_000,
+  '1d': 300_000,
 };
 
 interface PriceChartProps {

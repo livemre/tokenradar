@@ -19,7 +19,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 export function StatsBar() {
   const t = useTranslations('stats');
   const { data } = useSWR<StatsData>('/api/tokens/stats', fetcher, {
-    refreshInterval: 15000,
+    refreshInterval: 60_000,
     keepPreviousData: true,
   });
 

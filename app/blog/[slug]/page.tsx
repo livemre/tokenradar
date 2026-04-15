@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import DOMPurify from 'isomorphic-dompurify';
+import sanitize from 'sanitize-html';
 import { Radar, ArrowLeft, ArrowRight, Calendar, Tag, Clock, BookOpen, Shield, Newspaper, GraduationCap } from 'lucide-react';
 import { getPost, getPosts } from '@/lib/wordpress';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
@@ -36,9 +36,19 @@ const CATEGORY_STYLES: Record<string, { gradient: string; color: string }> = {
 };
 
 function sanitizeContent(html: string): string {
-  const clean = DOMPurify.sanitize(html, {
-    ADD_TAGS: ['iframe'],
-    ADD_ATTR: ['target', 'allow', 'allowfullscreen', 'frameborder'],
+  const clean = sanitize(html, {
+    allowedTags: sanitize.defaults.allowedTags.concat(['iframe', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figure', 'figcaption']),
+    allowedAttributes: {
+      ...sanitize.defaults.allowedAttributes,
+      a: ['href', 'target', 'rel'],
+      img: ['src', 'alt', 'width', 'height', 'loading'],
+      iframe: ['src', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'style'],
+      figure: ['style'],
+      figcaption: ['style'],
+      div: ['style'],
+      '*': ['id', 'class', 'style'],
+    },
+    allowedIframeHostnames: ['www.youtube.com', 'youtube.com'],
   });
   return clean.replace(
     /<h2([^>]*)>(.*?)<\/h2>/gi,

@@ -14,7 +14,7 @@ export async function GET(
     // Step 1: Find the top pool for this token
     const poolsRes = await fetch(
       `${GECKO_BASE}/networks/solana/tokens/${mint}/pools?page=1`,
-      { headers: { Accept: 'application/json' }, next: { revalidate: 60 } }
+      { headers: { Accept: 'application/json' }, next: { revalidate: 300 } }
     );
 
     if (!poolsRes.ok) {
@@ -47,7 +47,7 @@ export async function GET(
     // Step 3: Fetch OHLCV data
     const ohlcvRes = await fetch(
       `${GECKO_BASE}/networks/solana/pools/${poolAddress}/ohlcv/${tf.path}?aggregate=${tf.aggregate}&limit=300&currency=usd`,
-      { headers: { Accept: 'application/json' }, next: { revalidate: 30 } }
+      { headers: { Accept: 'application/json' }, next: { revalidate: 120 } }
     );
 
     if (!ohlcvRes.ok) {
@@ -71,8 +71,8 @@ export async function GET(
       .sort((a: { time: number }, b: { time: number }) => a.time - b.time);
 
     const res = NextResponse.json({ data: formatted });
-    // Edge cache: 30s fresh, serve stale up to 60s while revalidating
-    res.headers.set('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
+    // Edge cache: 120s fresh, serve stale up to 300s while revalidating
+    res.headers.set('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
     return res;
   } catch {
     return NextResponse.json({ data: [] });

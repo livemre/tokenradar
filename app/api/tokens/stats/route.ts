@@ -32,6 +32,6 @@ export async function GET() {
     trending,
   });
 
-  res.headers.set('Cache-Control', 's-maxage=15, stale-while-revalidate=30');
+  res.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
   return res;
 }

@@ -35,7 +35,7 @@ export async function getPosts(params?: {
   if (params?.search) searchParams.set('search', params.search);
 
   const res = await fetch(`${WP_API_URL}/posts?${searchParams}`, {
-    next: { revalidate: 60 },
+    next: { revalidate: 300 },
   });
 
   if (!res.ok) return { posts: [], total: 0, totalPages: 0 };
@@ -49,7 +49,7 @@ export async function getPosts(params?: {
 
 export async function getPost(slug: string): Promise<WPPost | null> {
   const res = await fetch(`${WP_API_URL}/posts?slug=${slug}&_embed=wp:term`, {
-    next: { revalidate: 60 },
+    next: { revalidate: 300 },
   });
 
   if (!res.ok) return null;
