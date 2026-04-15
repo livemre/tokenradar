@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | TokenRadar",
   },
   description:
-    "Detect new Solana memecoins in under 5 seconds. Free 24/7 rug-pull detection, safety scores, holder analysis, and live charts from Pump.fun, Raydium & Moonshot.",
+    "Best free Solana memecoin tracker and token scanner. Detect new Solana tokens in under 5 seconds with automatic safety analysis, rug check, holder data, and live charts from Pump.fun, Raydium & Moonshot.",
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "TokenRadar — Free Solana Memecoin Radar & Safety Scanner",
+    title: "TokenRadar — Best Free Solana Memecoin Tracker & Token Scanner",
     description:
-      "Detect new Solana tokens in < 5s. Free rug-pull detection, safety scores, holder analysis & live charts. 24/7 monitoring from Pump.fun, Raydium & Moonshot.",
+      "Best free Solana memecoin tracker. Detect new tokens in under 5 seconds with memecoin safety checker, rug check, real-time token alerts & live charts from Pump.fun, Raydium & Moonshot.",
     url: SITE_URL,
     siteName: "TokenRadar",
     type: "website",
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TokenRadar — Free Solana Memecoin Radar",
+    title: "TokenRadar — Best Free Solana Memecoin Tracker",
     description:
-      "Detect new tokens in < 5s. Free rug-pull detection, safety scores & live charts. 24/7 monitoring.",
+      "Best free Solana memecoin tracker & token scanner. Real-time token alerts, safety checker, rug check & live charts. 24/7 monitoring.",
   },
   robots: {
     index: true,
@@ -80,12 +80,18 @@ export const metadata: Metadata = {
   keywords: [
     "solana memecoin tracker",
     "solana token scanner",
-    "pump.fun tracker",
-    "memecoin radar",
-    "rug pull detector",
+    "memecoin screener",
+    "memecoin safety checker",
+    "new solana tokens",
+    "pump.fun new tokens",
+    "solana rug check",
     "solana token safety",
+    "real-time token alerts",
+    "best memecoin tracker 2026",
+    "pump.fun tracker",
     "raydium new tokens",
     "moonshot tokens",
+    "rug pull detector",
     "crypto safety scanner",
     "solana dex tracker",
   ],
@@ -102,7 +108,7 @@ const jsonLd = [
     name: "TokenRadar",
     url: SITE_URL,
     description:
-      "Real-time token detection and safety analysis for Solana. Track new tokens from Pump.fun, Raydium, and Moonshot.",
+      "Best free Solana memecoin tracker and token scanner. Real-time detection, memecoin safety checker, rug check, and live charts for new Solana tokens from Pump.fun, Raydium, and Moonshot.",
     publisher: {
       "@type": "Organization",
       name: "TokenRadar",
@@ -131,15 +137,17 @@ const jsonLd = [
       priceCurrency: "USD",
     },
     description:
-      "Free real-time Solana memecoin detection and safety analysis. Track tokens from Pump.fun, Raydium & Moonshot with rug-pull detection, safety scores, and live charts.",
+      "Best free Solana memecoin tracker and token scanner. Detect new Solana tokens in real-time with memecoin safety checker, Solana rug check, real-time token alerts, and live charts from Pump.fun, Raydium & Moonshot.",
     featureList: [
-      "Real-time token detection in under 5 seconds",
-      "Rug-pull safety scoring and analysis",
-      "Mint & freeze authority checks",
+      "Real-time new Solana token detection in under 5 seconds",
+      "Memecoin safety checker with automatic rug check",
+      "Solana token scanner across Pump.fun, Raydium & Moonshot",
+      "Real-time token alerts and notifications",
+      "Mint & freeze authority verification",
       "Top holder concentration analysis",
-      "Live price charts with OHLCV data",
-      "Jupiter swap integration",
-      "Push notifications for new tokens",
+      "Live OHLCV candlestick price charts",
+      "Jupiter swap integration for instant trading",
+      "Memecoin screener with advanced filters",
       "Multi-language support (9 languages)",
     ],
   },
@@ -185,6 +193,30 @@ const jsonLd = [
         acceptedAnswer: {
           "@type": "Answer",
           text: "TokenRadar monitors three Solana DEX sources: Pump.fun (new token launches), Raydium (graduated tokens), and Moonshot by DEXScreener. All sources are tracked 24/7 in real-time.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is TokenRadar the best memecoin tracker in 2026?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "TokenRadar is the only free Solana memecoin tracker that combines real-time token detection, automatic memecoin safety checker, trending algorithms, and live charts in one platform. Unlike other memecoin screeners, every feature is completely free.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How does the memecoin safety checker work?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "TokenRadar's memecoin safety checker runs an automatic Solana rug check on every new token. It analyzes mint authority, freeze authority, top holder concentration, liquidity depth, and RugCheck data to assign a Safe, Warning, or Danger rating.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can I get real-time token alerts for new Solana tokens?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. TokenRadar provides real-time token alerts for every new Solana token from Pump.fun, Raydium, and Moonshot. The Solana token scanner detects launches in under 5 seconds. Enable browser notifications to get alerted instantly.",
         },
       },
     ],

@@ -1,9 +1,9 @@
 {
   "landing": {
-    "badge": "Live on Solana Mainnet",
+    "badge": "Free Solana Memecoin Tracker — Live on Mainnet",
     "title1": "Solana Memecoin",
-    "title2": "Radar",
-    "subtitle": "Detect new tokens in real-time, analyze safety scores, and trade — all in one dashboard. Never miss a launch, never ape blindly.",
+    "title2": "Tracker",
+    "subtitle": "The best free Solana token scanner. Detect new tokens in real-time with automatic safety analysis, rug checks, and live charts from Pump.fun, Raydium & Moonshot.",
     "openDashboard": "Open Dashboard",
     "exploreTokens": "Explore Tokens",
     "launchApp": "Launch App",
@@ -14,41 +14,41 @@
       "noSignup": "No sign-up required"
     },
     "features": {
-      "heading": "Everything you need to <highlight>snipe safely</highlight>",
-      "subheading": "Built for degens who value speed and safety equally.",
+      "heading": "The most powerful memecoin <highlight>screener</highlight>",
+      "subheading": "Real-time Solana token scanner with built-in safety checker and rug pull detection.",
       "realtime": {
-        "title": "Real-time Detection",
-        "desc": "New tokens appear within seconds of creation. Live radar tracks every launch on Solana."
+        "title": "Real-Time Token Alerts",
+        "desc": "New Solana tokens appear within seconds of launch. Our memecoin screener tracks every new token across all major DEXs in real-time."
       },
       "safety": {
-        "title": "Safety Analysis",
-        "desc": "Every token is scored for rug-pull risk — mint authority, freeze authority, LP status, and more."
+        "title": "Memecoin Safety Checker",
+        "desc": "Automatic Solana rug check on every token — mint authority, freeze authority, holder concentration, liquidity, and RugCheck integration."
       },
       "charts": {
         "title": "Live Charts & Swap",
-        "desc": "OHLCV charts via GeckoTerminal, one-click swap via Jupiter — all inside the dashboard."
+        "desc": "OHLCV candlestick charts, price alerts, and one-click swap via Jupiter — all inside the dashboard."
       },
       "multiDex": {
-        "title": "Multi-DEX Coverage",
-        "desc": "Tracks Pump.fun, Raydium, and Moonshot simultaneously. Never miss a launch."
+        "title": "Multi-DEX Token Scanner",
+        "desc": "Scans Pump.fun new tokens, Raydium migrations, and Moonshot launches simultaneously. Complete Solana token coverage."
       }
     },
     "sources": {
       "heading": "Multi-DEX <highlight>coverage</highlight>",
-      "subheading": "Tracking the top Solana launch platforms simultaneously.",
+      "subheading": "Scan new Solana tokens from all major launch platforms simultaneously.",
       "pumpfun": "Bonding curve launches",
       "raydium": "AMM liquidity pools",
       "moonshot": "Fair launch tokens"
     },
     "howItWorks": {
       "heading": "How it <highlight>works</highlight>",
-      "detect": { "title": "Detect", "desc": "Our worker monitors Solana DEXes 24/7 and detects new tokens within seconds of creation." },
-      "analyze": { "title": "Analyze", "desc": "Each token is enriched with on-chain data — mint authority, LP status, holder count, and safety score." },
-      "act": { "title": "Act", "desc": "View charts, check safety, and swap directly through Jupiter — all from one place." }
+      "detect": { "title": "Detect", "desc": "Our Solana token scanner monitors all DEXs 24/7 and detects new tokens within seconds of launch — real-time token alerts delivered instantly." },
+      "analyze": { "title": "Analyze", "desc": "Every token gets a full safety check — mint authority, freeze authority, holder concentration, liquidity, and Solana rug check via RugCheck integration." },
+      "act": { "title": "Act", "desc": "View live charts, review the memecoin safety checker results, and swap directly through Jupiter — all from one dashboard." }
     },
     "cta": {
-      "heading": "Ready to start <highlight>scanning</highlight>?",
-      "subheading": "No sign-up required. Open the dashboard and start tracking tokens instantly.",
+      "heading": "Start tracking new Solana tokens <highlight>now</highlight>",
+      "subheading": "The best free memecoin tracker — no sign-up required. Real-time token alerts, safety checker, and live charts.",
       "button": "Launch TokenRadar"
     },
     "faq": {
@@ -62,7 +62,13 @@
       "q4": "How does the safety score work?",
       "a4": "TokenRadar analyzes multiple on-chain data points: RugCheck analysis, mint and freeze authority status, top holder concentration, holder count, and liquidity levels. Tokens are rated as Safe, Warning, or Danger.",
       "q5": "What DEX sources does TokenRadar monitor?",
-      "a5": "TokenRadar monitors three Solana DEX sources 24/7: Pump.fun (new token launches), Raydium (graduated tokens with AMM pools), and Moonshot by DEXScreener (fair launch tokens)."
+      "a5": "TokenRadar monitors three Solana DEX sources 24/7: Pump.fun (new token launches), Raydium (graduated tokens with AMM pools), and Moonshot by DEXScreener (fair launch tokens).",
+      "q6": "Is TokenRadar the best memecoin tracker in 2026?",
+      "a6": "TokenRadar is the only free Solana memecoin tracker that combines real-time detection, automatic safety analysis, trending algorithms, and live charts in one place. Unlike other memecoin screeners, every feature is free with no paywall.",
+      "q7": "How does the memecoin safety checker work?",
+      "a7": "The memecoin safety checker runs an automatic Solana rug check on every new token. It analyzes mint authority, freeze authority, top holder concentration, liquidity depth, and RugCheck risk data to assign a Safe, Warning, or Danger rating.",
+      "q8": "Can I get real-time token alerts for new Solana tokens?",
+      "a8": "Yes. TokenRadar provides real-time token alerts for every new Solana token detected from Pump.fun, Raydium, and Moonshot. Enable browser notifications to get alerted even when the tab is in the background."
     },
     "blog": {
       "heading": "Latest from the <highlight>blog</highlight>",
@@ -71,7 +77,7 @@
       "viewAll": "View all articles"
     },
     "footer": {
-      "tagline": "Solana Memecoin Radar",
+      "tagline": "Free Solana Memecoin Tracker & Token Scanner",
       "disclaimer": "Data provided as-is. DYOR. Not financial advice.",
       "product": "Product",
       "learn": "Learn",

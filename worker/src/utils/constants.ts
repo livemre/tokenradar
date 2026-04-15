@@ -2,8 +2,8 @@ export const PUMPFUN_WS_URL = process.env.PUMPFUN_WS_URL || 'wss://pumpportal.fu
 export const DEXSCREENER_API_URL = process.env.DEXSCREENER_API_URL || 'https://api.dexscreener.com';
 export const PUMPFUN_API_URL = process.env.PUMPFUN_API_URL || 'https://frontend-api-v3.pump.fun';
 export const MOONSHOT_POLL_INTERVAL_MS = parseInt(process.env.MOONSHOT_POLL_INTERVAL_MS || '30000');
-export const ENRICHMENT_CONCURRENCY = parseInt(process.env.ENRICHMENT_CONCURRENCY || '3');
-export const ENRICHMENT_DELAY_MS = parseInt(process.env.ENRICHMENT_DELAY_MS || '2000');
+export const ENRICHMENT_CONCURRENCY = parseInt(process.env.ENRICHMENT_CONCURRENCY || '2');
+export const ENRICHMENT_DELAY_MS = parseInt(process.env.ENRICHMENT_DELAY_MS || '5000');
 export const SOLANA_RPC_URL = process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
 
 export const SOL_MINT = 'So11111111111111111111111111111111111111112';

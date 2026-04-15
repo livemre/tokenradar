@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { getPosts } from '@/lib/wordpress';
 
 export const metadata: Metadata = {
-  title: 'TokenRadar — Real-Time Solana Memecoin Tracker & Safety Scanner',
+  title: 'TokenRadar — Best Free Solana Memecoin Tracker & Token Scanner 2026',
   alternates: {
     canonical: 'https://tokenradar.site',
   },
@@ -101,6 +101,9 @@ export default async function LandingPage() {
     { q: t('faq.q3'), a: t('faq.a3') },
     { q: t('faq.q4'), a: t('faq.a4') },
     { q: t('faq.q5'), a: t('faq.a5') },
+    { q: t('faq.q6'), a: t('faq.a6') },
+    { q: t('faq.q7'), a: t('faq.a7') },
+    { q: t('faq.q8'), a: t('faq.a8') },
   ];
 
   return (

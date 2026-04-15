@@ -98,17 +98,23 @@ function computeTrendingScore(snapshots: TokenSnapshot[]): number {
   return Math.round(totalScore * 100) / 100;
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function calculateTrendingScores(): Promise<void> {
   logger.info('Calculating trending scores...');
 
   await resetStaleTrendingScores();
+  await sleep(500);
 
   const cleaned = await cleanupOldSnapshots(30);
   if (cleaned > 0) {
     logger.info(`Cleaned up ${cleaned} old snapshots`);
   }
+  await sleep(500);
 
-  const candidates = await fetchTrendingCandidates(200);
+  const candidates = await fetchTrendingCandidates(100);
   logger.info(`Calculating trending for ${candidates.length} candidates`);
 
   let updated = 0;
@@ -117,6 +123,7 @@ export async function calculateTrendingScores(): Promise<void> {
     const score = computeTrendingScore(snapshots);
     await updateTrendingScore(mint, score);
     if (score > 0) updated++;
+    await sleep(150); // Throttle: 150ms between each token to avoid Supabase 429
   }
 
   logger.info(`Trending scores updated: ${updated} tokens with positive score`);

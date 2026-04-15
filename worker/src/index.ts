@@ -7,7 +7,7 @@ import { calculateTrendingScores } from './enrichment/trending.js';
 import { logger } from './utils/logger.js';
 
 const CLEANUP_INTERVAL_MS = 30 * 60 * 1000; // Every 30 minutes
-const TRENDING_INTERVAL_MS = 15 * 60 * 1000; // Every 15 minutes
+const TRENDING_INTERVAL_MS = 30 * 60 * 1000; // Every 30 minutes
 
 async function main() {
   logger.info('TokenRadar Worker starting...');

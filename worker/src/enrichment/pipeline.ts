@@ -210,30 +210,37 @@ export async function startEnrichmentPipeline(): Promise<void> {
     const tokens = await fetchUnenrichedTokens(ENRICHMENT_CONCURRENCY, 5);
 
     if (tokens.length > 0) {
-      const promises = tokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, false));
-      await Promise.allSettled(promises);
+      // Enrich tokens sequentially with delay to avoid rate limits
+      for (const t of tokens) {
+        await enrichToken(t.mint, t.uri ?? null, t.source, false);
+        await sleep(2000); // 2s stagger between individual tokens
+      }
       await sleep(ENRICHMENT_DELAY_MS);
       continue;
     }
 
     // When idle: re-enrich tokens with missing data (last 3 hours only)
-    const staleTokens = await fetchTokensForReEnrichment(5, 15, 3);
+    const staleTokens = await fetchTokensForReEnrichment(3, 15, 3);
 
     if (staleTokens.length > 0) {
       logger.info(`Re-enriching ${staleTokens.length} tokens with incomplete data`);
-      const promises = staleTokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, true));
-      await Promise.allSettled(promises);
+      for (const t of staleTokens) {
+        await enrichToken(t.mint, t.uri ?? null, t.source, true);
+        await sleep(2000);
+      }
       await sleep(ENRICHMENT_DELAY_MS);
       continue;
     }
 
     // When idle: re-validate "safe" tokens to catch dead/inactive ones (every 10 min, last 2h)
-    const safeTokens = await fetchSafeTokensForReValidation(3, 10, 2);
+    const safeTokens = await fetchSafeTokensForReValidation(2, 10, 2);
 
     if (safeTokens.length > 0) {
       logger.info(`Re-validating ${safeTokens.length} safe tokens for dead/inactive detection`);
-      const promises = safeTokens.map((t) => enrichToken(t.mint, t.uri ?? null, t.source, true));
-      await Promise.allSettled(promises);
+      for (const t of safeTokens) {
+        await enrichToken(t.mint, t.uri ?? null, t.source, true);
+        await sleep(2000);
+      }
       await sleep(ENRICHMENT_DELAY_MS);
       continue;
     }
